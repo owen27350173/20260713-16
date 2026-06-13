@@ -18,15 +18,11 @@
   main { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
   .page { display: none; }
   .page.active { display: block; }
-
-  /* 篩選 */
   .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
   .btn { font-size: 13px; padding: 6px 16px; border-radius: 20px; border: 1px solid #ddd; background: #fff; color: #666; cursor: pointer; font-family: inherit; transition: all 0.15s; }
   .btn:hover { border-color: #aaa; color: #333; }
   .btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; font-weight: 500; }
   .count { font-size: 12px; color: #aaa; margin-bottom: 10px; }
-
-  /* 表格 */
   table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #e8e8e8; }
   thead tr { background: #1a1a1a; color: #fff; }
   thead th { padding: 12px 16px; font-size: 13px; font-weight: 500; text-align: left; white-space: nowrap; }
@@ -39,26 +35,11 @@
   .tasks-list li { padding: 2px 0 2px 14px; position: relative; line-height: 1.6; color: #555; }
   .tasks-list li::before { content: "•"; position: absolute; left: 0; color: #ccc; }
   .same-as { font-size: 13px; color: #aaa; font-style: italic; }
-
-  /* 組別顏色 */
-  .g1 { background: #E6F1FB; color: #0C447C; }
-  .g2 { background: #E1F5EE; color: #085041; }
-  .g3 { background: #EEEDFE; color: #3C3489; }
-  .g4 { background: #FAEEDA; color: #854F0B; }
-  .g5 { background: #FAECE7; color: #993C1D; }
-  .g6 { background: #EAF3DE; color: #3B6D11; }
-  .g7 { background: #F1EFE8; color: #444441; }
-  .g8 { background: #FBEAF0; color: "#72243E"; }
-  .g9 { background: #FCEBEB; color: #791F1F; }
-
-  @media (max-width: 700px) {
-    table, thead, tbody, th, td, tr { display: block; }
-    thead { display: none; }
-    tbody td { border: none; padding: 4px 16px; }
-    tbody td:first-child { padding-top: 14px; font-weight: 600; }
-    tbody td:last-child { padding-bottom: 14px; }
-    tbody tr { border-bottom: 1px solid #e8e8e8; }
-  }
+  .g1{background:#E6F1FB;color:#0C447C}.g2{background:#E1F5EE;color:#085041}.g3{background:#EEEDFE;color:#3C3489}.g4{background:#FAEEDA;color:#854F0B}.g5{background:#FAECE7;color:#993C1D}.g6{background:#EAF3DE;color:#3B6D11}.g7{background:#F1EFE8;color:#444441}.g8{background:#FBEAF0;color:#72243E}.g9{background:#FCEBEB;color:#791F1F}
+  .stats-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .stat-section h2 { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #1a1a1a; }
+  @media(max-width:900px) { .stats-wrap { grid-template-columns: 1fr; } }
+  @media(max-width:700px){table,thead,tbody,th,td,tr{display:block}thead{display:none}tbody td{border:none;padding:4px 16px}tbody td:first-child{padding-top:14px;font-weight:600}tbody td:last-child{padding-bottom:14px}tbody tr{border-bottom:1px solid #e8e8e8}}
 </style>
 </head>
 <body>
@@ -67,232 +48,297 @@
     <h1>7月營隊資料</h1>
     <div class="tabs">
       <button class="tab active" onclick="switchTab('staff')">工作人員職責</button>
-      <button class="tab" onclick="switchTab('members')">參加人員分組</button>
+      <button class="tab" onclick="switchTab('members')">參加人員分組</button><button class="tab" onclick="switchTab('stats')">統計數據</button>
     </div>
   </div>
 </header>
 <main>
-
-  <!-- 工作人員 -->
   <div class="page active" id="page-staff">
     <div class="filters" id="staff-filters"></div>
     <p class="count" id="staff-count"></p>
-    <table>
-      <thead><tr><th>姓名</th><th>職位</th><th>房間</th><th>組別</th><th>工作項目</th></tr></thead>
-      <tbody id="staff-tbody"></tbody>
-    </table>
+    <table><thead><tr><th>姓名</th><th>職位</th><th>房間</th><th>組別</th><th>工作項目</th></tr></thead><tbody id="staff-tbody"></tbody></table>
   </div>
-
-  <!-- 參加人員 -->
   <div class="page" id="page-members">
     <div class="filters" id="member-filters"></div>
     <p class="count" id="member-count"></p>
-    <table>
-      <thead><tr><th>姓名</th><th>性別</th><th>房間</th><th>組別</th></tr></thead>
-      <tbody id="member-tbody"></tbody>
-    </table>
+    <table><thead><tr><th>姓名</th><th>性別</th><th>房間</th><th>組別</th><th>縣市</th><th>學校</th></tr></thead><tbody id="member-tbody"></tbody></table>
   </div>
-
+  <div class="page" id="page-stats">
+    <div class="stats-wrap">
+      <div class="stat-section">
+        <h2>依縣市統計</h2>
+        <table><thead><tr><th>縣市</th><th>人數</th><th>佔比</th></tr></thead><tbody id="city-tbody"></tbody></table>
+      </div>
+      <div class="stat-section">
+        <h2>依學校統計</h2>
+        <table><thead><tr><th>學校</th><th>縣市</th><th>人數</th><th>佔比</th></tr></thead><tbody id="school-tbody"></tbody></table>
+      </div>
+    </div>
+  </div>
 </main>
 <script>
-/* ── 分頁切換 ── */
-function switchTab(id) {
-  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['staff','members'][i] === id));
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
+function switchTab(id){
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['staff','members','stats'][i]===id));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
 }
 
-/* ════════════════════════════════
-   工作人員
-════════════════════════════════ */
-const staffGroups = {
-  "總協":  { bg: "#EEEDFE", text: "#3C3489" },
-  "接待組": { bg: "#E6F1FB", text: "#0C447C" },
-  "器材組": { bg: "#E1F5EE", text: "#085041" },
-  "公關組": { bg: "#FAECE7", text: "#993C1D" },
-  "活動組": { bg: "#FAEEDA", text: "#854F0B" },
-  "生輔組": { bg: "#EAF3DE", text: "#3B6D11" },
-  "隊輔組": { bg: "#F1EFE8", text: "#444441" },
-};
-
-const queueTasks = [
-  "全程陪伴並帶領負責隊伍，維持隊員參與積極度與場內秩序",
-  "課程期間協助學員理解課程內容，適時引導小組討論與活動進行",
-  "每日早晚關心隊員生活作息，留意隊員情緒與人際狀況",
-  "發現隊員異常情況（身體不適、情緒問題）立即通報生輔或總協",
-  "協助隊員完成各項任務、課堂作業及成果發表的準備工作",
-  "每日參與工作人員檢討會，回報隊伍狀況並接收隔日指示",
+/* ── 工作人員 ── */
+const staffGroups={"總協":{bg:"#EEEDFE",text:"#3C3489"},"接待組":{bg:"#E6F1FB",text:"#0C447C"},"器材組":{bg:"#E1F5EE",text:"#085041"},"公關組":{bg:"#FAECE7",text:"#993C1D"},"活動組":{bg:"#FAEEDA",text:"#854F0B"},"生輔組":{bg:"#EAF3DE",text:"#3B6D11"},"隊輔組":{bg:"#F1EFE8",text:"#444441"}};
+const queueTasks=["全程陪伴並帶領負責隊伍，維持隊員參與積極度與場內秩序","課程期間協助學員理解課程內容，適時引導小組討論與活動進行","每日早晚關心隊員生活作息，留意隊員情緒與人際狀況","發現隊員異常情況（身體不適、情緒問題）立即通報生輔或總協","協助隊員完成各項任務、課堂作業及成果發表的準備工作","每日參與工作人員檢討會，回報隊伍狀況並接收隔日指示"];
+const staffData=[
+  {name:"賴以展",role:"總協",room:"A",group:"總協",tasks:["統籌整體活動流程，掌握各組進度與執行狀況","召開行前會議及各階段檢討會，協調各組分工","負責緊急狀況的最終決策與即時處理","維護工作人員士氣，適時給予支援與人力調度","活動結束後彙整各組回饋，撰寫總檢討報告"]},
+  {name:"凃宥聰",role:"機動",room:"B",group:"接待組",tasks:["負責接待講師，確認到達時間並安排接送事宜","引導講師至休息室，提供餐飲及所需物資","協助講師確認簡報設備、麥克風等技術需求","講師課程結束後送行，確認交通安排無誤","擔任機動支援，協助各組人力不足時補位","保持聯絡暢通，處理突發狀況並回報總協"]},
+  {name:"呂岱晏",role:"器材",room:"F",group:"器材組",tasks:["活動前盤點並清查所有器材，製作器材清單","負責場地音響設備架設、測試與調整","管理電腦、投影機、麥克風等設備之借用與歸還","各場次活動前確認音控與簡報播放正常運作","隊輔或學員有設備需求時，即時提供協助與技術支援","活動結束後回收、整理並歸還所有器材，確認無損壞遺失"]},
+  {name:"蔡孟庭",role:"公關",room:"E",group:"公關組",tasks:["負責宣傳發文，規劃社群媒體（IG、FB）內容","活動期間記錄精彩畫面，拍攝照片與影片素材","即時發布活動動態，維持社群互動與曝光","製作活動紀錄影片或相簿，活動後對外發布","與孫郁琪協作，確認新聞稿是否如期發佈","處理外部詢問與訊息回覆，維護對外形象"]},
+  {name:"黃俊凱",role:"活動",room:"F",group:"活動組",tasks:["擔任主持人，主持開幕式、閉幕式及各場次活動","負責全體學員集合、解散之指揮與秩序維持","掌控整體活動時間，確保各流程依時程推進","主持成果發表會，協助各隊進行上台報告流程","主持專題座談，引導討論方向並控制節奏與時間","設計並發放滿意度問卷，活動結束後統一回收整理","與總協即時溝通，彈性調整流程以因應突發狀況"]},
+  {name:"陳弘意",role:"生輔",room:"G",group:"生輔組",tasks:["負責學員生活起居輔導，維護宿舍秩序與安全","每日確認學員出缺席狀況、用餐狀況（尤其吃素同學）","處理學員身體不適、受傷等突發健康狀況","協助學員適應營隊生活，關心其心理與情緒狀態","隨總協行動，協助傳達各項指示並執行交辦任務","活動結束後協助清點人數，確保學員安全離場"]},
+  {name:"施妤媗",role:"隊輔1",room:"C",group:"隊輔組",tasks:queueTasks,first:true},
+  {name:"吳恩萱",role:"隊輔2",room:"C",group:"隊輔組",tasks:null},
+  {name:"周品瑜",role:"隊輔3",room:"D",group:"隊輔組",tasks:null},
+  {name:"陳筱琴",role:"隊輔4",room:"D",group:"隊輔組",tasks:null},
+  {name:"錢威銘",role:"隊輔5",room:"G",group:"隊輔組",tasks:null},
+  {name:"李采容",role:"隊輔6",room:"—",group:"隊輔組",tasks:null},
+  {name:"倪瑞澤",role:"隊輔7",room:"H",group:"隊輔組",tasks:null},
+  {name:"董彥甫",role:"隊輔8",room:"H",group:"隊輔組",tasks:null},
+  {name:"王苡媗",role:"隊輔9",room:"E",group:"隊輔組",tasks:null},
 ];
-
-const staffData = [
-  { name:"賴以展", role:"總協", room:"A", group:"總協", tasks:["統籌整體活動流程，掌握各組進度與執行狀況","召開行前會議及各階段檢討會，協調各組分工","負責緊急狀況的最終決策與即時處理","維護工作人員士氣，適時給予支援與人力調度","活動結束後彙整各組回饋，撰寫總檢討報告"] },
-  { name:"凃宥聰", role:"機動", room:"B", group:"接待組", tasks:["負責接待講師，確認到達時間並安排接送事宜","引導講師至休息室，提供餐飲及所需物資","協助講師確認簡報設備、麥克風等技術需求","講師課程結束後送行，確認交通安排無誤","擔任機動支援，協助各組人力不足時補位","保持聯絡暢通，處理突發狀況並回報總協"] },
-  { name:"呂岱晏", role:"器材", room:"F", group:"器材組", tasks:["活動前盤點並清查所有器材，製作器材清單","負責場地音響設備架設、測試與調整","管理電腦、投影機、麥克風等設備之借用與歸還","各場次活動前確認音控與簡報播放正常運作","隊輔或學員有設備需求時，即時提供協助與技術支援","活動結束後回收、整理並歸還所有器材，確認無損壞遺失"] },
-  { name:"蔡孟庭", role:"公關", room:"E", group:"公關組", tasks:["負責宣傳發文，規劃社群媒體（IG、FB）內容","活動期間記錄精彩畫面，拍攝照片與影片素材","即時發布活動動態，維持社群互動與曝光","製作活動紀錄影片或相簿，活動後對外發布","與孫郁琪協作，確認新聞稿是否如期發佈","處理外部詢問與訊息回覆，維護對外形象"] },
-  { name:"黃俊凱", role:"活動", room:"F", group:"活動組", tasks:["擔任主持人，主持開幕式、閉幕式及各場次活動","負責全體學員集合、解散之指揮與秩序維持","掌控整體活動時間，確保各流程依時程推進","主持成果發表會，協助各隊進行上台報告流程","主持專題座談，引導討論方向並控制節奏與時間","設計並發放滿意度問卷，活動結束後統一回收整理","與總協即時溝通，彈性調整流程以因應突發狀況"] },
-  { name:"陳弘意", role:"生輔", room:"G", group:"生輔組", tasks:["負責學員生活起居輔導，維護宿舍秩序與安全","每日確認學員出缺席狀況、用餐狀況（尤其吃素同學）","處理學員身體不適、受傷等突發健康狀況","協助學員適應營隊生活，關心其心理與情緒狀態","隨總協行動，協助傳達各項指示並執行交辦任務","活動結束後協助清點人數，確保學員安全離場"] },
-  { name:"施妤媗", role:"隊輔1", room:"C", group:"隊輔組", tasks: queueTasks, first: true },
-  { name:"吳恩萱", role:"隊輔2", room:"C", group:"隊輔組", tasks: null },
-  { name:"周品瑜", role:"隊輔3", room:"D", group:"隊輔組", tasks: null },
-  { name:"陳筱琴", role:"隊輔4", room:"D", group:"隊輔組", tasks: null },
-  { name:"錢威銘", role:"隊輔5", room:"G", group:"隊輔組", tasks: null },
-  { name:"李采容", role:"隊輔6", room:"—", group:"隊輔組", tasks: null },
-  { name:"倪瑞澤", role:"隊輔7", room:"H", group:"隊輔組", tasks: null },
-  { name:"董彥甫", role:"隊輔8", room:"H", group:"隊輔組", tasks: null },
-  { name:"王苡媗", role:"隊輔9", room:"E", group:"隊輔組", tasks: null },
-];
-
-let staffFilter = "全部";
-const staffGroupNames = ["全部", ...Object.keys(staffGroups)];
-
-function renderStaff() {
-  const filtered = staffFilter === "全部" ? staffData : staffData.filter(s => s.group === staffFilter);
-  document.getElementById("staff-count").textContent = "顯示 " + filtered.length + " 人";
-  let firstQueue = false;
-  document.getElementById("staff-tbody").innerHTML = filtered.map(s => {
-    const g = staffGroups[s.group];
-    let taskCell = "";
-    if (s.group !== "隊輔組") {
-      taskCell = `<ul class="tasks-list">${s.tasks.map(t=>`<li>${t}</li>`).join("")}</ul>`;
-    } else if (!firstQueue) {
-      firstQueue = true;
-      taskCell = `<ul class="tasks-list">${queueTasks.map(t=>`<li>${t}</li>`).join("")}</ul>`;
-    } else {
-      taskCell = `<span class="same-as">同上</span>`;
-    }
-    return `<tr><td><strong>${s.name}</strong></td><td>${s.role}</td><td>${s.room}</td><td><span class="badge" style="background:${g.bg};color:${g.text}">${s.group}</span></td><td>${taskCell}</td></tr>`;
+let staffFilter="全部";
+const staffGroupNames=["全部",...Object.keys(staffGroups)];
+function renderStaff(){
+  const filtered=staffFilter==="全部"?staffData:staffData.filter(s=>s.group===staffFilter);
+  document.getElementById("staff-count").textContent="顯示 "+filtered.length+" 人";
+  let firstQueue=false;
+  document.getElementById("staff-tbody").innerHTML=filtered.map(s=>{
+    const g=staffGroups[s.group];
+    let taskCell="";
+    if(s.group!=="隊輔組"){taskCell=`<ul class="tasks-list">${s.tasks.map(t=>`<li>${t}</li>`).join("")}</ul>`;}
+    else if(!firstQueue){firstQueue=true;taskCell=`<ul class="tasks-list">${queueTasks.map(t=>`<li>${t}</li>`).join("")}</ul>`;}
+    else{taskCell=`<span class="same-as">同上</span>`;}
+    return`<tr><td><strong>${s.name}</strong></td><td>${s.role}</td><td>${s.room}</td><td><span class="badge" style="background:${g.bg};color:${g.text}">${s.group}</span></td><td>${taskCell}</td></tr>`;
   }).join("");
 }
+function initStaffFilters(){document.getElementById("staff-filters").innerHTML=staffGroupNames.map(g=>`<button class="btn${g===staffFilter?" active":""}" onclick="setStaffFilter('${g}')">${g}</button>`).join("");}
+function setStaffFilter(g){staffFilter=g;initStaffFilters();renderStaff();
 
-function initStaffFilters() {
-  document.getElementById("staff-filters").innerHTML = staffGroupNames.map(g =>
-    `<button class="btn${g===staffFilter?" active":""}" onclick="setStaffFilter('${g}')">${g}</button>`
-  ).join("");
-}
-function setStaffFilter(g) { staffFilter = g; initStaffFilters(); renderStaff(); }
-
-/* ════════════════════════════════
-   參加人員
-════════════════════════════════ */
-const memberData = [
-  {name:"李沛瑢",gender:"女",room:"205",group:2},
-  {name:"劉芷妘",gender:"女",room:"205",group:2},
-  {name:"陳劭齊",gender:"男",room:"101",group:1},
-  {name:"伍建錄",gender:"男",room:"101",group:1},
-  {name:"林祥芫",gender:"男",room:"102",group:1},
-  {name:"張絜晰",gender:"女",room:"206",group:2},
-  {name:"王雅嫻",gender:"女",room:"206",group:2},
-  {name:"陳品妍",gender:"女",room:"207",group:3},
-  {name:"呂巽寰",gender:"男",room:"102",group:2},
-  {name:"施浥湘",gender:"女",room:"207",group:3},
-  {name:"江良介",gender:"男",room:"103",group:2},
-  {name:"紀妤潔",gender:"女",room:"201",group:1},
-  {name:"陳妍熹",gender:"女",room:"202",group:1},
-  {name:"柳向謙",gender:"男",room:"103",group:2},
-  {name:"陳立溱",gender:"女",room:"208",group:3},
-  {name:"林珈亦",gender:"女",room:"208",group:3},
-  {name:"陳品霏",gender:"女",room:"209",group:3},
-  {name:"王禹方",gender:"女",room:"209",group:3},
-  {name:"柯祈光",gender:"男",room:"104",group:3},
-  {name:"吳凰瑄",gender:"女",room:"301",group:3},
-  {name:"潘晞媛",gender:"女",room:"210",group:4},
-  {name:"李佩潔",gender:"女",room:"203",group:1},
-  {name:"林芋辰",gender:"女",room:"301",group:4},
-  {name:"李新婕",gender:"女",room:"302",group:4},
-  {name:"劉惠羽",gender:"女",room:"302",group:4},
-  {name:"許安安",gender:"女",room:"204",group:2},
-  {name:"郭宇翔",gender:"男",room:"104",group:3},
-  {name:"周庭樂",gender:"女",room:"303",group:4},
-  {name:"劉佳欣",gender:"女",room:"202",group:1},
-  {name:"涂于真",gender:"女",room:"303",group:4},
-  {name:"蔡泊欣",gender:"女",room:"304",group:5},
-  {name:"郭品妍",gender:"女",room:"304",group:5},
-  {name:"鄭秉鈞",gender:"男",room:"105",group:4},
-  {name:"洪志榮",gender:"男",room:"105",group:4},
-  {name:"陳羿廷",gender:"女",room:"305",group:5},
-  {name:"陳柏翰",gender:"男",room:"106",group:5},
-  {name:"謝若水",gender:"女",room:"305",group:5},
-  {name:"黃泰團",gender:"男",room:"106",group:5},
-  {name:"張廷安",gender:"男",room:"107",group:6},
-  {name:"吳若昕",gender:"女",room:"306",group:5},
-  {name:"洪楷博",gender:"男",room:"107",group:6},
-  {name:"郭宸禎",gender:"女",room:"306",group:5},
-  {name:"方宜",gender:"女",room:"307",group:5},
-  {name:"王泳琁",gender:"女",room:"307",group:6},
-  {name:"張子軒",gender:"男",room:"108",group:7},
-  {name:"沈子歆",gender:"女",room:"308",group:6},
-  {name:"徐千涵",gender:"女",room:"308",group:6},
-  {name:"吳巧㚬",gender:"女",room:"203",group:1},
-  {name:"李季芸",gender:"女",room:"309",group:6},
-  {name:"陳姸樺",gender:"女",room:"309",group:6},
-  {name:"陳宏洋",gender:"男",room:"108",group:7},
-  {name:"何芸樓",gender:"女",room:"310",group:6},
-  {name:"林宥彤",gender:"女",room:"204",group:2},
-  {name:"李予喬",gender:"女",room:"310",group:6},
-  {name:"鄭永昌",gender:"男",room:"109",group:8},
-  {name:"呂二信",gender:"男",room:"109",group:8},
-  {name:"林郁芯",gender:"女",room:"401",group:7},
-  {name:"薛靖妍",gender:"女",room:"401",group:7},
-  {name:"蔡維恩",gender:"男",room:"110",group:9},
-  {name:"吳家臻",gender:"女",room:"402",group:7},
-  {name:"陳心亞",gender:"女",room:"402",group:7},
-  {name:"羅歆瑞",gender:"女",room:"403",group:7},
-  {name:"梁永瑩",gender:"女",room:"201",group:1},
-  {name:"黃怡真",gender:"女",room:"403",group:7},
-  {name:"李宥萱",gender:"女",room:"404",group:7},
-  {name:"賴美綺",gender:"女",room:"404",group:8},
-  {name:"劉婕安",gender:"女",room:"405",group:8},
-  {name:"辜霈予",gender:"女",room:"405",group:8},
-  {name:"劉玠銓",gender:"男",room:"110",group:9},
-  {name:"林于庭",gender:"女",room:"210",group:4},
-  {name:"范芷涵",gender:"女",room:"407",group:8},
-  {name:"莊庭瑄",gender:"女",room:"406",group:8},
-  {name:"莊雨璇",gender:"女",room:"406",group:8},
-  {name:"陳薇羽",gender:"女",room:"407",group:8},
-  {name:"董曜瑄",gender:"女",room:"408",group:9},
-  {name:"翁意涵",gender:"女",room:"408",group:9},
-  {name:"黃鈺宸",gender:"男",room:"110",group:9},
-  {name:"霍維娣",gender:"女",room:"409",group:9},
-  {name:"柳語丞",gender:"女",room:"409",group:9},
-  {name:"朱雨嫻",gender:"女",room:"410",group:9},
-  {name:"黃冠瑜",gender:"女",room:"410",group:9},
+/* ── 統計 ── */
+const cityStats=[
+  {city:"高雄市",count:35,pct:"43.2%"},
+  {city:"臺南市",count:13,pct:"16.0%"},
+  {city:"屏東縣",count:13,pct:"16.0%"},
+  {city:"雲林縣",count:6,pct:"7.4%"},
+  {city:"臺中市",count:4,pct:"4.9%"},
+  {city:"臺東縣",count:3,pct:"3.7%"},
+  {city:"嘉義縣",count:3,pct:"3.7%"},
+  {city:"嘉義市",count:3,pct:"3.7%"},
+  {city:"其他",count:1,pct:"1.2%"},
 ];
+const schoolStats=[
+  {school:"高雄女中",city:"高雄市",count:7,pct:"8.6%"},
+  {school:"臺南女中",city:"臺南市",count:6,pct:"7.4%"},
+  {school:"枋寮高中",city:"屏東縣",count:5,pct:"6.2%"},
+  {school:"潮州高中",city:"屏東縣",count:5,pct:"6.2%"},
+  {school:"福誠高中",city:"高雄市",count:4,pct:"4.9%"},
+  {school:"竹崎高中",city:"嘉義縣",count:3,pct:"3.7%"},
+  {school:"黎明中學",city:"臺中市",count:3,pct:"3.7%"},
+  {school:"中正高中",city:"高雄市",count:3,pct:"3.7%"},
+  {school:"旗美高中",city:"高雄市",count:3,pct:"3.7%"},
+  {school:"仁武高中",city:"高雄市",count:3,pct:"3.7%"},
+  {school:"均一實驗高中",city:"臺東縣",count:2,pct:"2.5%"},
+  {school:"虎尾高中",city:"雲林縣",count:2,pct:"2.5%"},
+  {school:"新化高中",city:"臺南市",count:2,pct:"2.5%"},
+  {school:"義大國際高中",city:"高雄市",count:2,pct:"2.5%"},
+  {school:"新興高中",city:"高雄市",count:2,pct:"2.5%"},
+  {school:"古坑華德福實驗高中",city:"雲林縣",count:2,pct:"2.5%"},
+  {school:"高雄高商",city:"高雄市",count:2,pct:"2.5%"},
+  {school:"前鎮高中",city:"高雄市",count:2,pct:"2.5%"},
+  {school:"普門中學",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"高雄美國學校",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"福智高中",city:"雲林縣",count:1,pct:"1.2%"},
+  {school:"聖功女中",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"鳳新高中",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"家齊高中",city:"臺南市",count:1,pct:"1.2%"},
+  {school:"屏東女中",city:"屏東縣",count:1,pct:"1.2%"},
+  {school:"新莊高中",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"中信國際高中",city:"臺南市",count:1,pct:"1.2%"},
+  {school:"斗六高中",city:"雲林縣",count:1,pct:"1.2%"},
+  {school:"美和高中",city:"屏東縣",count:1,pct:"1.2%"},
+  {school:"屏科實中",city:"屏東縣",count:1,pct:"1.2%"},
+  {school:"輔仁中學",city:"嘉義市",count:1,pct:"1.2%"},
+  {school:"高雄中學",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"南大附中",city:"臺南市",count:1,pct:"1.2%"},
+  {school:"永仁高中",city:"臺南市",count:1,pct:"1.2%"},
+  {school:"東大附中",city:"臺東縣",count:1,pct:"1.2%"},
+  {school:"東海大學附中",city:"臺中市",count:1,pct:"1.2%"},
+  {school:"三民高中",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"嘉義女中",city:"嘉義市",count:1,pct:"1.2%"},
+  {school:"瀛海中學",city:"臺南市",count:1,pct:"1.2%"},
+  {school:"非學校型態實驗教育",city:"嘉義市",count:1,pct:"1.2%"},
+  {school:"其他",city:"—",count:1,pct:"1.2%"},
+];
+document.getElementById("city-tbody").innerHTML=cityStats.map(r=>`<tr><td>${r.city}</td><td>${r.count}</td><td>${r.pct}</td></tr>`).join("");
+document.getElementById("school-tbody").innerHTML=schoolStats.map(r=>`<tr><td><strong>${r.school}</strong></td><td>${r.city}</td><td>${r.count}</td><td>${r.pct}</td></tr>`).join("");}
 
-const groupColors = ["","g1","g2","g3","g4","g5","g6","g7","g8","g9"];
-
-let memberFilter = "全部";
-const memberFilterList = ["全部","第1組","第2組","第3組","第4組","第5組","第6組","第7組","第8組","第9組","男","女"];
-
-function renderMembers() {
-  let filtered = memberData;
-  if (memberFilter === "男" || memberFilter === "女") {
-    filtered = memberData.filter(m => m.gender === memberFilter);
-  } else if (memberFilter !== "全部") {
-    const g = parseInt(memberFilter.replace("第","").replace("組",""));
-    filtered = memberData.filter(m => m.group === g);
-  }
-  document.getElementById("member-count").textContent = "顯示 " + filtered.length + " 人";
-  filtered.sort((a,b) => a.group - b.group);
-  document.getElementById("member-tbody").innerHTML = filtered.map(m =>
-    `<tr>
-      <td><strong>${m.name}</strong></td>
-      <td>${m.gender}</td>
-      <td>${m.room}</td>
-      <td><span class="badge ${groupColors[m.group]}">第${m.group}組</span></td>
-    </tr>`
+/* ── 參加人員 ── */
+const memberData=[
+  {name:"李沛瑢",gender:"女",room:"205",group:2,city:"臺東縣",school:"均一實驗高中"},
+  {name:"劉芷妘",gender:"女",room:"205",group:2,city:"雲林縣",school:"虎尾高中"},
+  {name:"陳劭齊",gender:"男",room:"101",group:1,city:"高雄市",school:"福誠高中"},
+  {name:"伍建錄",gender:"男",room:"101",group:1,city:"嘉義縣",school:"竹崎高中"},
+  {name:"林祥芫",gender:"男",room:"102",group:1,city:"高雄市",school:"普門中學"},
+  {name:"張絜晰",gender:"女",room:"206",group:2,city:"高雄市",school:"高雄美國學校"},
+  {name:"王雅嫻",gender:"女",room:"206",group:2,city:"臺中市",school:"黎明中學"},
+  {name:"陳品妍",gender:"女",room:"207",group:3,city:"臺南市",school:"新化高中"},
+  {name:"呂巽寰",gender:"男",room:"102",group:2,city:"高雄市",school:"中正高中"},
+  {name:"施浥湘",gender:"女",room:"207",group:3,city:"臺南市",school:"臺南女中"},
+  {name:"江良介",gender:"男",room:"103",group:2,city:"高雄市",school:"義大國際高中"},
+  {name:"紀妤潔",gender:"女",room:"201",group:1,city:"高雄市",school:"高雄女中"},
+  {name:"陳妍熹",gender:"女",room:"202",group:1,city:"高雄市",school:"旗美高中"},
+  {name:"柳向謙",gender:"男",room:"103",group:2,city:"屏東縣",school:"枋寮高中"},
+  {name:"陳立溱",gender:"女",room:"208",group:3,city:"高雄市",school:"新興高中"},
+  {name:"林珈亦",gender:"女",room:"208",group:3,city:"雲林縣",school:"福智高中"},
+  {name:"陳品霏",gender:"女",room:"209",group:3,city:"高雄市",school:"聖功女中"},
+  {name:"王禹方",gender:"女",room:"209",group:3,city:"屏東縣",school:"枋寮高中"},
+  {name:"柯祈光",gender:"男",room:"104",group:3,city:"高雄市",school:"鳳新高中"},
+  {name:"吳凰瑄",gender:"女",room:"301",group:3,city:"臺南市",school:"家齊高中"},
+  {name:"潘晞媛",gender:"女",room:"210",group:4,city:"屏東縣",school:"屏東女中"},
+  {name:"李佩潔",gender:"女",room:"203",group:1,city:"高雄市",school:"新莊高中"},
+  {name:"林芋辰",gender:"女",room:"301",group:4,city:"臺南市",school:"中信國際高中"},
+  {name:"李新婕",gender:"女",room:"302",group:4,city:"雲林縣",school:"古坑華德福實驗高中"},
+  {name:"劉惠羽",gender:"女",room:"302",group:4,city:"雲林縣",school:"斗六高中"},
+  {name:"許安安",gender:"女",room:"204",group:2,city:"高雄市",school:"高雄女中"},
+  {name:"郭宇翔",gender:"男",room:"104",group:3,city:"屏東縣",school:"潮州高中"},
+  {name:"周庭樂",gender:"女",room:"303",group:4,city:"雲林縣",school:"虎尾高中"},
+  {name:"劉佳欣",gender:"女",room:"202",group:1,city:"高雄市",school:"旗美高中"},
+  {name:"涂于真",gender:"女",room:"303",group:4,city:"高雄市",school:"旗美高中"},
+  {name:"蔡泊欣",gender:"女",room:"304",group:5,city:"高雄市",school:"高雄高商"},
+  {name:"郭品妍",gender:"女",room:"304",group:5,city:"高雄市",school:"義大國際高中"},
+  {name:"鄭秉鈞",gender:"男",room:"105",group:4,city:"屏東縣",school:"美和高中"},
+  {name:"洪志榮",gender:"男",room:"105",group:4,city:"高雄市",school:"福誠高中"},
+  {name:"陳羿廷",gender:"女",room:"305",group:5,city:"臺南市",school:"臺南女中"},
+  {name:"陳柏翰",gender:"男",room:"106",group:5,city:"屏東縣",school:"屏科實中"},
+  {name:"謝若水",gender:"女",room:"305",group:5,city:"屏東縣",school:"枋寮高中"},
+  {name:"黃泰團",gender:"男",room:"106",group:5,city:"嘉義市",school:"輔仁中學"},
+  {name:"張廷安",gender:"男",room:"107",group:6,city:"高雄市",school:"高雄中學"},
+  {name:"吳若昕",gender:"女",room:"306",group:5,city:"臺東縣",school:"均一實驗高中"},
+  {name:"洪楷博",gender:"男",room:"107",group:6,city:"雲林縣",school:"古坑華德福實驗高中"},
+  {name:"郭宸禎",gender:"女",room:"306",group:5,city:"臺南市",school:"南大附中"},
+  {name:"方宜",gender:"女",room:"307",group:5,city:"屏東縣",school:"潮州高中"},
+  {name:"王泳琁",gender:"女",room:"307",group:6,city:"臺南市",school:"永仁高中"},
+  {name:"張子軒",gender:"男",room:"108",group:7,city:"高雄市",school:"仁武高中"},
+  {name:"沈子歆",gender:"女",room:"308",group:6,city:"臺東縣",school:"東大附中"},
+  {name:"徐千涵",gender:"女",room:"308",group:6,city:"臺中市",school:"東海大學附中"},
+  {name:"吳巧㚬",gender:"女",room:"203",group:1,city:"臺中市",school:"黎明中學"},
+  {name:"李季芸",gender:"女",room:"309",group:6,city:"臺南市",school:"臺南女中"},
+  {name:"陳姸樺",gender:"女",room:"309",group:6,city:"高雄市",school:"前鎮高中"},
+  {name:"陳宏洋",gender:"男",room:"108",group:7,city:"高雄市",school:"仁武高中"},
+  {name:"何芸樓",gender:"女",room:"310",group:6,city:"高雄市",school:"三民高中"},
+  {name:"林宥彤",gender:"女",room:"204",group:2,city:"高雄市",school:"高雄女中"},
+  {name:"李予喬",gender:"女",room:"310",group:6,city:"嘉義市",school:"嘉義女中"},
+  {name:"鄭永昌",gender:"男",room:"109",group:8,city:"臺南市",school:"瀛海中學"},
+  {name:"呂二信",gender:"男",room:"109",group:8,city:"高雄市",school:"福誠高中"},
+  {name:"林郁芯",gender:"女",room:"401",group:7,city:"高雄市",school:"高雄女中"},
+  {name:"薛靖妍",gender:"女",room:"401",group:7,city:"嘉義市",school:"非學校型態實驗教育"},
+  {name:"蔡維恩",gender:"男",room:"110",group:9,city:"高雄市",school:"新興高中"},
+  {name:"吳家臻",gender:"女",room:"402",group:7,city:"嘉義縣",school:"竹崎高中"},
+  {name:"陳心亞",gender:"女",room:"402",group:7,city:"高雄市",school:"高雄女中"},
+  {name:"羅歆瑞",gender:"女",room:"403",group:7,city:"高雄市",school:"福誠高中"},
+  {name:"梁永瑩",gender:"女",room:"201",group:1,city:"高雄市",school:"前鎮高中"},
+  {name:"黃怡真",gender:"女",room:"403",group:7,city:"屏東縣",school:"枋寮高中"},
+  {name:"李宥萱",gender:"女",room:"404",group:7,city:"高雄市",school:"仁武高中"},
+  {name:"賴美綺",gender:"女",room:"404",group:8,city:"",school:""},
+  {name:"劉婕安",gender:"女",room:"405",group:8,city:"高雄市",school:"高雄女中"},
+  {name:"辜霈予",gender:"女",room:"405",group:8,city:"臺南市",school:"臺南女中"},
+  {name:"劉玠銓",gender:"男",room:"110",group:9,city:"嘉義縣",school:"竹崎高中"},
+  {name:"林于庭",gender:"女",room:"210",group:4,city:"臺中市",school:"黎明中學"},
+  {name:"范芷涵",gender:"女",room:"407",group:8,city:"高雄市",school:"高雄高商"},
+  {name:"莊庭瑄",gender:"女",room:"406",group:8,city:"高雄市",school:"中正高中"},
+  {name:"莊雨璇",gender:"女",room:"406",group:8,city:"高雄市",school:"中正高中"},
+  {name:"陳薇羽",gender:"女",room:"407",group:8,city:"屏東縣",school:"潮州高中"},
+  {name:"董曜瑄",gender:"女",room:"408",group:9,city:"臺南市",school:"臺南女中"},
+  {name:"翁意涵",gender:"女",room:"408",group:9,city:"臺南市",school:"臺南女中"},
+  {name:"黃鈺宸",gender:"男",room:"110",group:9,city:"屏東縣",school:"枋寮高中"},
+  {name:"霍維娣",gender:"女",room:"409",group:9,city:"屏東縣",school:"潮州高中"},
+  {name:"柳語丞",gender:"女",room:"409",group:9,city:"高雄市",school:"高雄女中"},
+  {name:"朱雨嫻",gender:"女",room:"410",group:9,city:"屏東縣",school:"潮州高中"},
+  {name:"黃冠瑜",gender:"女",room:"410",group:9,city:"臺南市",school:"新化高中"},
+];
+const groupColors=["","g1","g2","g3","g4","g5","g6","g7","g8","g9"];
+let memberFilter="全部";
+const memberFilterList=["全部","第1組","第2組","第3組","第4組","第5組","第6組","第7組","第8組","第9組","男","女"];
+function renderMembers(){
+  let filtered=[...memberData];
+  if(memberFilter==="男"||memberFilter==="女"){filtered=memberData.filter(m=>m.gender===memberFilter);}
+  else if(memberFilter!=="全部"){const g=parseInt(memberFilter.replace("第","").replace("組",""));filtered=memberData.filter(m=>m.group===g);}
+  filtered.sort((a,b)=>a.group-b.group);
+  document.getElementById("member-count").textContent="顯示 "+filtered.length+" 人";
+  document.getElementById("member-tbody").innerHTML=filtered.map(m=>
+    `<tr><td><strong>${m.name}</strong></td><td>${m.gender}</td><td>${m.room}</td><td><span class="badge ${groupColors[m.group]}">第${m.group}組</span></td><td>${m.city}</td><td>${m.school}</td></tr>`
   ).join("");
 }
+function initMemberFilters(){document.getElementById("member-filters").innerHTML=memberFilterList.map(g=>`<button class="btn${g===memberFilter?" active":""}" onclick="setMemberFilter('${g}')">${g}</button>`).join("");}
+function setMemberFilter(g){memberFilter=g;initMemberFilters();renderMembers();}
 
-function initMemberFilters() {
-  document.getElementById("member-filters").innerHTML = memberFilterList.map(g =>
-    `<button class="btn${g===memberFilter?" active":""}" onclick="setMemberFilter('${g}')">${g}</button>`
-  ).join("");
-}
-function setMemberFilter(g) { memberFilter = g; initMemberFilters(); renderMembers(); }
+initStaffFilters();renderStaff();
 
-/* 初始化 */
-initStaffFilters(); renderStaff();
-initMemberFilters(); renderMembers();
+/* ── 統計 ── */
+const cityStats=[
+  {city:"高雄市",count:35,pct:"43.2%"},
+  {city:"臺南市",count:13,pct:"16.0%"},
+  {city:"屏東縣",count:13,pct:"16.0%"},
+  {city:"雲林縣",count:6,pct:"7.4%"},
+  {city:"臺中市",count:4,pct:"4.9%"},
+  {city:"臺東縣",count:3,pct:"3.7%"},
+  {city:"嘉義縣",count:3,pct:"3.7%"},
+  {city:"嘉義市",count:3,pct:"3.7%"},
+  {city:"其他",count:1,pct:"1.2%"},
+];
+const schoolStats=[
+  {school:"高雄女中",city:"高雄市",count:7,pct:"8.6%"},
+  {school:"臺南女中",city:"臺南市",count:6,pct:"7.4%"},
+  {school:"枋寮高中",city:"屏東縣",count:5,pct:"6.2%"},
+  {school:"潮州高中",city:"屏東縣",count:5,pct:"6.2%"},
+  {school:"福誠高中",city:"高雄市",count:4,pct:"4.9%"},
+  {school:"竹崎高中",city:"嘉義縣",count:3,pct:"3.7%"},
+  {school:"黎明中學",city:"臺中市",count:3,pct:"3.7%"},
+  {school:"中正高中",city:"高雄市",count:3,pct:"3.7%"},
+  {school:"旗美高中",city:"高雄市",count:3,pct:"3.7%"},
+  {school:"仁武高中",city:"高雄市",count:3,pct:"3.7%"},
+  {school:"均一實驗高中",city:"臺東縣",count:2,pct:"2.5%"},
+  {school:"虎尾高中",city:"雲林縣",count:2,pct:"2.5%"},
+  {school:"新化高中",city:"臺南市",count:2,pct:"2.5%"},
+  {school:"義大國際高中",city:"高雄市",count:2,pct:"2.5%"},
+  {school:"新興高中",city:"高雄市",count:2,pct:"2.5%"},
+  {school:"古坑華德福實驗高中",city:"雲林縣",count:2,pct:"2.5%"},
+  {school:"高雄高商",city:"高雄市",count:2,pct:"2.5%"},
+  {school:"前鎮高中",city:"高雄市",count:2,pct:"2.5%"},
+  {school:"普門中學",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"高雄美國學校",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"福智高中",city:"雲林縣",count:1,pct:"1.2%"},
+  {school:"聖功女中",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"鳳新高中",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"家齊高中",city:"臺南市",count:1,pct:"1.2%"},
+  {school:"屏東女中",city:"屏東縣",count:1,pct:"1.2%"},
+  {school:"新莊高中",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"中信國際高中",city:"臺南市",count:1,pct:"1.2%"},
+  {school:"斗六高中",city:"雲林縣",count:1,pct:"1.2%"},
+  {school:"美和高中",city:"屏東縣",count:1,pct:"1.2%"},
+  {school:"屏科實中",city:"屏東縣",count:1,pct:"1.2%"},
+  {school:"輔仁中學",city:"嘉義市",count:1,pct:"1.2%"},
+  {school:"高雄中學",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"南大附中",city:"臺南市",count:1,pct:"1.2%"},
+  {school:"永仁高中",city:"臺南市",count:1,pct:"1.2%"},
+  {school:"東大附中",city:"臺東縣",count:1,pct:"1.2%"},
+  {school:"東海大學附中",city:"臺中市",count:1,pct:"1.2%"},
+  {school:"三民高中",city:"高雄市",count:1,pct:"1.2%"},
+  {school:"嘉義女中",city:"嘉義市",count:1,pct:"1.2%"},
+  {school:"瀛海中學",city:"臺南市",count:1,pct:"1.2%"},
+  {school:"非學校型態實驗教育",city:"嘉義市",count:1,pct:"1.2%"},
+  {school:"其他",city:"—",count:1,pct:"1.2%"},
+];
+document.getElementById("city-tbody").innerHTML=cityStats.map(r=>`<tr><td>${r.city}</td><td>${r.count}</td><td>${r.pct}</td></tr>`).join("");
+document.getElementById("school-tbody").innerHTML=schoolStats.map(r=>`<tr><td><strong>${r.school}</strong></td><td>${r.city}</td><td>${r.count}</td><td>${r.pct}</td></tr>`).join("");
+initMemberFilters();renderMembers();
 </script>
 </body>
 </html>
