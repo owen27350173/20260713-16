@@ -128,7 +128,7 @@ function renderStaff(){
   }).join("");
 }
 function initStaffFilters(){document.getElementById("staff-filters").innerHTML=staffGroupNames.map(g=>`<button class="btn${g===staffFilter?" active":""}" onclick="setStaffFilter('${g}')">${g}</button>`).join("");}
-function setStaffFilter(g){staffFilter=g;initStaffFilters();renderStaff();
+function setStaffFilter(g){staffFilter=g;initStaffFilters();renderStaff();}
 
 /* ── 統計 ── */
 const cityStats=[
@@ -185,7 +185,7 @@ const schoolStats=[
   {school:"臺中二中",city:"臺中市",count:1,pct:"1.2%"},
 ];
 document.getElementById("city-tbody").innerHTML=cityStats.map(r=>`<tr><td>${r.city}</td><td>${r.count}</td><td>${r.pct}</td></tr>`).join("");
-document.getElementById("school-tbody").innerHTML=schoolStats.map(r=>`<tr><td><strong>${r.school}</strong></td><td>${r.city}</td><td>${r.count}</td><td>${r.pct}</td></tr>`).join("");}
+document.getElementById("school-tbody").innerHTML=schoolStats.map(r=>`<tr><td><strong>${r.school}</strong></td><td>${r.city}</td><td>${r.count}</td><td>${r.pct}</td></tr>`).join("");
 
 /* ── 參加人員 ── */
 const memberData=[
