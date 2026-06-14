@@ -136,11 +136,10 @@ const cityStats=[
   {city:"臺南市",count:13,pct:"16.0%"},
   {city:"屏東縣",count:13,pct:"16.0%"},
   {city:"雲林縣",count:6,pct:"7.4%"},
-  {city:"臺中市",count:4,pct:"4.9%"},
+  {city:"臺中市",count:5,pct:"6.2%"},
   {city:"臺東縣",count:3,pct:"3.7%"},
   {city:"嘉義縣",count:3,pct:"3.7%"},
   {city:"嘉義市",count:3,pct:"3.7%"},
-  {city:"其他",count:1,pct:"1.2%"},
 ];
 const schoolStats=[
   {school:"高雄女中",city:"高雄市",count:7,pct:"8.6%"},
@@ -183,7 +182,7 @@ const schoolStats=[
   {school:"嘉義女中",city:"嘉義市",count:1,pct:"1.2%"},
   {school:"瀛海中學",city:"臺南市",count:1,pct:"1.2%"},
   {school:"非學校型態實驗教育",city:"嘉義市",count:1,pct:"1.2%"},
-  {school:"其他",city:"—",count:1,pct:"1.2%"},
+  {school:"臺中二中",city:"臺中市",count:1,pct:"1.2%"},
 ];
 document.getElementById("city-tbody").innerHTML=cityStats.map(r=>`<tr><td>${r.city}</td><td>${r.count}</td><td>${r.pct}</td></tr>`).join("");
 document.getElementById("school-tbody").innerHTML=schoolStats.map(r=>`<tr><td><strong>${r.school}</strong></td><td>${r.city}</td><td>${r.count}</td><td>${r.pct}</td></tr>`).join("");}
@@ -255,7 +254,7 @@ const memberData=[
   {name:"梁永瑩",gender:"女",room:"201",group:1,city:"高雄市",school:"前鎮高中"},
   {name:"黃怡真",gender:"女",room:"403",group:7,city:"屏東縣",school:"枋寮高中"},
   {name:"李宥萱",gender:"女",room:"404",group:7,city:"高雄市",school:"仁武高中"},
-  {name:"賴美綺",gender:"女",room:"404",group:8,city:"",school:""},
+  {name:"賴美綺",gender:"女",room:"404",group:8,city:"臺中市",school:"臺中二中"},
   {name:"劉婕安",gender:"女",room:"405",group:8,city:"高雄市",school:"高雄女中"},
   {name:"辜霈予",gender:"女",room:"405",group:8,city:"臺南市",school:"臺南女中"},
   {name:"劉玠銓",gender:"男",room:"110",group:9,city:"嘉義縣",school:"竹崎高中"},
@@ -290,63 +289,6 @@ function setMemberFilter(g){memberFilter=g;initMemberFilters();renderMembers();}
 
 initStaffFilters();renderStaff();
 
-/* ── 統計 ── */
-const cityStats=[
-  {city:"高雄市",count:35,pct:"43.2%"},
-  {city:"臺南市",count:13,pct:"16.0%"},
-  {city:"屏東縣",count:13,pct:"16.0%"},
-  {city:"雲林縣",count:6,pct:"7.4%"},
-  {city:"臺中市",count:4,pct:"4.9%"},
-  {city:"臺東縣",count:3,pct:"3.7%"},
-  {city:"嘉義縣",count:3,pct:"3.7%"},
-  {city:"嘉義市",count:3,pct:"3.7%"},
-  {city:"其他",count:1,pct:"1.2%"},
-];
-const schoolStats=[
-  {school:"高雄女中",city:"高雄市",count:7,pct:"8.6%"},
-  {school:"臺南女中",city:"臺南市",count:6,pct:"7.4%"},
-  {school:"枋寮高中",city:"屏東縣",count:5,pct:"6.2%"},
-  {school:"潮州高中",city:"屏東縣",count:5,pct:"6.2%"},
-  {school:"福誠高中",city:"高雄市",count:4,pct:"4.9%"},
-  {school:"竹崎高中",city:"嘉義縣",count:3,pct:"3.7%"},
-  {school:"黎明中學",city:"臺中市",count:3,pct:"3.7%"},
-  {school:"中正高中",city:"高雄市",count:3,pct:"3.7%"},
-  {school:"旗美高中",city:"高雄市",count:3,pct:"3.7%"},
-  {school:"仁武高中",city:"高雄市",count:3,pct:"3.7%"},
-  {school:"均一實驗高中",city:"臺東縣",count:2,pct:"2.5%"},
-  {school:"虎尾高中",city:"雲林縣",count:2,pct:"2.5%"},
-  {school:"新化高中",city:"臺南市",count:2,pct:"2.5%"},
-  {school:"義大國際高中",city:"高雄市",count:2,pct:"2.5%"},
-  {school:"新興高中",city:"高雄市",count:2,pct:"2.5%"},
-  {school:"古坑華德福實驗高中",city:"雲林縣",count:2,pct:"2.5%"},
-  {school:"高雄高商",city:"高雄市",count:2,pct:"2.5%"},
-  {school:"前鎮高中",city:"高雄市",count:2,pct:"2.5%"},
-  {school:"普門中學",city:"高雄市",count:1,pct:"1.2%"},
-  {school:"高雄美國學校",city:"高雄市",count:1,pct:"1.2%"},
-  {school:"福智高中",city:"雲林縣",count:1,pct:"1.2%"},
-  {school:"聖功女中",city:"高雄市",count:1,pct:"1.2%"},
-  {school:"鳳新高中",city:"高雄市",count:1,pct:"1.2%"},
-  {school:"家齊高中",city:"臺南市",count:1,pct:"1.2%"},
-  {school:"屏東女中",city:"屏東縣",count:1,pct:"1.2%"},
-  {school:"新莊高中",city:"高雄市",count:1,pct:"1.2%"},
-  {school:"中信國際高中",city:"臺南市",count:1,pct:"1.2%"},
-  {school:"斗六高中",city:"雲林縣",count:1,pct:"1.2%"},
-  {school:"美和高中",city:"屏東縣",count:1,pct:"1.2%"},
-  {school:"屏科實中",city:"屏東縣",count:1,pct:"1.2%"},
-  {school:"輔仁中學",city:"嘉義市",count:1,pct:"1.2%"},
-  {school:"高雄中學",city:"高雄市",count:1,pct:"1.2%"},
-  {school:"南大附中",city:"臺南市",count:1,pct:"1.2%"},
-  {school:"永仁高中",city:"臺南市",count:1,pct:"1.2%"},
-  {school:"東大附中",city:"臺東縣",count:1,pct:"1.2%"},
-  {school:"東海大學附中",city:"臺中市",count:1,pct:"1.2%"},
-  {school:"三民高中",city:"高雄市",count:1,pct:"1.2%"},
-  {school:"嘉義女中",city:"嘉義市",count:1,pct:"1.2%"},
-  {school:"瀛海中學",city:"臺南市",count:1,pct:"1.2%"},
-  {school:"非學校型態實驗教育",city:"嘉義市",count:1,pct:"1.2%"},
-  {school:"其他",city:"—",count:1,pct:"1.2%"},
-];
-document.getElementById("city-tbody").innerHTML=cityStats.map(r=>`<tr><td>${r.city}</td><td>${r.count}</td><td>${r.pct}</td></tr>`).join("");
-document.getElementById("school-tbody").innerHTML=schoolStats.map(r=>`<tr><td><strong>${r.school}</strong></td><td>${r.city}</td><td>${r.count}</td><td>${r.pct}</td></tr>`).join("");
 initMemberFilters();renderMembers();
 </script>
 </body>
