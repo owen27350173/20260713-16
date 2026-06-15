@@ -88,7 +88,7 @@
     </p>
     <div class="tabs">
       <button class="tab active" onclick="switchTab('staff')">工作人員分工表</button>
-      <button class="tab" onclick="switchTab('members')">參加人員分組</button><button class="tab" onclick="switchTab('stats')">統計數據</button><button class="tab" onclick="switchTab('manual')">隊輔手冊</button><button class="tab" onclick="switchTab('schedule')">演講議程</button>
+      <button class="tab" onclick="switchTab('members')">參加人員分組</button><button class="tab" onclick="switchTab('stats')">統計數據</button><button class="tab" onclick="switchTab('manual')">隊輔手冊</button><button class="tab" onclick="switchTab('schedule')">演講議程</button><button class="tab" onclick="switchTab('rooms')">房間分配表</button>
     </div>
   </div>
 </header>
@@ -285,10 +285,52 @@
       </table>
     </div>
   </div>
+  <div class="page" id="page-rooms">
+    <div class="schedule-wrap">
+      <h2 class="manual-title">房間分配表</h2>
+
+      <div class="stat-section" style="margin-bottom:16px;">
+        <div class="manual-heading" style="margin-bottom:12px;">🎤 講師房間</div>
+        <table>
+          <thead><tr><th>房間</th><th>姓名</th><th>入住日</th><th>退房日</th></tr></thead>
+          <tbody>
+            <tr><td>甲</td><td>陳宗巖</td><td>7/13</td><td>7/16</td></tr>
+            <tr><td>乙</td><td>楊尚儒</td><td>7/13</td><td>7/16</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="stat-section" style="margin-bottom:16px;">
+        <div class="manual-heading" style="margin-bottom:12px;">🏷️ 工作人員（共 9 間）</div>
+        <table>
+          <thead><tr><th>房間</th><th>姓名</th><th>組別</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>賴以展</td><td>總協</td></tr>
+            <tr><td>B</td><td>凃宥聰</td><td>接待組</td></tr>
+            <tr><td>C</td><td>第1組 施妤諼、吳恩萱（第2組）</td><td>隊輔組</td></tr>
+            <tr><td>D</td><td>周品瑜（第3組）、陳筱琴（第4組）</td><td>隊輔組</td></tr>
+            <tr><td>E</td><td>蔡孟庭、李采容（第6組）、王苡媗（第9組）</td><td>公關組 / 隊輔組</td></tr>
+            <tr><td>F</td><td>呂岱晏、黃俊凱</td><td>器材組 / 活動組</td></tr>
+            <tr><td>G</td><td>陳弘意、錢威銘（第5組）</td><td>生輔組 / 隊輔組</td></tr>
+            <tr><td>H</td><td>倪瑞澤（第7組）、董彥甫（第8組）</td><td>隊輔組</td></tr>
+            <tr><td>I</td><td>卷毛、小柯</td><td>攝影組</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="stat-section">
+        <div class="manual-heading" style="margin-bottom:12px;">🏫 學員（共 40 間）</div>
+        <table id="room-member-table">
+          <thead><tr><th>房間</th><th>姓名</th><th>組別</th><th>性別</th></tr></thead>
+          <tbody id="room-member-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </main>
 <script>
 function switchTab(id){
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['staff','members','stats','manual','schedule'][i]===id));
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['staff','members','stats','manual','schedule','rooms'][i]===id));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
 }
@@ -498,6 +540,13 @@ function setMemberFilter(g){memberFilter=g;initMemberFilters();renderMembers();}
 initStaffFilters();renderStaff();
 
 initMemberFilters();renderMembers();
+
+/* ── 房間分配 ── */
+const groupColors2=["","g1","g2","g3","g4","g5","g6","g7","g8","g9"];
+const sortedByRoom=[...memberData].sort((a,b)=>a.room.localeCompare(b.room));
+document.getElementById("room-member-tbody").innerHTML=sortedByRoom.map(m=>
+  `<tr><td>${m.room}</td><td><strong>${m.name}</strong></td><td><span class="badge ${groupColors2[m.group]}">第${m.group}組</span></td><td>${m.gender}</td></tr>`
+).join("");
 </script>
 </body>
 </html>
