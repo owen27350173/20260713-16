@@ -38,6 +38,31 @@
   .tasks-list li::before { content: "•"; position: absolute; left: 0; color: #ccc; }
   .same-as { font-size: 13px; color: #aaa; font-style: italic; }
   .g1{background:#E6F1FB;color:#0C447C}.g2{background:#E1F5EE;color:#085041}.g3{background:#EEEDFE;color:#3C3489}.g4{background:#FAEEDA;color:#854F0B}.g5{background:#FAECE7;color:#993C1D}.g6{background:#EAF3DE;color:#3B6D11}.g7{background:#F1EFE8;color:#444441}.g8{background:#FBEAF0;color:#72243E}.g9{background:#FCEBEB;color:#791F1F}
+
+  .manual-wrap { max-width: 780px; }
+  .manual-title { font-size: 20px; font-weight: 600; margin-bottom: 1.5rem; color: #1a1a1a; }
+  .manual-section { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 12px; }
+
+  .schedule-wrap { max-width: 900px; }
+  .schedule-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #e8e8e8; }
+  .schedule-table thead tr { background: #1a1a1a; color: #fff; }
+  .schedule-table thead th { padding: 12px 16px; font-size: 13px; font-weight: 500; text-align: left; white-space: nowrap; }
+  .schedule-table tbody tr { border-bottom: 1px solid #f0f0f0; }
+  .schedule-table tbody tr:last-child { border-bottom: none; }
+  .schedule-table tbody tr:hover { background: #fafafa; }
+  .schedule-table tbody td { padding: 11px 16px; font-size: 13px; color: #333; vertical-align: middle; border-left: 1px solid #e8e8e8; }
+  .schedule-table tbody td:first-child { border-left: none; }
+  .day-header td { background: #f0f4ff; color: #1a1a1a; font-weight: 600; font-size: 13px; padding: 10px 16px; }
+  .break-row td { background: #f9f9f9; color: #888; }
+  .scene { white-space: nowrap; font-weight: 500; color: #555; }
+  .time { white-space: nowrap; color: #444; font-variant-numeric: tabular-nums; }
+  .manual-section.info { border-color: #90CAF9; background: #EFF7FF; }
+  .manual-section.warning { border-color: #f5c842; background: #fffdf0; }
+  .manual-heading { font-size: 15px; font-weight: 600; margin-bottom: 10px; color: #1a1a1a; }
+  .manual-list { list-style: none; padding: 0; }
+  .manual-list li { font-size: 13px; color: #444; padding: 5px 0 5px 16px; position: relative; line-height: 1.7; border-bottom: 1px solid #f5f5f5; }
+  .manual-list li:last-child { border-bottom: none; }
+  .manual-list li::before { content: "•"; position: absolute; left: 2px; color: #ccc; }
   .stats-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .stat-section h2 { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #1a1a1a; }
   @media(max-width:900px) { .stats-wrap { grid-template-columns: 1fr; } }
@@ -49,8 +74,8 @@
   <div class="header-inner">
     <h1>7月營隊資料</h1>
     <div class="tabs">
-      <button class="tab active" onclick="switchTab('staff')">工作人員職責</button>
-      <button class="tab" onclick="switchTab('members')">參加人員分組</button><button class="tab" onclick="switchTab('stats')">統計數據</button>
+      <button class="tab active" onclick="switchTab('staff')">工作人員分工表</button>
+      <button class="tab" onclick="switchTab('members')">參加人員分組</button><button class="tab" onclick="switchTab('stats')">統計數據</button><button class="tab" onclick="switchTab('manual')">隊輔手冊</button><button class="tab" onclick="switchTab('schedule')">演講議程</button>
     </div>
   </div>
 </header>
@@ -77,10 +102,159 @@
       </div>
     </div>
   </div>
+  <div class="page" id="page-manual">
+    <div class="manual-wrap">
+      <h2 class="manual-title">隊輔手冊</h2>
+
+      <div class="manual-section info">
+        <div class="manual-heading">📌 遇到問題，請找對的人！</div>
+        <ul class="manual-list">
+          <li><strong>小隊成果報告不知道怎麼辦？</strong>→ 找 <strong>課程組</strong></li>
+          <li><strong>吃住上有問題需要反應？</strong>→ 找 <strong>生輔組</strong></li>
+          <li><strong>文具、海報、手冊、名牌、證書等有遺漏？</strong>→ 找 <strong>器材組</strong></li>
+        </ul>
+      </div>
+
+      <div class="manual-section">
+        <div class="manual-heading">🧑‍🤝‍🧑 與學員的互動</div>
+        <ul class="manual-list">
+          <li><strong>建立信任感：</strong>第一天是關鍵，主動自我介紹、記住每位學員的名字，讓他們感受到被重視。</li>
+          <li><strong>觀察情緒狀態：</strong>留意學員是否有情緒低落、孤立、或與他人格格不入的情況，及早介入關心。</li>
+          <li><strong>保持適當距離：</strong>態度親切但不逾矩，避免過於親密或偏心特定學員。</li>
+          <li><strong>包容個體差異：</strong>每位學員個性、背景不同，不要用同一套方式對待所有人。</li>
+        </ul>
+      </div>
+
+      <div class="manual-section">
+        <div class="manual-heading">🛡️ 安全與緊急應變</div>
+        <ul class="manual-list">
+          <li><strong>清楚掌握緊急聯絡流程：</strong>知道發生意外時要聯絡誰、怎麼聯絡，不要慌亂。</li>
+          <li><strong>隨時清點人數：</strong>移動、轉換場地時一定要確認所有人都在。</li>
+          <li><strong>注意學員健康狀況：</strong>了解有無過敏、慢性病、特殊需求，藥物保管與提醒服藥。</li>
+          <li><strong>防止霸凌與排擠：</strong>留意小圈圈或言語、肢體上的衝突，不讓任何人被邊緣化。</li>
+        </ul>
+      </div>
+
+      <div class="manual-section">
+        <div class="manual-heading">📋 活動執行</div>
+        <ul class="manual-list">
+          <li><strong>提前熟悉流程：</strong>活動前充分了解每個環節的目的、規則與時間安排。</li>
+          <li><strong>帶動氣氛但不強迫：</strong>鼓勵參與，但尊重學員意願，不過度施壓。</li>
+          <li><strong>靈活應變：</strong>計畫趕不上變化，遇到突發狀況冷靜處理，不要讓學員感受到混亂。</li>
+          <li><strong>時間管理：</strong>準時集合、轉場，幫助整體活動順暢進行。</li>
+        </ul>
+      </div>
+
+      <div class="manual-section">
+        <div class="manual-heading">🗣️ 溝通與團隊合作</div>
+        <ul class="manual-list">
+          <li><strong>與其他隊輔保持同步：</strong>隨時溝通學員狀況、分工明確，避免資訊落差。</li>
+          <li><strong>向工作人員或主辦回報：</strong>有任何異常（衝突、健康問題、情緒危機）都要向上回報，不要自己扛。</li>
+          <li><strong>給學員正向回饋：</strong>多鼓勵、少批評，讓學員願意嘗試與表達。</li>
+        </ul>
+      </div>
+
+      <div class="manual-section">
+        <div class="manual-heading">🧘 自我管理</div>
+        <ul class="manual-list">
+          <li><strong>保持體力：</strong>營隊非常耗體力，睡眠、飲食要顧好，才有能量照顧學員。</li>
+          <li><strong>情緒穩定：</strong>遇到調皮或不配合的學員，保持耐心，不輕易動怒。</li>
+          <li><strong>界定自己的角色：</strong>你是引導者與支持者，不是朋友也不是老師，拿捏好這個分寸。</li>
+        </ul>
+      </div>
+
+      <div class="manual-section warning">
+        <div class="manual-heading">⚠️ 特別提醒</div>
+        <ul class="manual-list">
+          <li><strong>不表達個人立場：</strong>不論你支持哪個黨、哪種理念，在營隊中都不適合輸出給學員。</li>
+          <li><strong>不引導、不辯論：</strong>若學員主動討論，可以說「這個議題很值得思考，你們可以多方參考不同觀點」，不下結論。</li>
+          <li><strong>若學員之間因政治觀點起爭執：</strong>引導他們「尊重彼此不同的想法」，轉移焦點到活動上。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="page" id="page-schedule">
+    <div class="schedule-wrap">
+      <h2 class="manual-title">演講議程</h2>
+      <table class="schedule-table">
+        <thead>
+          <tr><th>場次</th><th>時間</th><th>講者</th><th>講題</th><th>備註</th></tr>
+        </thead>
+        <tbody>
+          <tr class="day-header"><td colspan="5">第一天 ｜ 7 月 13 日（一）</td></tr>
+          <tr>
+            <td class="scene">開幕</td>
+            <td class="time">14:00–14:30</td>
+            <td>—</td><td>—</td><td>—</td>
+          </tr>
+          <tr>
+            <td class="scene">場次 1</td>
+            <td class="time">14:30–16:00</td>
+            <td>—</td><td>—</td><td>—</td>
+          </tr>
+          <tr>
+            <td class="scene">場次 2</td>
+            <td class="time">16:15–17:45</td>
+            <td>—</td><td>—</td><td>—</td>
+          </tr>
+
+          <tr class="day-header"><td colspan="5">第二天 ｜ 7 月 14 日（二）</td></tr>
+          <tr>
+            <td class="scene">場次 3</td>
+            <td class="time">09:00–10:30</td>
+            <td>海基會副秘書長 黎寶文</td>
+            <td>從認知戰辨識中國：青年世代的理解與應對</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td class="scene">場次 4</td>
+            <td class="time">10:45–11:45</td>
+            <td>美國在台協會公共外交官員 史佩靈（Jennifer Steffensen）</td>
+            <td>—</td><td>—</td>
+          </tr>
+          <tr>
+            <td class="scene">場次 5</td>
+            <td class="time">14:00–15:30</td>
+            <td>—</td><td>—</td><td>—</td>
+          </tr>
+
+          <tr class="day-header"><td colspan="5">第四天 ｜ 7 月 16 日（四）</td></tr>
+          <tr>
+            <td class="scene" rowspan="4">場次 6</td>
+            <td class="time">09:00–09:30</td>
+            <td>外交部次長 吳志中</td>
+            <td>台灣外交與全球民主的機會與挑戰</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td class="time">09:30–10:00</td>
+            <td>陸委會副主委 沈有忠</td>
+            <td>當前兩岸關係與兩岸政策</td>
+            <td>—</td>
+          </tr>
+          <tr class="break-row">
+            <td class="time">10:00–10:20</td>
+            <td colspan="3">休息</td>
+          </tr>
+          <tr>
+            <td class="time">10:20–11:30</td>
+            <td>座談</td>
+            <td>台灣的民主與未來</td>
+            <td>—</td>
+          </tr>
+          <tr class="break-row">
+            <td class="scene">—</td>
+            <td class="time">11:30–13:00</td>
+            <td colspan="3">中午用餐</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </main>
 <script>
 function switchTab(id){
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['staff','members','stats'][i]===id));
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['staff','members','stats','manual','schedule'][i]===id));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
 }
