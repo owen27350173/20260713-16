@@ -87,13 +87,13 @@
       ＊如有問題需要調整修改請找以展
     </p>
     <div class="tabs">
-      <button class="tab active" onclick="switchTab('staff')">工作人員分工表</button>
-      <button class="tab" onclick="switchTab('members')">參加人員分組</button><button class="tab" onclick="switchTab('stats')">統計數據</button><button class="tab" onclick="switchTab('manual')">隊輔手冊</button><button class="tab" onclick="switchTab('schedule')">演講議程</button><button class="tab" onclick="switchTab('rooms')">房間分配表</button>
+      <button class="tab active" onclick="switchTab('itinerary')">行程總表</button>
+      <button class="tab" onclick="switchTab('staff')">工作人員分工表</button><button class="tab" onclick="switchTab('members')">參加人員分組</button><button class="tab" onclick="switchTab('stats')">統計數據</button><button class="tab" onclick="switchTab('manual')">隊輔手冊</button><button class="tab" onclick="switchTab('schedule')">演講議程</button><button class="tab" onclick="switchTab('rooms')">房間分配表</button>
     </div>
   </div>
 </header>
 <main>
-  <div class="page active" id="page-staff">
+  <div class="page" id="page-staff">
     <div class="filters" id="staff-filters"></div>
     <p class="count" id="staff-count"></p>
     <table><thead><tr><th>姓名</th><th>組別</th><th>房間</th><th>工作項目</th></tr></thead><tbody id="staff-tbody"></tbody></table>
@@ -321,12 +321,15 @@
       <h2 class="manual-title">房間分配表</h2>
 
       <div class="stat-section" style="margin-bottom:16px;">
-        <div class="manual-heading" style="margin-bottom:12px;">🎤 講師房間</div>
+        <div class="manual-heading" style="margin-bottom:12px;">🎤 講師房間（共 5 間）</div>
         <table>
           <thead><tr><th>房間</th><th>姓名</th><th>入住日</th><th>退房日</th></tr></thead>
           <tbody>
             <tr><td>甲</td><td>陳宗巖</td><td>7/13</td><td>7/16</td></tr>
             <tr><td>乙</td><td>楊尚儒<br><span style="font-size:11px;color:#888;">國立中山大學政治學研究所副教授</span></td><td>7/13</td><td>7/16</td></tr>
+            <tr><td>丙</td><td>沈有忠</td><td>7/15</td><td>7/16</td></tr>
+            <tr><td>丁</td><td>盧國毅</td><td>7/15</td><td>7/16</td></tr>
+            <tr><td>戊</td><td>洪啟堯</td><td>7/14</td><td>7/16</td></tr>
           </tbody>
         </table>
       </div>
@@ -358,10 +361,79 @@
       </div>
     </div>
   </div>
+  <div class="page active" id="page-itinerary">
+    <div class="schedule-wrap">
+      <h2 class="manual-title">行程總表</h2>
+
+      <table class="schedule-table">
+        <thead>
+          <tr><th>時間</th><th>內容</th><th>備註</th></tr>
+        </thead>
+        <tbody>
+
+          <!-- 第一天 -->
+          <tr class="day-header"><td colspan="3">第一天 ｜ 7 月 13 日（一）</td></tr>
+          <tr><td class="time">09:30–10:00</td><td>活動報到</td><td>—</td></tr>
+          <tr><td class="time">10:00–12:00</td><td>交通時間</td><td>—</td></tr>
+          <tr class="break-row"><td class="time">12:00–13:30</td><td>午餐</td><td>—</td></tr>
+          <tr><td class="time">13:30–14:00</td><td>破冰</td><td>—</td></tr>
+          <tr><td class="time">14:00–14:20</td><td>開幕式</td><td>—</td></tr>
+          <tr class="break-row"><td class="time">14:20–14:30</td><td>休息</td><td>—</td></tr>
+          <tr><td class="time">14:30–16:00</td><td>場次 1｜楊尚儒<br><span style="font-size:11px;color:#888;">民主制度與自由價值的基礎概念</span></td><td>—</td></tr>
+          <tr class="break-row"><td class="time">16:00–16:15</td><td>休息</td><td>—</td></tr>
+          <tr><td class="time">16:15–17:45</td><td>場次 2｜佘健源（暫定）<br><span style="font-size:11px;color:#888;">社會韌性與危機應變</span></td><td>—</td></tr>
+          <tr><td class="time">17:45–18:00</td><td>任務說明</td><td>—</td></tr>
+          <tr class="break-row"><td class="time">18:00–19:30</td><td>晚餐</td><td>—</td></tr>
+          <tr><td class="time">19:30–22:00</td><td>小組時間</td><td>—</td></tr>
+
+          <!-- 第二天 -->
+          <tr class="day-header"><td colspan="3">第二天 ｜ 7 月 14 日（二）</td></tr>
+          <tr><td class="time">09:00–10:30</td><td>場次 3｜黎寶文<br><span style="font-size:11px;color:#888;">從認知戰辨識中國：青年世代的理解與應對</span></td><td>—</td></tr>
+          <tr class="break-row"><td class="time">10:30–10:45</td><td>休息</td><td>—</td></tr>
+          <tr><td class="time">10:45–11:45</td><td>場次 4｜史佩靈（Jennifer Steffensen）<br><span style="font-size:11px;color:#888;">美國在台協會公共外交官員</span></td><td>—</td></tr>
+          <tr class="break-row"><td class="time">11:45–13:30</td><td>午餐</td><td>—</td></tr>
+          <tr><td class="time">13:30–14:00</td><td>課前暖身</td><td>—</td></tr>
+          <tr><td class="time">14:00–14:30</td><td>場次 5｜林婉萍<br><span style="font-size:11px;color:#888;">我們如何理解世界？（主軸：性別）</span></td><td>—</td></tr>
+          <tr><td class="time">14:30–15:00</td><td>場次 5｜王啟仲<br><span style="font-size:11px;color:#888;">我們如何理解世界？（主軸：流行音樂）</span></td><td>—</td></tr>
+          <tr><td class="time">15:00–15:30</td><td>場次 5｜張宇慧<br><span style="font-size:11px;color:#888;">我們如何理解世界？（主軸：教育）</span></td><td>—</td></tr>
+          <tr class="break-row"><td class="time">15:30–15:45</td><td>休息</td><td>—</td></tr>
+          <tr><td class="time">15:45–17:00</td><td>綜合座談</td><td>—</td></tr>
+          <tr class="break-row"><td class="time">17:00–18:30</td><td>晚餐</td><td>—</td></tr>
+          <tr><td class="time">18:30–22:00</td><td>小組時間</td><td>—</td></tr>
+
+          <!-- 第三天 -->
+          <tr class="day-header"><td colspan="3">第三天 ｜ 7 月 15 日（三）</td></tr>
+          <tr><td class="time">09:00–10:00</td><td>交通時間</td><td>—</td></tr>
+          <tr><td class="time">10:00–12:00</td><td>踏溯台南</td><td>—</td></tr>
+          <tr class="break-row"><td class="time">12:00–13:30</td><td>午餐</td><td>—</td></tr>
+          <tr><td class="time">13:30–15:30</td><td>室內演講</td><td>—</td></tr>
+          <tr><td class="time">15:30–17:00</td><td>踏溯台南</td><td>—</td></tr>
+          <tr><td class="time">17:00–18:30</td><td>交通時間</td><td>—</td></tr>
+          <tr class="break-row"><td class="time">18:30–20:00</td><td>晚餐</td><td>—</td></tr>
+          <tr><td class="time">20:00–22:00</td><td>小組時間</td><td>—</td></tr>
+
+          <!-- 第四天 -->
+          <tr class="day-header"><td colspan="3">第四天 ｜ 7 月 16 日（四）</td></tr>
+          <tr><td class="time">09:00–09:30</td><td>場次 6｜吳志中<br><span style="font-size:11px;color:#888;">台灣外交與全球民主的機會與挑戰</span></td><td>—</td></tr>
+          <tr><td class="time">09:30–10:00</td><td>場次 6｜沈有忠<br><span style="font-size:11px;color:#888;">當前兩岸關係與兩岸政策</span></td><td>—</td></tr>
+          <tr class="break-row"><td class="time">10:00–10:20</td><td>休息</td><td>—</td></tr>
+          <tr><td class="time">10:20–11:30</td><td>場次 6｜座談<br><span style="font-size:11px;color:#888;">台灣的民主與未來</span></td><td>—</td></tr>
+          <tr class="break-row"><td class="time">11:30–13:00</td><td>中午用餐</td><td>—</td></tr>
+          <tr><td class="time">13:00–13:30</td><td>海報準備</td><td>—</td></tr>
+          <tr><td class="time">13:30–15:30</td><td>成果發表</td><td>—</td></tr>
+          <tr class="break-row"><td class="time">15:30–15:45</td><td>休息</td><td>—</td></tr>
+          <tr><td class="time">15:45–16:15</td><td>閉幕式</td><td>—</td></tr>
+          <tr><td class="time">16:15–16:30</td><td>滿意度調查</td><td>—</td></tr>
+          <tr><td class="time">16:30</td><td>帶學生去搭車</td><td>—</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
 </main>
 <script>
 function switchTab(id){
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['staff','members','stats','manual','schedule','rooms'][i]===id));
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['itinerary','staff','members','stats','manual','schedule','rooms'][i]===id));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
 }
