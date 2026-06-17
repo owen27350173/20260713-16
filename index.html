@@ -5,93 +5,173 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>2026全球民主價值青年對話營線上筆記</title>
 <style>
+  /* ── Reset & Base ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", sans-serif; background: #f5f6f8; color: #1a1a1a; }
-  header { background: #fff; border-bottom: 1px solid #e8e8e8; padding: 1rem 1.5rem; position: sticky; top: 0; z-index: 10; }
-  .header-inner { max-width: 1100px; margin: 0 auto; }
-  header h1 { font-size: 18px; font-weight: 600; }
-  .tabs { display: flex; gap: 0; margin-top: 10px; }
-  .tab { font-size: 13px; padding: 7px 20px; border: 1px solid #ddd; background: #f5f6f8; color: #888; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-  .tab:first-child { border-radius: 8px 0 0 8px; }
-  .tab:last-child { border-radius: 0 8px 8px 0; border-left: none; }
-  .tab.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; font-weight: 500; }
-  main { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  :root {
+    --accent: #2563EB;
+    --accent-dark: #1a1a1a;
+    --accent-light: #EFF6FF;
+    --surface: #ffffff;
+    --surface-alt: #F8FAFC;
+    --border: #E2E8F0;
+    --border-light: #F1F5F9;
+    --text: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --sidebar-w: 220px;
+    --radius: 10px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", sans-serif; background: #F1F5F9; color: var(--text); line-height: 1.5; }
+
+  /* ── Layout ── */
+  .layout { display: flex; min-height: 100vh; }
+
+  /* ── Sidebar ── */
+  .sidebar { width: var(--sidebar-w); background: #1E293B; color: #fff; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto; z-index: 100; transition: transform 0.25s ease; }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+  .sidebar-header { padding: 1.25rem 1rem 1rem; border-bottom: 1px solid #334155; }
+  .sidebar-header h1 { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.4; }
+  .sidebar-sub { font-size: 11px; color: #94A3B8; margin-top: 2px; }
+  .sidebar-notice { font-size: 11px; color: #F87171; margin-top: 10px; line-height: 1.7; }
+  .sidebar-nav { padding: 0.75rem 0 1.5rem; flex: 1; }
+  .nav-group { margin-bottom: 0.25rem; }
+  .nav-label { font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.8px; padding: 0.75rem 1rem 0.25rem; }
+  .nav-item { display: block; width: 100%; text-align: left; font-size: 13px; font-weight: 500; padding: 8px 1rem 8px 1.25rem; border: none; background: transparent; color: #CBD5E1; cursor: pointer; font-family: inherit; transition: all 0.12s; border-left: 3px solid transparent; }
+  .nav-item:hover { background: #334155; color: #fff; }
+  .nav-item.active { background: #1E40AF; color: #fff; border-left-color: #60A5FA; font-weight: 600; }
+
+  /* ── Main content ── */
+  main { margin-left: var(--sidebar-w); padding: 1.75rem 1.5rem 3rem; width: calc(100% - var(--sidebar-w)); min-height: 100vh; }
   .page { display: none; }
   .page.active { display: block; }
-  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
-  .btn { font-size: 13px; padding: 6px 16px; border-radius: 20px; border: 1px solid #ddd; background: #fff; color: #666; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-  .btn:hover { border-color: #aaa; color: #333; }
-  .btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; font-weight: 500; }
-  .count { font-size: 12px; color: #aaa; margin-bottom: 10px; }
-  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #e8e8e8; }
-  thead tr { background: #1a1a1a; color: #fff; }
-  thead th { padding: 12px 16px; font-size: 13px; font-weight: 500; text-align: left; white-space: nowrap; }
-  tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.1s; }
+
+  /* ── Mobile header ── */
+  .mobile-header { display: none; background: #1E293B; color: #fff; padding: 0.85rem 1rem; position: fixed; top: 0; left: 0; right: 0; z-index: 99; align-items: center; justify-content: space-between; }
+  .mobile-title { font-size: 14px; font-weight: 600; }
+  .menu-btn { background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; padding: 2px 6px; }
+
+  /* ── Filter Buttons ── */
+  .filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+  .btn { font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 16px; border: 1.5px solid var(--border); background: var(--surface); color: var(--text-secondary); cursor: pointer; font-family: inherit; transition: all 0.15s; }
+  .btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .count { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+
+  /* ── Tables ── */
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+  thead tr { background: #1E293B; color: #fff; }
+  thead th { padding: 11px 14px; font-size: 12px; font-weight: 600; text-align: left; white-space: nowrap; letter-spacing: 0.3px; }
+  tbody tr { border-bottom: 1px solid var(--border-light); transition: background 0.1s; }
   tbody tr:last-child { border-bottom: none; }
-  tbody tr:hover { background: #fafafa; }
-  tbody td { padding: 11px 16px; font-size: 13px; color: #333; vertical-align: middle; text-align: left; border-left: 1px solid #e8e8e8; }
+  tbody tr:hover { background: #F8FAFF; }
+  tbody td { padding: 10px 14px; font-size: 13px; color: #334155; vertical-align: middle; text-align: left; border-left: 1px solid var(--border-light); }
   tbody td:first-child { border-left: none; }
 
-  .badge { display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 10px; font-weight: 500; white-space: nowrap; }
+  /* ── Badges ── */
+  .badge { display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 10px; font-weight: 600; white-space: nowrap; }
+  .g1{background:#DBEAFE;color:#1E40AF}.g2{background:#D1FAE5;color:#065F46}.g3{background:#EDE9FE;color:#4C1D95}.g4{background:#FEF3C7;color:#92400E}.g5{background:#FEE2E2;color:#991B1B}.g6{background:#DCFCE7;color:#14532D}.g7{background:#F3F4F6;color:#374151}.g8{background:#FCE7F3;color:#831843}.g9{background:#FFF7ED;color:#7C2D12}
+
+  /* ── Tasks list ── */
   .tasks-list { list-style: none; }
-  .tasks-list li { padding: 2px 0 2px 14px; position: relative; line-height: 1.6; color: #555; }
-  .tasks-list li::before { content: "•"; position: absolute; left: 0; color: #ccc; }
-  .same-as { font-size: 13px; color: #aaa; font-style: italic; }
-  .g1{background:#E6F1FB;color:#0C447C}.g2{background:#E1F5EE;color:#085041}.g3{background:#EEEDFE;color:#3C3489}.g4{background:#FAEEDA;color:#854F0B}.g5{background:#FAECE7;color:#993C1D}.g6{background:#EAF3DE;color:#3B6D11}.g7{background:#F1EFE8;color:#444441}.g8{background:#FBEAF0;color:#72243E}.g9{background:#FCEBEB;color:#791F1F}
+  .tasks-list li { padding: 3px 0 3px 14px; position: relative; line-height: 1.65; color: #475569; font-size: 13px; }
+  .tasks-list li::before { content: "›"; position: absolute; left: 1px; color: var(--accent); font-weight: 700; }
+  .same-as { font-size: 13px; color: var(--text-muted); font-style: italic; }
 
-  .manual-wrap { max-width: 780px; }
-  .manual-title { font-size: 20px; font-weight: 600; margin-bottom: 1.5rem; color: #1a1a1a; }
-  .manual-section { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 12px; }
-
-  .schedule-wrap { max-width: 900px; }
-  .schedule-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #e8e8e8; }
-  .schedule-table thead tr { background: #1a1a1a; color: #fff; }
-  .schedule-table thead th { padding: 12px 16px; font-size: 13px; font-weight: 500; text-align: left; white-space: nowrap; }
-  .schedule-table tbody tr { border-bottom: 1px solid #f0f0f0; }
-  .schedule-table tbody tr:last-child { border-bottom: none; }
-  .schedule-table tbody tr:hover { background: #fafafa; }
-  .schedule-table tbody td { padding: 11px 16px; font-size: 13px; color: #333; vertical-align: middle; border-left: 1px solid #e8e8e8; }
-  .schedule-table tbody td:first-child { border-left: none; }
-  .day-header td { background: #f0f4ff; color: #1a1a1a; font-weight: 600; font-size: 13px; padding: 10px 16px; }
-  .break-row td { background: #f9f9f9; color: #888; }
-  .scene { white-space: nowrap; font-weight: 500; color: #555; }
-  .time { white-space: nowrap; color: #444; font-variant-numeric: tabular-nums; }
-  .manual-section.info { border-color: #90CAF9; background: #EFF7FF; }
-  .manual-section.warning { border-color: #f5c842; background: #fffdf0; }
-  .manual-heading { font-size: 15px; font-weight: 600; margin-bottom: 10px; color: #1a1a1a; }
+  /* ── Manual / Cards ── */
+  .manual-wrap { max-width: 800px; }
+  .schedule-wrap { max-width: 960px; }
+  .manual-title { font-size: 18px; font-weight: 700; margin-bottom: 1.25rem; color: var(--text); letter-spacing: -0.3px; }
+  .manual-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.4rem; margin-bottom: 10px; box-shadow: var(--shadow-sm); }
+  .manual-section.info { border-left: 3px solid var(--accent); background: var(--accent-light); }
+  .manual-section.warning { border-left: 3px solid #F59E0B; background: #FFFBEB; }
+  .manual-heading { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
   .manual-list { list-style: none; padding: 0; }
-  .manual-list li { font-size: 13px; color: #444; padding: 5px 0 5px 16px; position: relative; line-height: 1.7; border-bottom: 1px solid #f5f5f5; }
+  .manual-list li { font-size: 13px; color: #475569; padding: 5px 0 5px 16px; position: relative; line-height: 1.7; border-bottom: 1px solid var(--border-light); }
   .manual-list li:last-child { border-bottom: none; }
-  .manual-list li::before { content: "•"; position: absolute; left: 2px; color: #ccc; }
-  .stats-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .stat-section h2 { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #1a1a1a; }
+  .manual-list li::before { content: "›"; position: absolute; left: 1px; color: var(--accent); font-weight: 700; }
+
+  /* ── Stats ── */
+  .stats-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stat-section h2 { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
+
+  /* ── Schedule ── */
+  .schedule-table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+  .schedule-table thead tr { background: #1E293B; color: #fff; }
+  .schedule-table thead th { padding: 11px 14px; font-size: 12px; font-weight: 600; text-align: left; white-space: nowrap; }
+  .schedule-table tbody tr { border-bottom: 1px solid var(--border-light); }
+  .schedule-table tbody tr:last-child { border-bottom: none; }
+  .schedule-table tbody tr:hover { background: #F8FAFF; }
+  .schedule-table tbody td { padding: 10px 14px; font-size: 13px; color: #334155; vertical-align: middle; border-left: 1px solid var(--border-light); }
+  .schedule-table tbody td:first-child { border-left: none; }
+  .day-header td { background: #1E3A5F !important; color: #fff !important; font-weight: 700; font-size: 13px; padding: 9px 14px; letter-spacing: 0.3px; }
+  .break-row td { background: #F8FAFC; color: var(--text-muted); }
+  .scene { white-space: nowrap; font-weight: 600; color: #1E40AF; }
+  .time { white-space: nowrap; color: var(--text-secondary); font-variant-numeric: tabular-nums; font-weight: 500; }
+
+  /* ── Flow table ── */
+  .flow-table { width:100%; border-collapse:collapse; background:var(--surface); border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); font-size:12px; box-shadow:var(--shadow-sm); }
+  .flow-table thead tr { background:#1E293B; color:#fff; }
+  .flow-table thead th { padding:10px 12px; text-align:left; white-space:nowrap; font-size:12px; font-weight:600; letter-spacing:0.3px; }
+  .flow-table tbody tr { border-bottom:1px solid var(--border-light); }
+  .flow-table tbody tr:last-child { border-bottom:none; }
+  .flow-table tbody tr:hover { background:#F8FAFF; }
+  .flow-table tbody td { padding:9px 12px; vertical-align:top; border-left:1px solid var(--border-light); line-height:1.65; color:#334155; }
+  .flow-table tbody td:first-child { border-left:none; white-space:nowrap; font-weight:500; color:var(--text-secondary); }
+  .flow-day, .flow-day td { background:#1E3A5F !important; color:#fff !important; font-weight:700; font-size:13px; padding:9px 14px; letter-spacing:0.3px; }
+  .flow-break { background:#F8FAFC; }
+  .flow-break td { color:var(--text-muted) !important; }
+  .flow-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:var(--radius); }
+
+  /* ── Mobile ── */
   @media(max-width:900px) { .stats-wrap { grid-template-columns: 1fr; } }
-  @media(max-width:700px){
-    .tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .tab { font-size:12px; padding:6px 12px; white-space: nowrap; flex-shrink: 0; }
-    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; }
-    thead th { font-size: 12px; padding: 10px 10px; }
-    tbody td { font-size: 12px; padding: 8px 10px; white-space: normal; }
+  @media(max-width:768px){
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.3); }
+    .mobile-header { display: flex; }
+    main { margin-left: 0; padding: 4.5rem 0.75rem 3rem; width: 100%; }
+    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    thead th { font-size: 11px; padding: 9px 10px; }
+    tbody td { font-size: 12px; padding: 8px 10px; }
     .tasks-list li { font-size: 12px; }
-    main { padding: 1rem 0.5rem 3rem; }
   }
 </style>
 </head>
 <body>
-<header>
-  <div class="header-inner">
-    <h1>2026全球民主價值青年對話營線上筆記</h1>
-    <p style="font-size:12px;color:#e05c5c;margin-top:4px;line-height:1.8;">
-      ＊限工作人員瀏覽<br>
-      ＊會不定時更新資訊<br>
-      ＊如有問題需要調整修改請找以展
-    </p>
-    <div class="tabs">
-      <button class="tab active" onclick="switchTab('itinerary')">行程總表</button>
-      <button class="tab" onclick="switchTab('staff')">工作人員分工表</button><button class="tab" onclick="switchTab('members')">參加人員分組</button><button class="tab" onclick="switchTab('stats')">統計數據</button><button class="tab" onclick="switchTab('manual')">隊輔手冊</button><button class="tab" onclick="switchTab('schedule')">演講議程</button><button class="tab" onclick="switchTab('rooms')">房間分配表</button>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h1>2026全球民主價值青年對話營</h1>
+      <p class="sidebar-sub">線上筆記</p>
+      <p class="sidebar-notice">＊限工作人員瀏覽<br>＊會不定時更新資訊<br>＊如有問題需要調整修改請找以展</p>
     </div>
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <div class="nav-label">📅 活動</div>
+        <button class="nav-item active" onclick="switchTab('itinerary')">行程總表</button>
+        <button class="nav-item" onclick="switchTab('schedule')">演講議程</button>
+        <button class="nav-item" onclick="switchTab('flowchart')">活動細流</button>
+        <button class="nav-item" onclick="switchTab('presentation')">成果發表</button>
+      </div>
+      <div class="nav-group">
+        <div class="nav-label">👥 人員</div>
+        <button class="nav-item" onclick="switchTab('staff')">工作人員分工表</button>
+        <button class="nav-item" onclick="switchTab('members')">參加人員分組</button>
+        <button class="nav-item" onclick="switchTab('stats')">統計數據</button>
+      </div>
+      <div class="nav-group">
+        <div class="nav-label">📋 資料</div>
+        <button class="nav-item" onclick="switchTab('rooms')">房間分配表</button>
+        <button class="nav-item" onclick="switchTab('manual')">隊輔手冊</button>
+      </div>
+    </nav>
+  </aside>
+  <div class="mobile-header">
+    <div class="mobile-title">2026全球民主價值青年對話營</div>
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
   </div>
-</header>
 <main>
   <div class="page active" id="page-itinerary">
     <div class="schedule-wrap">
@@ -399,9 +479,9 @@
             <tr><td>乙</td><td>楊尚儒</td><td>單人房</td><td>7/13</td><td>7/16</td></tr>
             <tr><td>丙</td><td>沈有忠</td><td>單人房</td><td>7/15</td><td>7/16</td></tr>
             <tr><td>丁</td><td>盧國毅</td><td>單人房</td><td>7/15</td><td>7/16</td></tr>
-            <tr><td>戊</td><td>洪啟堯</td><td>單人房</td><td>7/14</td><td>7/16</td></tr>
+            <tr><td>戊</td><td>洪啓堯</td><td>單人房</td><td>7/14</td><td>7/16</td></tr>
             <tr><td>己</td><td>張宇慧</td><td>單人房</td><td>未定</td><td>未定</td></tr>
-            <tr><td>庚</td><td>林婉萍</td><td>單人房</td><td>未定</td><td>未定</td></tr>
+            <tr><td>庚</td><td>林婉萍</td><td>單人房</td><td>7/13</td><td>7/16</td></tr>
             <tr><td>辛</td><td>王啟仲</td><td>四人房</td><td>未定</td><td>未定</td></tr>
           </tbody>
         </table>
@@ -434,12 +514,282 @@
       </div>
     </div>
   </div>
+  <div class="page" id="page-presentation">
+    <div class="manual-wrap">
+      <h2 class="manual-title">成果發表｜議題介紹</h2>
+
+      <div class="manual-section">
+        <div class="manual-heading">議題 1｜台灣政府是否應該禁止抖音 APP？</div>
+        <p style="font-size:13px;color:#444;line-height:1.8;">近年來，短影音平台快速興起，其中由中國公司 ByteDance 所推出的抖音更成為全球最受歡迎的社群媒體之一，特別受到年輕世代喜愛。使用者可以透過短影片分享生活、娛樂、資訊與流行文化，使其影響力迅速擴大。然而，隨著使用人數增加，TikTok 也引發許多爭議。</p>
+        <br>
+        <p style="font-size:13px;color:#444;line-height:1.8;">部分國家擔心平台可能涉及個人資料蒐集、演算法操控與國家安全問題，尤其因其母公司來自中國，使外界擔憂資料可能受到中國政府影響。2022年，行政院宣布，基於資訊安全與國家資通安全考量，公部門設備不得使用中國製的危害國家資通安全產品以及中國製的特定軟體，請問你們覺得政府應不應該擴大限制，規定民眾也不得使用呢？</p>
+      </div>
+
+      <div class="manual-section">
+        <div class="manual-heading">議題 2｜台灣政府是否應該降低投票選舉總統的年齡至 18 歲？</div>
+        <p style="font-size:13px;color:#444;line-height:1.8;">投票權是民主政治中重要的公民權利之一，而投票年齡的規定也反映社會對「政治成熟度」與「公民參與」的看法。過去許多國家的投票年齡多設定在20歲以上，但近年來，隨著青年公共參與意識提升，越來越多國家將投票年齡下修至18歲，希望讓年輕世代更早參與政治決策。</p>
+        <br>
+        <p style="font-size:13px;color:#444;line-height:1.8;">在台灣，目前年滿18歲即具有法律上的成年資格，可以工作、繳稅、考駕照、服兵役，也需要承擔部分法律責任。然而，依現行制度，總統與公職人員選舉的投票年齡仍以20歲為門檻。支持者認為，18歲青年已具備基本判斷能力，應享有完整投票權並參與民主政治。反對者則認為，18歲青年社會經驗不足，容易受外界影響，可能影響選舉品質。請問你們認為政府應不應該降低投票的年齡呢？</p>
+      </div>
+
+      <div class="manual-section">
+        <div class="manual-heading">議題 3｜台灣政府是否要增加軍購預算？</div>
+        <p style="font-size:13px;color:#444;line-height:1.8;">近年來，隨著國際局勢變化與兩岸關係緊張，台灣的國防安全議題受到越來越多關注。面對區域軍事壓力與安全挑戰，台灣政府持續提升國防能力，並向其他國家購買各種軍事裝備，例如戰機、飛彈、防空系統與軍艦等，希望強化自我防衛能力。因此，「台灣是否應該增加軍購預算」成為社會上重要的公共政策討論。</p>
+        <br>
+        <p style="font-size:13px;color:#444;line-height:1.8;">支持者認為，增加軍購預算能提升國防與嚇阻能力，保障國家安全。反對者則認為，軍購花費龐大，可能排擠其他公共資源，甚至加劇區域緊張。請問你們認為政府是否要增加軍購預算呢？</p>
+      </div>
+
+    </div>
+  </div>
+  <div class="page" id="page-flowchart">
+    <div class="schedule-wrap">
+      <h2 class="manual-title">工作人員活動細流</h2>
+
+      <div class="flow-wrap">
+      <table class="flow-table">
+        <thead>
+          <tr><th>時間</th><th>活動內容</th><th>負責人</th><th>地點</th><th>總協</th><th>活動組</th><th>行政組</th><th>場地組</th></tr>
+        </thead>
+        <tbody>
+
+          <!-- 第一天 -->
+          <tr><td colspan="8" class="flow-day">第一天 ｜ 7 月 13 日（一）</td></tr>
+          <tr>
+            <td>09:30–10:00</td><td>活動報到</td><td>行政組</td><td>左營彩虹市集前</td>
+            <td>到現場巡視各組是否就位、流程是否順利</td>
+            <td>1. 導引學員至分隊集合區<br>2. 引導每位學員加進指定小隊 LINE 群組<br>3. 協助講解當天流程</td>
+            <td>1. 核對報到名單<br>2. 發放相關文件（營隊須知、學習手冊）<br>3. 登記臨時狀況<br>4. 聯絡遊覽車</td>
+            <td>1. 協助布置報到區（指示牌、隊伍牌、椅子、遮陽／雨備）<br>2. 確認報到動線（入口→報到→等候區→分組區）</td>
+          </tr>
+          <tr>
+            <td>10:00–12:00</td><td>交通時間</td><td>活動組</td><td>—</td>
+            <td>1. 與各組保持聯繫，回報人數、突發狀況<br>2. 確保所有學員已上車，無人遺漏</td>
+            <td>1. 帶領學員走至搭車地點，維持隊伍秩序<br>2. 每車安排活動組成員點名與陪同<br>3. 協助學員找到自己的車次</td>
+            <td>—</td></tr>
+          <tr class="flow-break">
+            <td>12:00–13:30</td><td>午餐</td><td>—</td><td>餐廳</td>
+            <td>—</td>
+            <td>—</td>
+            <td>1. 確認等等上台人數，與想要上台的長官確認演講時間、放名牌<br>2. 長官來記得去接待</td>
+            <td>1. 確保音響、投影、燈光、電力正常<br>2. 現場需手舉指示牌提醒時間</td>
+          </tr>
+          <tr>
+            <td>13:30–14:00</td><td>破冰</td><td>活動組</td><td>會議廳</td>
+            <td>1. 確認破冰活動流程與時間掌握情況<br>2. 協調臨場支援</td>
+            <td>1. 主導破冰遊戲流程<br>2. 每位隊輔負責帶領自己小隊，引導學員互動<br>3. 點名</td>
+            <td>1. 若需物資協助發放<br>2. 如有突發事件，協助通報總協處理</td>
+            <td>1. 準備音響設備／播放背景音樂</td>
+          </tr>
+          <tr>
+            <td>14:00–14:20</td><td>開幕式</td><td>總協</td><td>會議廳</td>
+            <td>全場總控，確認流程是否準時與順暢</td>
+            <td>引導小隊依序就坐，協助維持現場秩序</td>
+            <td>—</td>
+            <td>協助講者處理演講使用檔案</td>
+          </tr>
+          <tr class="flow-break">
+            <td>14:20–14:30</td><td>休息</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr>
+            <td>14:30–16:00</td><td>場次 1｜楊尚儒</td><td>活動組</td><td>會議廳</td>
+            <td>開場簡短介紹講者背景與演講主題</td>
+            <td>1. 協助引導學生入座、維持現場秩序<br>2. 若學生不踴躍提問，可由工作人員帶頭提問</td>
+            <td>1. 提前準備講者所需物品（水、講稿、筆、紙）<br>2. 協助佈置講桌與座位</td>
+            <td>1. 負責投影、麥克風、簡報筆、燈光等場控<br>2. 控時（提醒講者剩餘時間、準備 Q&A）</td>
+          </tr>
+          <tr class="flow-break">
+            <td>16:00–16:15</td><td>休息</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr>
+            <td>16:15–17:45</td><td>場次 2｜佘健源（暫定）</td><td>活動組</td><td>會議廳</td>
+            <td>1. 開場簡短介紹講者背景與演講主題<br>2. 負責控時</td>
+            <td>1. 協助引導學生入座、維持現場秩序<br>2. 準備問題引導卡，帶頭提問</td>
+            <td>提前準備講者所需物品（水、講稿、筆、紙）</td>
+            <td>1. 負責投影、麥克風、簡報筆、燈光等場控<br>2. 協助佈置講桌與座位</td>
+          </tr>
+          <tr>
+            <td>17:45–18:00</td><td>任務說明</td><td>活動組</td><td>會議廳</td>
+            <td>—</td>
+            <td>黃俊凱上台介紹活動的成果發表方式</td>
+            <td>黃說明結束時，發放鑰匙</td>
+            </tr>
+          <tr class="flow-break">
+            <td>18:00–19:30</td><td>晚餐</td><td>—</td><td>餐廳</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr>
+            <td>19:30–22:00</td><td>小組時間</td><td>隊輔</td><td>—</td>
+            <td>—</td>
+            <td>各隊輔帶領小隊進行小組討論</td>
+            <td>—</td></tr>
+
+          <!-- 第二天 -->
+          <tr><td colspan="8" class="flow-day">第二天 ｜ 7 月 14 日（二）</td></tr>
+          <tr>
+            <td>08:50</td><td>集合</td><td>行政組</td><td>會議廳</td>
+            <td>檢查各組人員是否就定位</td>
+            <td>1. 引導學員，確保準時進入下一時段<br>2. 若有學員未出現或出現狀況，立即通報並處理</td>
+            <td>—</td></tr>
+          <tr>
+            <td>09:00–10:30</td><td>場次 3｜黎寶文</td><td>活動組</td><td>會議廳</td>
+            <td>1. 確認講者已抵達<br>2. 開場簡短介紹講者背景與演講主題<br>3. 負責控時</td>
+            <td>1. 協助引導學生入座、維持現場秩序<br>2. 準備問題引導卡，帶頭提問</td>
+            <td>1. 提前準備講者所需物品<br>2. 確認出席名單</td>
+            <td>1. 負責投影、麥克風、簡報筆、燈光等場控<br>2. 協助佈置講桌與座位</td>
+          </tr>
+          <tr class="flow-break">
+            <td>10:30–10:45</td><td>休息</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr>
+            <td>10:45–11:45</td><td>場次 4｜史佩靈</td><td>活動組</td><td>會議廳</td>
+            <td>同上</td><td>同上</td><td>同上</td></tr>
+          <tr class="flow-break">
+            <td>11:45–13:30</td><td>午餐</td><td>—</td><td>餐廳</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr>
+            <td>13:30–14:00</td><td>課前暖身</td><td>活動組</td><td>會議廳</td>
+            <td>1. 確認活動流程與時間掌握情況<br>2. 協調臨場支援</td>
+            <td>1. 主導暖身遊戲流程<br>2. 每位隊輔帶領自己小隊，活絡氣氛</td>
+            <td>1. 協助記錄隊伍出席與帶領狀況<br>2. 若需物資協助發放<br>3. 如有突發事件，通報總協處理</td>
+            <td>準備音響設備／播放背景音樂</td>
+          </tr>
+          <tr>
+            <td>14:00–14:30</td><td>場次 5｜林婉萍</td><td>活動組</td><td>會議廳</td>
+            <td>同上</td><td>同上</td><td>同上</td></tr>
+          <tr>
+            <td>14:30–15:00</td><td>場次 5｜王啟仲</td><td>活動組</td><td>會議廳</td>
+            <td>同上</td><td>同上</td><td>同上</td></tr>
+          <tr>
+            <td>15:00–15:30</td><td>場次 5｜張宇慧</td><td>活動組</td><td>會議廳</td>
+            <td>同上</td><td>同上</td><td>同上</td></tr>
+          <tr class="flow-break">
+            <td>15:30–15:45</td><td>休息</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr>
+            <td>15:45–17:00</td><td>林婉萍 & 王啟仲 & 張宇慧 綜合座談</td><td>活動組</td><td>會議廳</td>
+            <td>主持座談，控制時間與節奏</td>
+            <td>1. 隊輔協助小組提問<br>2. 維持現場秩序</td>
+            <td>—</td></tr>
+          <tr class="flow-break">
+            <td>17:00–18:30</td><td>晚餐</td><td>—</td><td>餐廳</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr>
+            <td>18:30–22:00</td><td>小組時間</td><td>隊輔</td><td>—</td>
+            <td>—</td>
+            <td>各隊輔帶領小隊進行小組討論與成果準備</td>
+            <td>—</td></tr>
+
+          <!-- 第三天 -->
+          <tr><td colspan="8" class="flow-day">第三天 ｜ 7 月 15 日（三）</td></tr>
+          <tr>
+            <td>08:30–10:00</td><td>交通時間</td><td>行政組</td><td>—</td>
+            <td>到現場巡視各組是否就位、流程是否順利</td>
+            <td>隊輔導引學員分隊集合</td>
+            <td>聯絡遊覽車</td></tr>
+          <tr>
+            <td>10:00–12:00</td><td>踏溯台南</td><td>活動組</td><td>台南</td>
+            <td>—</td>
+            <td>帶領學員進行戶外踏查活動，維持隊伍秩序</td>
+            <td>—</td></tr>
+          <tr class="flow-break">
+            <td>12:00–13:30</td><td>午餐</td><td>—</td><td>餐廳</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr>
+            <td>13:30–15:30</td><td>室內演講</td><td>活動組</td><td>會議廳</td>
+            <td>確認講者與流程</td>
+            <td>協助引導學生入座、維持現場秩序</td>
+            <td>準備講者所需物品</td>
+            <td>負責投影、麥克風等場控</td>
+          </tr>
+          <tr>
+            <td>15:30–16:30</td><td>踏溯台南</td><td>活動組</td><td>台南</td>
+            <td>—</td>
+            <td>帶領學員繼續踏查活動</td>
+            <td>—</td></tr>
+          <tr>
+            <td>16:30–18:00</td><td>交通時間</td><td>活動組</td><td>—</td>
+            <td>與各組保持聯繫，回報人數與狀況</td>
+            <td>帶領學員上車，確認人數</td>
+            <td>—</td></tr>
+          <tr class="flow-break">
+            <td>18:00–20:00</td><td>晚餐</td><td>—</td><td>餐廳</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr>
+            <td>20:00–22:00</td><td>小組時間</td><td>隊輔</td><td>—</td>
+            <td>—</td>
+            <td>各隊輔帶領小隊進行小組討論與海報製作準備</td>
+            <td>—</td></tr>
+
+          <!-- 第四天 （加公關組） -->
+
+          <tr><td colspan="8" class="flow-day">第四天 ｜ 7 月 16 日（四）</td></tr>
+          <tr>
+            <td>08:50</td><td>集合</td><td>行政組</td><td>會議廳</td>
+            <td>檢查各組人員是否就定位</td>
+            <td>1. 引導學員，確保準時進入下一時段<br>2. 若有學員出現狀況，立即通報並處理</td>
+            <td>—</td></tr>
+          <tr>
+            <td>09:00–09:30</td><td>場次 6｜吳志中</td><td>活動組</td><td>會議廳</td>
+            <td>1. 確認講者已抵達<br>2. 開場簡短介紹講者背景與演講主題<br>3. 負責控時</td>
+            <td>1. 協助引導學生入座、維持現場秩序<br>2. 準備問題引導卡，帶頭提問</td>
+            <td>1. 提前準備講者所需物品<br>2. 確認出席名單</td>
+            <td>1. 負責投影、麥克風、簡報筆、燈光等場控<br>2. 協助佈置講桌與座位</td>
+            
+          </tr>
+          <tr>
+            <td>09:30–10:00</td><td>場次 6｜沈有忠</td><td>活動組</td><td>會議廳</td>
+            <td>同上</td><td>同上</td><td>同上</td><td>同上</td></tr>
+          <tr class="flow-break">
+            <td>10:00–10:20</td><td>休息</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr>
+            <td>10:20–11:30</td><td>吳志中 & 沈有忠 綜合座談</td><td>活動組</td><td>會議廳</td>
+            <td>—</td>
+            <td>1. 隊輔協助小組提問<br>2. 黃在任務說明時會請小組準備問題</td>
+            <td>—</td></tr>
+          <tr class="flow-break">
+            <td>11:30–13:00</td><td>午餐</td><td>—</td><td>餐廳</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr>
+            <td>13:00–13:30</td><td>海報準備</td><td>活動組</td><td>會議廳</td>
+            <td>—</td>
+            <td>協助各組確認海報內容與站位</td>
+            <td>—</td></tr>
+          <tr>
+            <td>13:30–15:30</td><td>成果發表</td><td>活動組</td><td>會議廳</td>
+            <td>宣布活動開始與時間提醒</td>
+            <td>1. 安排發表順序、遞送麥克風<br>2. 發表前協助各組準備內容與站位<br>3. 確保提問有序進行</td>
+            <td>1. 發放並回收評分表或互評貼紙<br>2. 協助分組點名與時間控管<br>3. 記錄得獎名單與分數彙整</td>
+            </tr>
+          <tr class="flow-break">
+            <td>15:30–15:45</td><td>休息</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr>
+            <td>15:45–16:15</td><td>閉幕式</td><td>總協</td><td>會議廳</td>
+            <td>1. 統籌閉幕流程與時間控管<br>2. 主持整體活動，包含開場、頒獎、串場、總結等</td>
+            <td>1. 協助規劃頒獎名單與發表順序<br>2. 通知學員代表準備分享發言<br>3. 配合主持節奏進行物品遞交與引導</td>
+            <td>1. 準備並發放參與證書、回饋表單<br>2. 協助點名與統計實到人數<br>3. 引導學員領取個人物品</td>
+            </tr>
+          <tr>
+            <td>16:15–16:30</td><td>滿意度調查</td><td>行政組</td><td>會議廳</td>
+            <td>—</td>
+            <td>協助發放問卷並提醒學員填寫</td>
+            <td>發放並回收問卷，統計回收數量</td>
+            </tr>
+          <tr>
+            <td>16:30–17:00</td><td>帶學生去搭車</td><td>行政組</td><td>—</td>
+            <td>—</td>
+            <td>帶領學生前往搭車，並於搭車時確認人數向總協回報</td>
+            <td>—</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+    </div>
+  </div>
 </main>
 <script>
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+}
+document.addEventListener('click', function(e){
+  const sidebar = document.getElementById('sidebar');
+  if(sidebar.classList.contains('open') && !sidebar.contains(e.target) && !e.target.classList.contains('menu-btn')){
+    sidebar.classList.remove('open');
+  }
+});
 function switchTab(id){
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['itinerary','staff','members','stats','manual','schedule','rooms'][i]===id));
+  document.querySelectorAll('.nav-item').forEach(t=>t.classList.toggle('active', t.getAttribute('onclick').includes("'"+id+"'")));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
+  if(window.innerWidth<=768) document.getElementById('sidebar').classList.remove('open');
 }
 
 /* ── 工作人員 ── */
@@ -655,5 +1005,5 @@ document.getElementById("room-member-tbody").innerHTML=sortedByRoom.map(m=>
   `<tr><td>${m.room}</td><td><strong>${m.name}</strong></td><td><span class="badge ${groupColors2[m.group]}">第${m.group}組</span></td><td>${m.gender}</td></tr>`
 ).join("");
 </script>
-</body>
+</div></body>
 </html>
