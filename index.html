@@ -31,8 +31,8 @@
   /* ── Sidebar ── */
   .sidebar { width: var(--sidebar-w); background: #1E293B; color: #fff; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto; z-index: 100; transition: transform 0.25s ease; }
   .sidebar::-webkit-scrollbar { width: 4px; }
-  .sidebar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-  .sidebar-header { padding: 1.25rem 1rem 1rem; border-bottom: 1px solid #334155; }
+  .sidebar::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 4px; }
+  .sidebar-header { padding: 1.25rem 1rem 1rem; border-bottom: 1px solid #1E293B; }
   .sidebar-header h1 { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.4; }
   .sidebar-sub { font-size: 11px; color: #94A3B8; margin-top: 2px; }
   .sidebar-notice { font-size: 11px; color: #F87171; margin-top: 10px; line-height: 1.7; }
@@ -40,8 +40,8 @@
   .nav-group { margin-bottom: 0.25rem; }
   .nav-label { font-size: 10px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.8px; padding: 0.75rem 1rem 0.25rem; }
   .nav-item { display: block; width: 100%; text-align: left; font-size: 13px; font-weight: 500; padding: 8px 1rem 8px 1.25rem; border: none; background: transparent; color: #CBD5E1; cursor: pointer; font-family: inherit; transition: all 0.12s; border-left: 3px solid transparent; }
-  .nav-item:hover { background: #334155; color: #fff; }
-  .nav-item.active { background: #1E40AF; color: #fff; border-left-color: #60A5FA; font-weight: 600; }
+  .nav-item:hover { background: #1E293B; color: #fff; }
+  .nav-item.active { background: #1E293B; color: #fff; border-left-color: #60A5FA; font-weight: 600; }
 
   /* ── Main content ── */
   main { margin-left: var(--sidebar-w); padding: 1.75rem 1.5rem 3rem; width: calc(100% - var(--sidebar-w)); min-height: 100vh; }
@@ -49,7 +49,7 @@
   .page.active { display: block; }
 
   /* ── Mobile header ── */
-  .mobile-header { display: none; background: #1E293B; color: #fff; padding: 0.85rem 1rem; position: fixed; top: 0; left: 0; right: 0; z-index: 99; align-items: center; justify-content: space-between; }
+  .mobile-header { display: none; background: #1E293B; color: #fff; padding: 0.85rem 1rem; position: fixed; top: 0; left: 0; right: 0; z-index: 99; align-items: center; justify-content: flex-start; gap: 12px; }
   .mobile-title { font-size: 14px; font-weight: 600; }
   .menu-btn { background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; padding: 2px 6px; }
 
@@ -67,12 +67,12 @@
   tbody tr { border-bottom: 1px solid var(--border-light); transition: background 0.1s; }
   tbody tr:last-child { border-bottom: none; }
   tbody tr:hover { background: #F8FAFF; }
-  tbody td { padding: 10px 14px; font-size: 13px; color: #334155; vertical-align: middle; text-align: left; border-left: 1px solid var(--border-light); }
+  tbody td { padding: 10px 14px; font-size: 13px; color: #1E293B; vertical-align: middle; text-align: left; border-left: 1px solid var(--border-light); }
   tbody td:first-child { border-left: none; }
 
   /* ── Badges ── */
   .badge { display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 10px; font-weight: 600; white-space: nowrap; }
-  .g1{background:#DBEAFE;color:#1E40AF}.g2{background:#D1FAE5;color:#065F46}.g3{background:#EDE9FE;color:#4C1D95}.g4{background:#FEF3C7;color:#92400E}.g5{background:#FEE2E2;color:#991B1B}.g6{background:#DCFCE7;color:#14532D}.g7{background:#F3F4F6;color:#374151}.g8{background:#FCE7F3;color:#831843}.g9{background:#FFF7ED;color:#7C2D12}
+  .g1{background:#DCFCE7;color:#1E293B}.g2{background:#D1FAE5;color:#065F46}.g3{background:#EDE9FE;color:#4C1D95}.g4{background:#FEF3C7;color:#92400E}.g5{background:#FEE2E2;color:#991B1B}.g6{background:#DCFCE7;color:#1E293B}.g7{background:#F3F4F6;color:#374151}.g8{background:#FCE7F3;color:#831843}.g9{background:#FFF7ED;color:#7C2D12}
 
   /* ── Tasks list ── */
   .tasks-list { list-style: none; }
@@ -104,11 +104,11 @@
   .schedule-table tbody tr { border-bottom: 1px solid var(--border-light); }
   .schedule-table tbody tr:last-child { border-bottom: none; }
   .schedule-table tbody tr:hover { background: #F8FAFF; }
-  .schedule-table tbody td { padding: 10px 14px; font-size: 13px; color: #334155; vertical-align: middle; border-left: 1px solid var(--border-light); }
+  .schedule-table tbody td { padding: 10px 14px; font-size: 13px; color: #1E293B; vertical-align: middle; border-left: 1px solid var(--border-light); }
   .schedule-table tbody td:first-child { border-left: none; }
   .day-header td { background: #1E3A5F !important; color: #fff !important; font-weight: 700; font-size: 13px; padding: 9px 14px; letter-spacing: 0.3px; }
   .break-row td { background: #F8FAFC; color: var(--text-muted); }
-  .scene { white-space: nowrap; font-weight: 600; color: #1E40AF; }
+  .scene { white-space: nowrap; font-weight: 600; color: #1E293B; }
   .time { white-space: nowrap; color: var(--text-secondary); font-variant-numeric: tabular-nums; font-weight: 500; }
 
   /* ── Flow table ── */
@@ -118,7 +118,7 @@
   .flow-table tbody tr { border-bottom:1px solid var(--border-light); }
   .flow-table tbody tr:last-child { border-bottom:none; }
   .flow-table tbody tr:hover { background:#F8FAFF; }
-  .flow-table tbody td { padding:9px 12px; vertical-align:top; border-left:1px solid var(--border-light); line-height:1.65; color:#334155; }
+  .flow-table tbody td { padding:9px 12px; vertical-align:top; border-left:1px solid var(--border-light); line-height:1.65; color:#1E293B; }
   .flow-table tbody td:first-child { border-left:none; white-space:nowrap; font-weight:500; color:var(--text-secondary); }
   .flow-day, .flow-day td { background:#1E3A5F !important; color:#fff !important; font-weight:700; font-size:13px; padding:9px 14px; letter-spacing:0.3px; }
   .flow-break { background:#F8FAFC; }
@@ -169,8 +169,8 @@
     </nav>
   </aside>
   <div class="mobile-header">
-    <div class="mobile-title">2026全球民主價值青年對話營</div>
     <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    <div class="mobile-title">2026全球民主價值青年對話營</div>
   </div>
 <main>
   <div class="page active" id="page-itinerary">
@@ -494,12 +494,12 @@
           <tbody>
             <tr><td>A</td><td>賴以展</td><td>總協</td></tr>
             <tr><td>B</td><td>凃宥聰</td><td>接待組</td></tr>
-            <tr><td>C</td><td>第1組 施妤諼、吳恩萱（第2組）</td><td>隊輔組</td></tr>
-            <tr><td>D</td><td>周品瑜（第3組）、陳筱琴（第4組）</td><td>隊輔組</td></tr>
-            <tr><td>E</td><td>蔡孟庭、李采容（第6組）、王苡媗（第9組）</td><td>公關組 / 隊輔組</td></tr>
+            <tr><td>C</td><td>施妤諼、吳恩萱</td><td>隊輔組</td></tr>
+            <tr><td>D</td><td>周品瑜、陳筱琴</td><td>隊輔組</td></tr>
+            <tr><td>E</td><td>蔡孟庭、李采容、王苡媗</td><td>公關組 / 隊輔組</td></tr>
             <tr><td>F</td><td>呂岱晏、黃俊凱</td><td>器材組 / 活動組</td></tr>
-            <tr><td>G</td><td>陳弘意、錢威銘（第5組）</td><td>生輔組 / 隊輔組</td></tr>
-            <tr><td>H</td><td>倪瑞澤（第7組）、董彥甫（第8組）</td><td>隊輔組</td></tr>
+            <tr><td>G</td><td>陳弘意、錢威銘</td><td>生輔組 / 隊輔組</td></tr>
+            <tr><td>H</td><td>倪瑞澤、董彥甫</td><td>隊輔組</td></tr>
             <tr><td>I</td><td>卷毛、小柯</td><td>攝影組</td></tr>
           </tbody>
         </table>
