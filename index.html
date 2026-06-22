@@ -123,6 +123,15 @@
   .flow-day, .flow-day td { background:#1E3A5F !important; color:#fff !important; font-weight:700; font-size:13px; padding:9px 14px; letter-spacing:0.3px; }
   .flow-break { background:#F8FAFC; }
   .flow-break td { color:var(--text-muted) !important; }
+
+  .ptag { display:inline-block; font-size:10px; font-weight:600; padding:1px 7px; border-radius:10px; margin-right:3px; white-space:nowrap; }
+  .ptag-act  { background:#FEF3C7; color:#92400E; }  /* 活動組 黃俊凱 */
+  .ptag-bio  { background:#D1FAE5; color:#065F46; }  /* 生輔組 陳弘意 */
+  .ptag-eq   { background:#DBEAFE; color:#1E40AF; }  /* 器材組 呂岱晏 */
+  .ptag-rec  { background:#EDE9FE; color:#4C1D95; }  /* 接待組 凃宥聰 */
+  .ptag-pr   { background:#FCE7F3; color:#831843; }  /* 公關組 蔡孟庭 */
+  .ptag-lead { background:#F3F4F6; color:#1F2937; }  /* 總協   賴以展 */
+  .ptag-qi   { background:#FFEDD5; color:#9A3412; }  /* 隊輔組 */
   .flow-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:var(--radius); }
 
   /* ── Mobile ── */
@@ -153,6 +162,7 @@
         <button class="nav-item active" onclick="switchTab('itinerary')">行程總表</button>
         <button class="nav-item" onclick="switchTab('schedule')">演講議程</button>
         <button class="nav-item" onclick="switchTab('presentation')">成果發表</button>
+        <button class="nav-item" onclick="switchTab('flowchart')">活動細流</button>
       </div>
       <div class="nav-group">
         <div class="nav-label">👥 人員</div>
@@ -520,7 +530,18 @@
       </div>
 
       <div class="manual-section">
-        <div class="manual-heading">議題 3｜台灣政府是否要增加軍購預算？</div>
+        <div class="manual-heading">議題 3｜台灣政府是否應該要繼續推動數位中介法的立法？</div>
+        <p style="font-size:13px;color:#444;line-height:1.8;">數位平台已成為現代社會獲取資訊與交流意見的重要管道，但隨著網路使用日益普及，假訊息、網路詐騙、仇恨言論及不實資訊傳播等問題也逐漸受到關注。為了提升網路治理能力與保障數位環境安全，台灣政府曾提出《數位中介服務法》草案，希望建立數位平台的管理機制，要求大型網路平台承擔更多責任，以降低有害資訊對社會造成的負面影響。</p>
+        <br>
+        <p style="font-size:13px;color:#444;line-height:1.8;">支持者認為，在資訊快速傳播的時代，假訊息與網路詐騙可能影響公共安全、民主制度及社會秩序。透過加強數位中介法的執行，能夠促使網路平台更積極管理有害內容，提高資訊品質，並保護民眾免於受到錯誤資訊的誤導。</p>
+        <br>
+        <p style="font-size:13px;color:#444;line-height:1.8;">反對者則擔心加強數位中介法的實施可能影響言論自由與資訊流通。由於資訊內容的判定具有主觀性，若政府或平台擁有過大的管理權限，可能導致合法言論遭到限制，甚至產生寒蟬效應。此外，也有人認為政府應透過媒體識讀教育與資訊公開等方式來解決問題，而非擴大對網路內容的管制。</p>
+        <br>
+        <p style="font-size:13px;color:#444;line-height:1.8;">請問你們認為，台灣政府是否應該推動數位中介法的立法呢？</p>
+      </div>
+
+      <div class="manual-section">
+        <div class="manual-heading">議題 4｜台灣政府是否要增加軍購預算？</div>
         <p style="font-size:13px;color:#444;line-height:1.8;">近年來，隨著國際局勢變化與兩岸關係緊張，台灣的國防安全議題受到越來越多關注。面對區域軍事壓力與安全挑戰，台灣政府持續提升國防能力，並向其他國家購買各種軍事裝備，例如戰機、飛彈、防空系統與軍艦等，希望強化自我防衛能力。因此，「台灣是否應該增加軍購預算」成為社會上重要的公共政策討論。</p>
         <br>
         <p style="font-size:13px;color:#444;line-height:1.8;">支持者認為，增加軍購預算能提升國防與嚇阻能力，保障國家安全。反對者則認為，軍購花費龐大，可能排擠其他公共資源，甚至加劇區域緊張。請問你們認為政府是否要增加軍購預算呢？</p>
@@ -528,237 +549,20 @@
 
     </div>
   </div>
-  <div class="page" id="page-flowchart" style="display:none!important">
-    <div class="schedule-wrap">
+  
+  <div class="page" id="page-flowchart">
+    <div class="schedule-wrap" style="max-width:100%">
       <h2 class="manual-title">工作人員活動細流</h2>
-
+      <div class="filters" id="flow-filters"></div>
+      <p class="count" id="flow-count"></p>
       <div class="flow-wrap">
-      <table class="flow-table">
-        <thead>
-          <tr><th>時間</th><th>活動內容</th><th>負責人</th><th>地點</th><th>總協</th><th>活動組</th><th>行政組</th><th>場地組</th></tr>
-        </thead>
-        <tbody>
-
-          <!-- 第一天 -->
-          <tr><td colspan="8" class="flow-day">第一天 ｜ 7 月 13 日（一）</td></tr>
-          <tr>
-            <td>09:30–10:00</td><td>活動報到</td><td>行政組</td><td>左營彩虹市集前</td>
-            <td>到現場巡視各組是否就位、流程是否順利</td>
-            <td>1. 導引學員至分隊集合區<br>2. 引導每位學員加進指定小隊 LINE 群組<br>3. 協助講解當天流程</td>
-            <td>1. 核對報到名單<br>2. 發放相關文件（營隊須知、學習手冊）<br>3. 登記臨時狀況<br>4. 聯絡遊覽車</td>
-            <td>1. 協助布置報到區（指示牌、隊伍牌、椅子、遮陽／雨備）<br>2. 確認報到動線（入口→報到→等候區→分組區）</td>
-          </tr>
-          <tr>
-            <td>10:00–12:00</td><td>交通時間</td><td>活動組</td><td>—</td>
-            <td>1. 與各組保持聯繫，回報人數、突發狀況<br>2. 確保所有學員已上車，無人遺漏</td>
-            <td>1. 帶領學員走至搭車地點，維持隊伍秩序<br>2. 每車安排活動組成員點名與陪同<br>3. 協助學員找到自己的車次</td>
-            <td>—</td></tr>
-          <tr class="flow-break">
-            <td>12:00–13:30</td><td>午餐</td><td>—</td><td>餐廳</td>
-            <td>—</td>
-            <td>—</td>
-            <td>1. 確認等等上台人數，與想要上台的長官確認演講時間、放名牌<br>2. 長官來記得去接待</td>
-            <td>1. 確保音響、投影、燈光、電力正常<br>2. 現場需手舉指示牌提醒時間</td>
-          </tr>
-          <tr>
-            <td>13:30–14:00</td><td>破冰</td><td>活動組</td><td>會議廳</td>
-            <td>1. 確認破冰活動流程與時間掌握情況<br>2. 協調臨場支援</td>
-            <td>1. 主導破冰遊戲流程<br>2. 每位隊輔負責帶領自己小隊，引導學員互動<br>3. 點名</td>
-            <td>1. 若需物資協助發放<br>2. 如有突發事件，協助通報總協處理</td>
-            <td>1. 準備音響設備／播放背景音樂</td>
-          </tr>
-          <tr>
-            <td>14:00–14:20</td><td>開幕式</td><td>總協</td><td>會議廳</td>
-            <td>全場總控，確認流程是否準時與順暢</td>
-            <td>引導小隊依序就坐，協助維持現場秩序</td>
-            <td>—</td>
-            <td>協助講者處理演講使用檔案</td>
-          </tr>
-          <tr class="flow-break">
-            <td>14:20–14:30</td><td>休息</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr>
-            <td>14:30–16:00</td><td>場次 1｜楊尚儒</td><td>活動組</td><td>會議廳</td>
-            <td>開場簡短介紹講者背景與演講主題</td>
-            <td>1. 協助引導學生入座、維持現場秩序<br>2. 若學生不踴躍提問，可由工作人員帶頭提問</td>
-            <td>1. 提前準備講者所需物品（水、講稿、筆、紙）<br>2. 協助佈置講桌與座位</td>
-            <td>1. 負責投影、麥克風、簡報筆、燈光等場控<br>2. 控時（提醒講者剩餘時間、準備 Q&A）</td>
-          </tr>
-          <tr class="flow-break">
-            <td>16:00–16:15</td><td>休息</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr>
-            <td>16:15–17:45</td><td>場次 2｜佘健源（國立中山大學企業管理學系副教授）</td><td>活動組</td><td>會議廳</td>
-            <td>1. 開場簡短介紹講者背景與演講主題<br>2. 負責控時</td>
-            <td>1. 協助引導學生入座、維持現場秩序<br>2. 準備問題引導卡，帶頭提問</td>
-            <td>提前準備講者所需物品（水、講稿、筆、紙）</td>
-            <td>1. 負責投影、麥克風、簡報筆、燈光等場控<br>2. 協助佈置講桌與座位</td>
-          </tr>
-          <tr>
-            <td>17:45–18:00</td><td>任務說明</td><td>活動組</td><td>會議廳</td>
-            <td>—</td>
-            <td>黃俊凱上台介紹活動的成果發表方式</td>
-            <td>黃說明結束時，發放鑰匙</td>
-            </tr>
-          <tr class="flow-break">
-            <td>18:00–19:30</td><td>晚餐</td><td>—</td><td>餐廳</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr>
-            <td>19:30–22:00</td><td>小組時間</td><td>隊輔</td><td>—</td>
-            <td>—</td>
-            <td>各隊輔帶領小隊進行小組討論</td>
-            <td>—</td></tr>
-
-          <!-- 第二天 -->
-          <tr><td colspan="8" class="flow-day">第二天 ｜ 7 月 14 日（二）</td></tr>
-          <tr>
-            <td>08:50</td><td>集合</td><td>行政組</td><td>會議廳</td>
-            <td>檢查各組人員是否就定位</td>
-            <td>1. 引導學員，確保準時進入下一時段<br>2. 若有學員未出現或出現狀況，立即通報並處理</td>
-            <td>—</td></tr>
-          <tr>
-            <td>09:00–10:30</td><td>場次 3｜黎寶文</td><td>活動組</td><td>會議廳</td>
-            <td>1. 確認講者已抵達<br>2. 開場簡短介紹講者背景與演講主題<br>3. 負責控時</td>
-            <td>1. 協助引導學生入座、維持現場秩序<br>2. 準備問題引導卡，帶頭提問</td>
-            <td>1. 提前準備講者所需物品<br>2. 確認出席名單</td>
-            <td>1. 負責投影、麥克風、簡報筆、燈光等場控<br>2. 協助佈置講桌與座位</td>
-          </tr>
-          <tr class="flow-break">
-            <td>10:30–10:45</td><td>休息</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr>
-            <td>10:45–11:45</td><td>場次 4｜史佩靈</td><td>活動組</td><td>會議廳</td>
-            <td>同上</td><td>同上</td><td>同上</td></tr>
-          <tr class="flow-break">
-            <td>11:45–13:30</td><td>午餐</td><td>—</td><td>餐廳</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr>
-            <td>13:30–14:00</td><td>課前暖身</td><td>活動組</td><td>會議廳</td>
-            <td>1. 確認活動流程與時間掌握情況<br>2. 協調臨場支援</td>
-            <td>1. 主導暖身遊戲流程<br>2. 每位隊輔帶領自己小隊，活絡氣氛</td>
-            <td>1. 協助記錄隊伍出席與帶領狀況<br>2. 若需物資協助發放<br>3. 如有突發事件，通報總協處理</td>
-            <td>準備音響設備／播放背景音樂</td>
-          </tr>
-          <tr>
-            <td>14:00–14:30</td><td>場次 5｜林婉萍</td><td>活動組</td><td>會議廳</td>
-            <td>同上</td><td>同上</td><td>同上</td></tr>
-          <tr>
-            <td>14:30–15:00</td><td>場次 5｜王啟仲</td><td>活動組</td><td>會議廳</td>
-            <td>同上</td><td>同上</td><td>同上</td></tr>
-          <tr>
-            <td>15:00–15:30</td><td>場次 5｜張宇慧</td><td>活動組</td><td>會議廳</td>
-            <td>同上</td><td>同上</td><td>同上</td></tr>
-          <tr class="flow-break">
-            <td>15:30–15:45</td><td>休息</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr>
-            <td>15:45–17:00</td><td>林婉萍 & 王啟仲 & 張宇慧 綜合座談</td><td>活動組</td><td>會議廳</td>
-            <td>主持座談，控制時間與節奏</td>
-            <td>1. 隊輔協助小組提問<br>2. 維持現場秩序</td>
-            <td>—</td></tr>
-          <tr class="flow-break">
-            <td>17:00–18:30</td><td>晚餐</td><td>—</td><td>餐廳</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr>
-            <td>18:30–22:00</td><td>小組時間</td><td>隊輔</td><td>—</td>
-            <td>—</td>
-            <td>各隊輔帶領小隊進行小組討論與成果準備</td>
-            <td>—</td></tr>
-
-          <!-- 第三天 -->
-          <tr><td colspan="8" class="flow-day">第三天 ｜ 7 月 15 日（三）</td></tr>
-          <tr>
-            <td>08:30–10:00</td><td>交通時間</td><td>行政組</td><td>—</td>
-            <td>到現場巡視各組是否就位、流程是否順利</td>
-            <td>隊輔導引學員分隊集合</td>
-            <td>聯絡遊覽車</td></tr>
-          <tr>
-            <td>10:00–12:00</td><td>踏溯台南</td><td>活動組</td><td>台南</td>
-            <td>—</td>
-            <td>帶領學員進行戶外踏查活動，維持隊伍秩序</td>
-            <td>—</td></tr>
-          <tr class="flow-break">
-            <td>12:00–13:30</td><td>午餐</td><td>—</td><td>餐廳</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr>
-            <td>13:30–15:30</td><td>室內演講</td><td>活動組</td><td>會議廳</td>
-            <td>確認講者與流程</td>
-            <td>協助引導學生入座、維持現場秩序</td>
-            <td>準備講者所需物品</td>
-            <td>負責投影、麥克風等場控</td>
-          </tr>
-          <tr>
-            <td>15:30–16:30</td><td>踏溯台南</td><td>活動組</td><td>台南</td>
-            <td>—</td>
-            <td>帶領學員繼續踏查活動</td>
-            <td>—</td></tr>
-          <tr>
-            <td>16:30–18:00</td><td>交通時間</td><td>活動組</td><td>—</td>
-            <td>與各組保持聯繫，回報人數與狀況</td>
-            <td>帶領學員上車，確認人數</td>
-            <td>—</td></tr>
-          <tr class="flow-break">
-            <td>18:00–20:00</td><td>晚餐</td><td>—</td><td>餐廳</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr>
-            <td>20:00–22:00</td><td>小組時間</td><td>隊輔</td><td>—</td>
-            <td>—</td>
-            <td>各隊輔帶領小隊進行小組討論與海報製作準備</td>
-            <td>—</td></tr>
-
-          <!-- 第四天 （加公關組） -->
-
-          <tr><td colspan="8" class="flow-day">第四天 ｜ 7 月 16 日（四）</td></tr>
-          <tr>
-            <td>08:50</td><td>集合</td><td>行政組</td><td>會議廳</td>
-            <td>檢查各組人員是否就定位</td>
-            <td>1. 引導學員，確保準時進入下一時段<br>2. 若有學員出現狀況，立即通報並處理</td>
-            <td>—</td></tr>
-          <tr>
-            <td>09:00–09:30</td><td>場次 6｜吳志中</td><td>活動組</td><td>會議廳</td>
-            <td>1. 確認講者已抵達<br>2. 開場簡短介紹講者背景與演講主題<br>3. 負責控時</td>
-            <td>1. 協助引導學生入座、維持現場秩序<br>2. 準備問題引導卡，帶頭提問</td>
-            <td>1. 提前準備講者所需物品<br>2. 確認出席名單</td>
-            <td>1. 負責投影、麥克風、簡報筆、燈光等場控<br>2. 協助佈置講桌與座位</td>
-            
-          </tr>
-          <tr>
-            <td>09:30–10:00</td><td>場次 6｜沈有忠</td><td>活動組</td><td>會議廳</td>
-            <td>同上</td><td>同上</td><td>同上</td><td>同上</td></tr>
-          <tr class="flow-break">
-            <td>10:00–10:20</td><td>休息</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr>
-            <td>10:20–11:30</td><td>吳志中 & 沈有忠 綜合座談</td><td>活動組</td><td>會議廳</td>
-            <td>—</td>
-            <td>1. 隊輔協助小組提問<br>2. 黃在任務說明時會請小組準備問題</td>
-            <td>—</td></tr>
-          <tr class="flow-break">
-            <td>11:30–13:00</td><td>午餐</td><td>—</td><td>餐廳</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr>
-            <td>13:00–13:30</td><td>海報準備</td><td>活動組</td><td>會議廳</td>
-            <td>—</td>
-            <td>協助各組確認海報內容與站位</td>
-            <td>—</td></tr>
-          <tr>
-            <td>13:30–15:30</td><td>成果發表</td><td>活動組</td><td>會議廳</td>
-            <td>宣布活動開始與時間提醒</td>
-            <td>1. 安排發表順序、遞送麥克風<br>2. 發表前協助各組準備內容與站位<br>3. 確保提問有序進行</td>
-            <td>1. 發放並回收評分表或互評貼紙<br>2. 協助分組點名與時間控管<br>3. 記錄得獎名單與分數彙整</td>
-            </tr>
-          <tr class="flow-break">
-            <td>15:30–15:45</td><td>休息</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-          <tr>
-            <td>15:45–16:15</td><td>閉幕式</td><td>總協</td><td>會議廳</td>
-            <td>1. 統籌閉幕流程與時間控管<br>2. 主持整體活動，包含開場、頒獎、串場、總結等</td>
-            <td>1. 協助規劃頒獎名單與發表順序<br>2. 通知學員代表準備分享發言<br>3. 配合主持節奏進行物品遞交與引導</td>
-            <td>1. 準備並發放參與證書、回饋表單<br>2. 協助點名與統計實到人數<br>3. 引導學員領取個人物品</td>
-            </tr>
-          <tr>
-            <td>16:15–16:30</td><td>滿意度調查</td><td>行政組</td><td>會議廳</td>
-            <td>—</td>
-            <td>協助發放問卷並提醒學員填寫</td>
-            <td>發放並回收問卷，統計回收數量</td>
-            </tr>
-          <tr>
-            <td>16:30–17:00</td><td>帶學生去搭車</td><td>行政組</td><td>—</td>
-            <td>—</td>
-            <td>帶領學生前往搭車，並於搭車時確認人數向總協回報</td>
-            <td>—</td></tr>
-        </tbody>
-      </table>
+        <table class="flow-table">
+          <thead>
+            <tr><th>時間</th><th>活動內容</th><th>負責人</th><th>地點</th><th>總協</th><th>活動組</th><th>生輔組／隊輔組</th><th>器材組／接待組</th></tr>
+          </thead>
+          <tbody id="flow-tbody"></tbody>
+        </table>
       </div>
-
     </div>
   </div>
 </main>
@@ -822,7 +626,190 @@ function renderStaff(){
   }).join("");
 }
 function initStaffFilters(){document.getElementById("staff-filters").innerHTML=staffGroupNames.map(g=>`<button class="btn${g===staffFilter?" active":""}" onclick="setStaffFilter('${g}')">${g}</button>`).join("");}
-function setStaffFilter(g){staffFilter=g;initStaffFilters();renderStaff();}
+function setStaffFilter(g){staffFilter=g;
+/* ── 活動細流 ── */
+const flowData = [
+  {day:1, time:'09:30–10:00', content:'活動報到', owner:'黃俊凱', place:'左營彩虹市集前',
+   tzong:'', act:'1. 負責指揮分工現場工人\n2. 導引學員至分隊集合區',
+   bio:'陳弘意、蔡孟庭：導引已報到的學員至分隊集合區\n隊輔組：在集合區舉牌等待，引導每位學員加進指定小隊 LINE 群組，團隊建立',
+   eq:'呂岱晏：1. 協助布置報到區（指示牌、隊伍牌、椅子、遮陽／雨備）\n2. 確認報到動線、核對報到名單\n3. 聯絡遊覽車，確保所有學員已上車'},
+  {day:1, time:'10:00–11:30', content:'交通時間', owner:'黃俊凱', place:'', tzong:'', act:'', bio:'', eq:''},
+  {day:1, time:'11:30–12:00', content:'緩衝時間', owner:'黃俊凱', place:'',
+   tzong:'', act:'1. 負責指揮分工現場工人\n2. 導引學員放行李',
+   bio:'陳弘意：餐廳確認桌次\n隊輔組：認識環境',
+   eq:'呂岱晏：場地建設，確保音響、投影、燈光、電力正常\n凃宥聰：接待'},
+  {day:1, time:'12:00–13:30', content:'午餐', owner:'陳弘意', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況，分配座位', eq:''},
+  {day:1, time:'13:30–14:00', content:'破冰', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：主導破冰遊戲流程',
+   bio:'陳弘意：若需物資協助發放，突發事件通報\n隊輔組：每位隊輔負責帶領自己小隊，引導學員互動',
+   eq:'呂岱晏：準備音響設備／播放背景音樂'},
+  {day:1, time:'14:00–14:20', content:'開幕式', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：主持開幕流程',
+   bio:'隊輔組：引導小隊依序就坐，協助維持現場秩序',
+   eq:'呂岱晏：協助講者處理演講使用檔案'},
+  {day:1, time:'14:20–14:30', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
+  {day:1, time:'14:30–16:00', content:'場次 1｜楊尚儒\n民主制度與自由價值的基礎概念', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：引導入座、維持秩序，控時（提醒剩餘時間、準備 Q&A）',
+   bio:'隊輔組：鼓勵小隊員提問',
+   eq:'呂岱晏：負責投影、麥克風、簡報筆、燈光等場控'},
+  {day:1, time:'16:00–16:15', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
+  {day:1, time:'16:15–17:45', content:'場次 2｜佘健源\n社會韌性與危機應變', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'同上', bio:'同上', eq:'同上'},
+  {day:1, time:'17:45–18:00', content:'任務說明', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：介紹活動的成果發表方式', bio:'', eq:''},
+  {day:1, time:'18:00–19:30', content:'晚餐', owner:'陳弘意', place:'餐廳',
+   tzong:'', act:'', bio:'陳弘意：確認用餐狀況\n隊輔組：協助房卡發放', eq:''},
+  {day:1, time:'19:30–22:00', content:'小組時間', owner:'隊輔組', place:'早餐區',
+   tzong:'', act:'黃俊凱：各隊輔帶領小隊進行小組討論', bio:'隊輔組：帶領小隊進行小組討論', eq:''},
+  // Day 2
+  {day:2, time:'08:40 / 08:50', content:'工人集合 / 學員集合', owner:'黃俊凱', place:'會議廳',
+   tzong:'各組人員是否就定位', act:'1. 引導學員，確保準時進入下一時段\n2. 若有學員出現狀況，立即通報並處理',
+   bio:'陳弘意：確認用餐狀況', eq:'凃宥聰：接待'},
+  {day:2, time:'09:00–10:30', content:'場次 3｜黎寶文\n從認知戰辨識中國：青年世代的理解與應對', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：引導入座、維持秩序，控時',
+   bio:'隊輔組：鼓勵小隊員提問', eq:'呂岱晏：負責投影、麥克風、簡報筆、燈光等場控'},
+  {day:2, time:'10:30–10:45', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
+  {day:2, time:'10:45–11:45', content:'場次 4｜史佩靈\nMy Journey to AIT', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'同上', bio:'同上', eq:'凃宥聰：接待'},
+  {day:2, time:'11:45–13:30', content:'午餐', owner:'', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
+  {day:2, time:'13:30–14:00', content:'課前暖身', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：主導暖身遊戲流程',
+   bio:'陳弘意：若需物資協助發放\n隊輔組：每位隊輔負責帶領自己小隊，引導學員互動',
+   eq:'呂岱晏：準備音響設備\n凃宥聰：接待'},
+  {day:2, time:'14:00–14:30', content:'場次 5｜林婉萍\n我們如何理解世界？（主軸：性別）', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
+  {day:2, time:'14:30–15:00', content:'場次 5｜王啟仲\n我們如何理解世界？（主軸：流行音樂）', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
+  {day:2, time:'15:00–15:30', content:'場次 5｜張宇慧\n我們如何理解世界？（主軸：教育）', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
+  {day:2, time:'15:30–15:45', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
+  {day:2, time:'15:45–17:00', content:'林婉萍 & 王啟仲 & 張宇慧 綜合座談', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：主持座談，控制時間與節奏', bio:'', eq:''},
+  {day:2, time:'17:00–18:30', content:'晚餐', owner:'', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
+  {day:2, time:'18:30–22:00', content:'小組時間', owner:'隊輔組', place:'',
+   tzong:'', act:'黃俊凱：各隊輔帶領小隊進行小組討論', bio:'隊輔組：帶領小隊進行小組討論', eq:''},
+  // Day 3
+  {day:3, time:'08:30', content:'集合完畢上車', owner:'黃俊凱', place:'',
+   tzong:'', act:'黃俊凱：指揮隊輔導引學員集合',
+   bio:'陳弘意：確認用餐狀況\n隊輔組：導引學員集合', eq:'呂岱晏：聯絡遊覽車'},
+  {day:3, time:'08:30–10:00', content:'交通時間', owner:'', place:'', tzong:'', act:'', bio:'', eq:''},
+  {day:3, time:'10:00–12:00', content:'踏溯台南', owner:'成大', place:'台南',
+   tzong:'', act:'', bio:'隊輔組：帶領學員進行戶外踏查活動，維持隊伍秩序', eq:''},
+  {day:3, time:'12:00–13:30', content:'午餐', owner:'陳弘意', place:'南神', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
+  {day:3, time:'13:30–15:30', content:'室內演講', owner:'成大', place:'會議廳',
+   tzong:'', act:'黃俊凱：指揮隊輔導引學員集合', bio:'隊輔組：導引學員集合', eq:''},
+  {day:3, time:'15:30–16:30', content:'踏溯台南', owner:'成大', place:'台南',
+   tzong:'', act:'', bio:'隊輔組：帶領學員繼續踏查活動', eq:''},
+  {day:3, time:'16:30–18:00', content:'交通時間', owner:'', place:'',
+   tzong:'', act:'黃俊凱：帶領學員上車，確認人數', bio:'', eq:'呂岱晏：聯絡遊覽車'},
+  {day:3, time:'18:00–20:00', content:'晚餐', owner:'陳弘意', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
+  {day:3, time:'20:00–22:00', content:'小組時間', owner:'隊輔組', place:'',
+   tzong:'', act:'黃俊凱：各隊輔帶領小隊進行小組討論', bio:'隊輔組：帶領小隊進行小組討論', eq:''},
+  // Day 4
+  {day:4, time:'08:40 / 08:50', content:'工人集合 / 學員集合', owner:'黃俊凱', place:'會議廳',
+   tzong:'各組人員是否就定位', act:'1. 引導學員，確保準時進入下一時段\n2. 若有學員出現狀況，立即通報並處理',
+   bio:'陳弘意：確認用餐狀況', eq:'凃宥聰：接待'},
+  {day:4, time:'09:00–09:30', content:'場次 6｜吳志中\n台灣外交與全球民主的機會與挑戰', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：引導入座、維持秩序，控時',
+   bio:'隊輔組：鼓勵小隊員提問', eq:'呂岱晏：負責投影、麥克風、簡報筆、燈光等場控'},
+  {day:4, time:'09:30–10:00', content:'場次 6｜沈有忠\n當前兩岸關係與兩岸政策', owner:'黃俊凱', place:'會議廳', tzong:'同上', act:'同上', bio:'同上', eq:'同上'},
+  {day:4, time:'10:00–10:20', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
+  {day:4, time:'10:20–11:30', content:'吳志中 & 沈有忠 綜合座談\n台灣的民主與未來', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：主持座談，控制時間與節奏', bio:'', eq:''},
+  {day:4, time:'11:30–13:00', content:'午餐', owner:'', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
+  {day:4, time:'13:00–13:30', content:'海報準備', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：協助各組確認海報內容與站位', bio:'', eq:''},
+  {day:4, time:'13:30–15:30', content:'成果發表', owner:'黃俊凱', place:'會議廳',
+   tzong:'宣布活動開始與時間提醒',
+   act:'黃俊凱：1. 安排發表順序\n2. 發表前協助各組準備內容與站位\n3. 確保提問有序進行',
+   bio:'隊輔組：協助分組點名與時間控管，記錄得獎名單與分數彙整',
+   eq:'呂岱晏：發放並回收評分表或互評貼紙'},
+  {day:4, time:'15:30–15:45', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
+  {day:4, time:'15:45–16:15', content:'閉幕式', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：協助規劃頒獎名單與發表順序，配合主持節奏進行物品遞交與引導',
+   bio:'隊輔組：準備並發放參與證書、回饋表單', eq:''},
+  {day:4, time:'16:15–16:30', content:'滿意度調查', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'協助發放問卷並提醒學員填寫',
+   bio:'隊輔組：發放並回收問卷，統計回收數量', eq:''},
+  {day:4, time:'16:30–17:00', content:'帶學生去搭車', owner:'黃俊凱', place:'',
+   tzong:'', act:'帶領學生前往搭車',
+   bio:'隊輔組：引導學員領取個人物品', eq:''},
+];
+
+const dayLabels = {1:'第一天｜7 月 13 日（一）', 2:'第二天｜7 月 14 日（二）', 3:'第三天｜7 月 15 日（三）', 4:'第四天｜7 月 16 日（四）'};
+let flowFilter = '全部';
+const flowFilterList = ['全部','第一天','第二天','第三天','第四天'];
+
+const personTags = {'黃俊凱':'act','陳弘意':'bio','呂岱晏':'eq','凃宥聰':'rec','蔡孟庭':'pr','賴以展':'lead','YOYO':'rec'};
+
+function tagNames(text) {
+  if(!text) return '';
+  let r = text;
+  Object.entries(personTags).forEach(([n,c]) => { r = r.split(n).join('<span class="ptag ptag-'+c+'">'+n+'</span>'); });
+  r = r.replace(/(C?隊輔組)/g, '<span class="ptag ptag-qi">$1</span>');
+  return r;
+}
+
+function renderFlow() {
+  let filtered = flowFilter === '全部' ? flowData : flowData.filter(r => r.day === flowFilterList.indexOf(flowFilter));
+  document.getElementById('flow-count').textContent = '顯示 ' + filtered.length + ' 個時段';
+  let html = '';
+  let lastDay = 0;
+  filtered.forEach(r => {
+    if(r.day !== lastDay) {
+      html += `<tr><td colspan="8" class="flow-day">${dayLabels[r.day]}</td></tr>`;
+      lastDay = r.day;
+    }
+    const cls = r.isBreak ? ' class="flow-break"' : '';
+    html += `<tr${cls}>
+      <td style="white-space:nowrap;font-weight:500;color:var(--text-secondary)">${r.time}</td>
+      <td style="white-space:pre-line;font-weight:${r.isBreak?'400':'500'}">${r.content}</td>
+      <td>${r.owner||''}</td>
+      <td>${r.place||''}</td>
+      <td>${nl(r.tzong)}</td>
+      <td>${nl(r.act)}</td>
+      <td>${nl(r.bio)}</td>
+      <td>${nl(r.eq)}</td>
+    </tr>`;
+  });
+  document.getElementById('flow-tbody').innerHTML = html;
+}
+
+function initFlowFilters() {
+  document.getElementById('flow-filters').innerHTML = flowFilterList.map(f =>
+    `<button class="btn${f===flowFilter?' active':''}" onclick="setFlowFilter('${f}')">${f}</button>`
+  ).join('');
+}
+
+function setFlowFilter(f) {
+  if(f !== '全部') {
+    const dayMap = {'第一天':1,'第二天':2,'第三天':3,'第四天':4};
+    flowFilter = f;
+    const dayNum = dayMap[f];
+    const filtered = flowData.filter(r => r.day === dayNum);
+    document.getElementById('flow-count').textContent = '顯示 ' + filtered.length + ' 個時段';
+    let html = `<tr><td colspan="8" class="flow-day">${dayLabels[dayNum]}</td></tr>`;
+    filtered.forEach(r => {
+      const cls = r.isBreak ? ' class="flow-break"' : '';
+      html += `<tr${cls}>
+        <td style="white-space:nowrap;font-weight:500;color:var(--text-secondary)">${r.time}</td>
+        <td style="white-space:pre-line;font-weight:${r.isBreak?'400':'500'}">${r.content}</td>
+        <td>${r.owner||''}</td>
+        <td>${r.place||''}</td>
+        <td>${nl(r.tzong)}</td>
+        <td>${nl(r.act)}</td>
+        <td>${nl(r.bio)}</td>
+        <td>${nl(r.eq)}</td>
+      </tr>`;
+    });
+    document.getElementById('flow-tbody').innerHTML = html;
+  } else {
+    flowFilter = '全部';
+    renderFlow();
+  }
+  initFlowFilters();
+}
+
+initFlowFilters();
+renderFlow();
+initStaffFilters();renderStaff();}
 
 /* ── 統計 ── */
 const cityStats=[
@@ -981,6 +968,194 @@ function renderMembers(){
 function initMemberFilters(){document.getElementById("member-filters").innerHTML=memberFilterList.map(g=>`<button class="btn${g===memberFilter?" active":""}" onclick="setMemberFilter('${g}')">${g}</button>`).join("");}
 function setMemberFilter(g){memberFilter=g;initMemberFilters();renderMembers();}
 
+
+/* ── 活動細流 ── */
+const flowData = [
+  {day:1, time:'09:30–10:00', content:'活動報到', owner:'黃俊凱', place:'左營彩虹市集前',
+   tzong:'', act:'1. 負責指揮分工現場工人\n2. 導引學員至分隊集合區',
+   bio:'陳弘意、蔡孟庭：導引已報到的學員至分隊集合區\n隊輔組：在集合區舉牌等待，引導每位學員加進指定小隊 LINE 群組，團隊建立',
+   eq:'呂岱晏：1. 協助布置報到區（指示牌、隊伍牌、椅子、遮陽／雨備）\n2. 確認報到動線、核對報到名單\n3. 聯絡遊覽車，確保所有學員已上車'},
+  {day:1, time:'10:00–11:30', content:'交通時間', owner:'黃俊凱', place:'', tzong:'', act:'', bio:'', eq:''},
+  {day:1, time:'11:30–12:00', content:'緩衝時間', owner:'黃俊凱', place:'',
+   tzong:'', act:'1. 負責指揮分工現場工人\n2. 導引學員放行李',
+   bio:'陳弘意：餐廳確認桌次\n隊輔組：認識環境',
+   eq:'呂岱晏：場地建設，確保音響、投影、燈光、電力正常\n凃宥聰：接待'},
+  {day:1, time:'12:00–13:30', content:'午餐', owner:'陳弘意', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況，分配座位', eq:''},
+  {day:1, time:'13:30–14:00', content:'破冰', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：主導破冰遊戲流程',
+   bio:'陳弘意：若需物資協助發放，突發事件通報\n隊輔組：每位隊輔負責帶領自己小隊，引導學員互動',
+   eq:'呂岱晏：準備音響設備／播放背景音樂'},
+  {day:1, time:'14:00–14:20', content:'開幕式', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：主持開幕流程',
+   bio:'隊輔組：引導小隊依序就坐，協助維持現場秩序',
+   eq:'呂岱晏：協助講者處理演講使用檔案'},
+  {day:1, time:'14:20–14:30', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
+  {day:1, time:'14:30–16:00', content:'場次 1｜楊尚儒\n民主制度與自由價值的基礎概念', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：引導入座、維持秩序，控時（提醒剩餘時間、準備 Q&A）',
+   bio:'隊輔組：鼓勵小隊員提問',
+   eq:'呂岱晏：負責投影、麥克風、簡報筆、燈光等場控'},
+  {day:1, time:'16:00–16:15', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
+  {day:1, time:'16:15–17:45', content:'場次 2｜佘健源\n社會韌性與危機應變', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'同上', bio:'同上', eq:'同上'},
+  {day:1, time:'17:45–18:00', content:'任務說明', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：介紹活動的成果發表方式', bio:'', eq:''},
+  {day:1, time:'18:00–19:30', content:'晚餐', owner:'陳弘意', place:'餐廳',
+   tzong:'', act:'', bio:'陳弘意：確認用餐狀況\n隊輔組：協助房卡發放', eq:''},
+  {day:1, time:'19:30–22:00', content:'小組時間', owner:'隊輔組', place:'早餐區',
+   tzong:'', act:'黃俊凱：各隊輔帶領小隊進行小組討論', bio:'隊輔組：帶領小隊進行小組討論', eq:''},
+  // Day 2
+  {day:2, time:'08:40 / 08:50', content:'工人集合 / 學員集合', owner:'黃俊凱', place:'會議廳',
+   tzong:'各組人員是否就定位', act:'1. 引導學員，確保準時進入下一時段\n2. 若有學員出現狀況，立即通報並處理',
+   bio:'陳弘意：確認用餐狀況', eq:'凃宥聰：接待'},
+  {day:2, time:'09:00–10:30', content:'場次 3｜黎寶文\n從認知戰辨識中國：青年世代的理解與應對', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：引導入座、維持秩序，控時',
+   bio:'隊輔組：鼓勵小隊員提問', eq:'呂岱晏：負責投影、麥克風、簡報筆、燈光等場控'},
+  {day:2, time:'10:30–10:45', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
+  {day:2, time:'10:45–11:45', content:'場次 4｜史佩靈\nMy Journey to AIT', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'同上', bio:'同上', eq:'凃宥聰：接待'},
+  {day:2, time:'11:45–13:30', content:'午餐', owner:'', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
+  {day:2, time:'13:30–14:00', content:'課前暖身', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：主導暖身遊戲流程',
+   bio:'陳弘意：若需物資協助發放\n隊輔組：每位隊輔負責帶領自己小隊，引導學員互動',
+   eq:'呂岱晏：準備音響設備\n凃宥聰：接待'},
+  {day:2, time:'14:00–14:30', content:'場次 5｜林婉萍\n我們如何理解世界？（主軸：性別）', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
+  {day:2, time:'14:30–15:00', content:'場次 5｜王啟仲\n我們如何理解世界？（主軸：流行音樂）', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
+  {day:2, time:'15:00–15:30', content:'場次 5｜張宇慧\n我們如何理解世界？（主軸：教育）', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
+  {day:2, time:'15:30–15:45', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
+  {day:2, time:'15:45–17:00', content:'林婉萍 & 王啟仲 & 張宇慧 綜合座談', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：主持座談，控制時間與節奏', bio:'', eq:''},
+  {day:2, time:'17:00–18:30', content:'晚餐', owner:'', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
+  {day:2, time:'18:30–22:00', content:'小組時間', owner:'隊輔組', place:'',
+   tzong:'', act:'黃俊凱：各隊輔帶領小隊進行小組討論', bio:'隊輔組：帶領小隊進行小組討論', eq:''},
+  // Day 3
+  {day:3, time:'08:30', content:'集合完畢上車', owner:'黃俊凱', place:'',
+   tzong:'', act:'黃俊凱：指揮隊輔導引學員集合',
+   bio:'陳弘意：確認用餐狀況\n隊輔組：導引學員集合', eq:'呂岱晏：聯絡遊覽車'},
+  {day:3, time:'08:30–10:00', content:'交通時間', owner:'', place:'', tzong:'', act:'', bio:'', eq:''},
+  {day:3, time:'10:00–12:00', content:'踏溯台南', owner:'成大', place:'台南',
+   tzong:'', act:'', bio:'隊輔組：帶領學員進行戶外踏查活動，維持隊伍秩序', eq:''},
+  {day:3, time:'12:00–13:30', content:'午餐', owner:'陳弘意', place:'南神', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
+  {day:3, time:'13:30–15:30', content:'室內演講', owner:'成大', place:'會議廳',
+   tzong:'', act:'黃俊凱：指揮隊輔導引學員集合', bio:'隊輔組：導引學員集合', eq:''},
+  {day:3, time:'15:30–16:30', content:'踏溯台南', owner:'成大', place:'台南',
+   tzong:'', act:'', bio:'隊輔組：帶領學員繼續踏查活動', eq:''},
+  {day:3, time:'16:30–18:00', content:'交通時間', owner:'', place:'',
+   tzong:'', act:'黃俊凱：帶領學員上車，確認人數', bio:'', eq:'呂岱晏：聯絡遊覽車'},
+  {day:3, time:'18:00–20:00', content:'晚餐', owner:'陳弘意', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
+  {day:3, time:'20:00–22:00', content:'小組時間', owner:'隊輔組', place:'',
+   tzong:'', act:'黃俊凱：各隊輔帶領小隊進行小組討論', bio:'隊輔組：帶領小隊進行小組討論', eq:''},
+  // Day 4
+  {day:4, time:'08:40 / 08:50', content:'工人集合 / 學員集合', owner:'黃俊凱', place:'會議廳',
+   tzong:'各組人員是否就定位', act:'1. 引導學員，確保準時進入下一時段\n2. 若有學員出現狀況，立即通報並處理',
+   bio:'陳弘意：確認用餐狀況', eq:'凃宥聰：接待'},
+  {day:4, time:'09:00–09:30', content:'場次 6｜吳志中\n台灣外交與全球民主的機會與挑戰', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：引導入座、維持秩序，控時',
+   bio:'隊輔組：鼓勵小隊員提問', eq:'呂岱晏：負責投影、麥克風、簡報筆、燈光等場控'},
+  {day:4, time:'09:30–10:00', content:'場次 6｜沈有忠\n當前兩岸關係與兩岸政策', owner:'黃俊凱', place:'會議廳', tzong:'同上', act:'同上', bio:'同上', eq:'同上'},
+  {day:4, time:'10:00–10:20', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
+  {day:4, time:'10:20–11:30', content:'吳志中 & 沈有忠 綜合座談\n台灣的民主與未來', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：主持座談，控制時間與節奏', bio:'', eq:''},
+  {day:4, time:'11:30–13:00', content:'午餐', owner:'', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
+  {day:4, time:'13:00–13:30', content:'海報準備', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：協助各組確認海報內容與站位', bio:'', eq:''},
+  {day:4, time:'13:30–15:30', content:'成果發表', owner:'黃俊凱', place:'會議廳',
+   tzong:'宣布活動開始與時間提醒',
+   act:'黃俊凱：1. 安排發表順序\n2. 發表前協助各組準備內容與站位\n3. 確保提問有序進行',
+   bio:'隊輔組：協助分組點名與時間控管，記錄得獎名單與分數彙整',
+   eq:'呂岱晏：發放並回收評分表或互評貼紙'},
+  {day:4, time:'15:30–15:45', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
+  {day:4, time:'15:45–16:15', content:'閉幕式', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'黃俊凱：協助規劃頒獎名單與發表順序，配合主持節奏進行物品遞交與引導',
+   bio:'隊輔組：準備並發放參與證書、回饋表單', eq:''},
+  {day:4, time:'16:15–16:30', content:'滿意度調查', owner:'黃俊凱', place:'會議廳',
+   tzong:'', act:'協助發放問卷並提醒學員填寫',
+   bio:'隊輔組：發放並回收問卷，統計回收數量', eq:''},
+  {day:4, time:'16:30–17:00', content:'帶學生去搭車', owner:'黃俊凱', place:'',
+   tzong:'', act:'帶領學生前往搭車',
+   bio:'隊輔組：引導學員領取個人物品', eq:''},
+];
+
+const dayLabels = {1:'第一天｜7 月 13 日（一）', 2:'第二天｜7 月 14 日（二）', 3:'第三天｜7 月 15 日（三）', 4:'第四天｜7 月 16 日（四）'};
+let flowFilter = '全部';
+const flowFilterList = ['全部','第一天','第二天','第三天','第四天'];
+
+const personTags = {'黃俊凱':'act','陳弘意':'bio','呂岱晏':'eq','凃宥聰':'rec','蔡孟庭':'pr','賴以展':'lead','YOYO':'rec'};
+
+function tagNames(text) {
+  if(!text) return '';
+  let r = text;
+  Object.entries(personTags).forEach(([n,c]) => { r = r.split(n).join('<span class="ptag ptag-'+c+'">'+n+'</span>'); });
+  r = r.replace(/(C?隊輔組)/g, '<span class="ptag ptag-qi">$1</span>');
+  return r;
+}
+
+function nl(text) {
+  if(!text) return '';
+  return text.split('\n').map(l=>`<div>${tagNames(l)}</div>`).join('');
+}
+
+function renderFlow() {
+  let filtered = flowFilter === '全部' ? flowData : flowData.filter(r => r.day === flowFilterList.indexOf(flowFilter));
+  document.getElementById('flow-count').textContent = '顯示 ' + filtered.length + ' 個時段';
+  let html = '';
+  let lastDay = 0;
+  filtered.forEach(r => {
+    if(r.day !== lastDay) {
+      html += `<tr><td colspan="8" class="flow-day">${dayLabels[r.day]}</td></tr>`;
+      lastDay = r.day;
+    }
+    const cls = r.isBreak ? ' class="flow-break"' : '';
+    html += `<tr${cls}>
+      <td style="white-space:nowrap;font-weight:500;color:var(--text-secondary)">${r.time}</td>
+      <td style="white-space:pre-line;font-weight:${r.isBreak?'400':'500'}">${r.content}</td>
+      <td>${r.owner||''}</td>
+      <td>${r.place||''}</td>
+      <td>${nl(r.tzong)}</td>
+      <td>${nl(r.act)}</td>
+      <td>${nl(r.bio)}</td>
+      <td>${nl(r.eq)}</td>
+    </tr>`;
+  });
+  document.getElementById('flow-tbody').innerHTML = html;
+}
+
+function initFlowFilters() {
+  document.getElementById('flow-filters').innerHTML = flowFilterList.map(f =>
+    `<button class="btn${f===flowFilter?' active':''}" onclick="setFlowFilter('${f}')">${f}</button>`
+  ).join('');
+}
+
+function setFlowFilter(f) {
+  if(f !== '全部') {
+    const dayMap = {'第一天':1,'第二天':2,'第三天':3,'第四天':4};
+    flowFilter = f;
+    const dayNum = dayMap[f];
+    const filtered = flowData.filter(r => r.day === dayNum);
+    document.getElementById('flow-count').textContent = '顯示 ' + filtered.length + ' 個時段';
+    let html = `<tr><td colspan="8" class="flow-day">${dayLabels[dayNum]}</td></tr>`;
+    filtered.forEach(r => {
+      const cls = r.isBreak ? ' class="flow-break"' : '';
+      html += `<tr${cls}>
+        <td style="white-space:nowrap;font-weight:500;color:var(--text-secondary)">${r.time}</td>
+        <td style="white-space:pre-line;font-weight:${r.isBreak?'400':'500'}">${r.content}</td>
+        <td>${r.owner||''}</td>
+        <td>${r.place||''}</td>
+        <td>${nl(r.tzong)}</td>
+        <td>${nl(r.act)}</td>
+        <td>${nl(r.bio)}</td>
+        <td>${nl(r.eq)}</td>
+      </tr>`;
+    });
+    document.getElementById('flow-tbody').innerHTML = html;
+  } else {
+    flowFilter = '全部';
+    renderFlow();
+  }
+  initFlowFilters();
+}
+
+initFlowFilters();
+renderFlow();
 initStaffFilters();renderStaff();
 
 initMemberFilters();renderMembers();
