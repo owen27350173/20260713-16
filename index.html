@@ -161,7 +161,6 @@
       <div class="nav-group">
         <div class="nav-label">📅 活動</div>
         <button class="nav-item active" onclick="switchTab('itinerary')">行程總表</button>
-        <button class="nav-item" onclick="switchTab('schedule')">演講議程</button>
         <button class="nav-item" onclick="switchTab('presentation')">成果發表</button>
         <button class="nav-item" onclick="switchTab('flowchart')">活動細流</button>
       </div>
@@ -228,16 +227,17 @@
           <tr><td class="time">08:30–10:00</td><td>交通時間</td></tr>
           <tr><td class="time">10:00–12:00</td><td>踏溯台南</td></tr>
           <tr class="break-row"><td class="time">12:00–13:30</td><td>午餐</td></tr>
-          <tr><td class="time">13:30–15:30</td><td>室內演講</td></tr>
-          <tr><td class="time">15:30–16:30</td><td>踏溯台南</td></tr>
+          <tr><td class="time">13:30–14:30</td><td><span>場次 6｜蔡家淳（台灣基督長老教會總會事務所歷史檔案館館員）</span><br><span style="font-size:11px;color:#888;">講題：找回自己的聲音：鄭兒玉與台灣母語運動</span></td></tr>
+          <tr><td class="time">14:40–15:40</td><td><span>場次 7｜陳逸凡（台灣教會公報社總編輯）</span><br><span style="font-size:11px;color:#888;">講題：報力抵抗：台灣第一份報紙的死與生</span></td></tr>
+          <tr><td class="time">15:40–16:30</td><td>踏溯台南</td></tr>
           <tr><td class="time">16:30–18:00</td><td>交通時間</td></tr>
           <tr class="break-row"><td class="time">18:30–20:00</td><td>晚餐</td></tr>
           <tr><td class="time">20:00–22:00</td><td>小組時間</td></tr>
 
           <!-- 第四天 -->
           <tr class="day-header"><td colspan="2">第四天 ｜ 7 月 16 日（四）</td></tr>
-          <tr><td class="time">09:00–09:30</td><td>場次 6｜吳志中（外交部次長）<br><span style="font-size:11px;color:#888;">講題：台灣外交與全球民主的機會與挑戰</span></td></tr>
-          <tr><td class="time">09:30–10:00</td><td>場次 6｜沈有忠（大陸委員會副主委）<br><span style="font-size:11px;color:#888;">講題：當前兩岸關係與兩岸政策</span></td></tr>
+          <tr><td class="time">09:00–09:30</td><td>場次 8｜吳志中（外交部次長）<br><span style="font-size:11px;color:#888;">講題：台灣外交與全球民主的機會與挑戰</span></td></tr>
+          <tr><td class="time">09:30–10:00</td><td>場次 8｜沈有忠（大陸委員會副主委）<br><span style="font-size:11px;color:#888;">講題：當前兩岸關係與兩岸政策</span></td></tr>
           <tr class="break-row"><td class="time">10:00–10:20</td><td>休息</td></tr>
           <tr><td class="time">10:20–11:30</td><td>吳志中 & 沈有忠 綜合座談<br><span style="font-size:11px;color:#888;">台灣的民主與未來</span></td></tr>
           <tr class="break-row"><td class="time">11:30–13:00</td><td>中午用餐</td></tr>
@@ -357,7 +357,7 @@
 
     </div>
   </div>
-  <div class="page" id="page-schedule">
+  <div class="page" id="page-schedule" style="display:none!important">
     <div class="schedule-wrap">
       <h2 class="manual-title">演講議程</h2>
       <table class="schedule-table">
@@ -682,7 +682,7 @@ const flowData = [
    eq:'呂岱晏：準備音響設備\n凃宥聰：接待'},
   {day:2, time:'14:00–14:30', content:'場次 5｜林婉萍\n性別與民主', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
   {day:2, time:'14:30–15:00', content:'場次 5｜王啟仲\n講題：流行音樂與民主', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
-  {day:2, time:'15:00–15:30', content:'場次 5｜張宇慧\n我們如何理解世界？（主軸：教育）', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
+  {day:2, time:'15:00–15:30', content:'場次 5｜張宇慧\n講題：教育與民主', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
   {day:2, time:'15:30–15:45', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
   {day:2, time:'15:45–17:00', content:'林婉萍 & 王啟仲 & 張宇慧 綜合座談', owner:'黃俊凱', place:'會議廳',
    tzong:'', act:'黃俊凱：主持座談，控制時間與節奏', bio:'', eq:''},
@@ -697,9 +697,12 @@ const flowData = [
   {day:3, time:'10:00–12:00', content:'踏溯台南', owner:'成大', place:'台南',
    tzong:'', act:'', bio:'隊輔組：帶領學員進行戶外踏查活動，維持隊伍秩序', eq:''},
   {day:3, time:'12:00–13:30', content:'午餐', owner:'陳弘意', place:'南神', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
-  {day:3, time:'13:30–15:30', content:'室內演講', owner:'成大', place:'會議廳',
-   tzong:'', act:'黃俊凱：指揮隊輔導引學員集合', bio:'隊輔組：導引學員集合', eq:''},
-  {day:3, time:'15:30–16:30', content:'踏溯台南', owner:'成大', place:'台南',
+  {day:3, time:'13:30–14:30', content:'場次 6｜蔡家淳\n找回自己的聲音：鄭兒玉與台灣母語運動', owner:'成大', place:'會議廳',
+   tzong:'', act:'', bio:'', eq:''},
+  {day:3, time:'14:40–15:40', content:'場次 7｜陳逸凡\n報力抵抗：台灣第一份報紙的死與生', owner:'成大', place:'會議廳',
+   tzong:'', act:'', bio:'', eq:''},
+
+  {day:3, time:'15:40–16:30', content:'踏溯台南', owner:'成大', place:'台南',
    tzong:'', act:'', bio:'隊輔組：帶領學員繼續踏查活動', eq:''},
   {day:3, time:'16:30–18:00', content:'交通時間', owner:'', place:'',
    tzong:'', act:'黃俊凱：帶領學員上車，確認人數', bio:'', eq:'呂岱晏：聯絡遊覽車'},
@@ -739,8 +742,8 @@ const flowData = [
 ];
 
 const dayLabels = {1:'第一天｜7 月 13 日（一）', 2:'第二天｜7 月 14 日（二）', 3:'第三天｜7 月 15 日（三）', 4:'第四天｜7 月 16 日（四）'};
-let flowFilter = '全部';
-const flowFilterList = ['全部','第一天','第二天','第三天','第四天'];
+let flowFilter = '第一天';
+const flowFilterList = ['第一天','第二天','第三天','第四天'];
 
 const personTags = {'黃俊凱':'act','陳弘意':'bio','呂岱晏':'eq','凃宥聰':'rec','蔡孟庭':'pr','賴以展':'lead','YOYO':'rec'};
 
@@ -1031,7 +1034,7 @@ const flowData = [
    eq:'呂岱晏：準備音響設備\n凃宥聰：接待'},
   {day:2, time:'14:00–14:30', content:'場次 5｜林婉萍\n性別與民主', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
   {day:2, time:'14:30–15:00', content:'場次 5｜王啟仲\n講題：流行音樂與民主', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
-  {day:2, time:'15:00–15:30', content:'場次 5｜張宇慧\n我們如何理解世界？（主軸：教育）', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
+  {day:2, time:'15:00–15:30', content:'場次 5｜張宇慧\n講題：教育與民主', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
   {day:2, time:'15:30–15:45', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
   {day:2, time:'15:45–17:00', content:'林婉萍 & 王啟仲 & 張宇慧 綜合座談', owner:'黃俊凱', place:'會議廳',
    tzong:'', act:'黃俊凱：主持座談，控制時間與節奏', bio:'', eq:''},
@@ -1046,9 +1049,12 @@ const flowData = [
   {day:3, time:'10:00–12:00', content:'踏溯台南', owner:'成大', place:'台南',
    tzong:'', act:'', bio:'隊輔組：帶領學員進行戶外踏查活動，維持隊伍秩序', eq:''},
   {day:3, time:'12:00–13:30', content:'午餐', owner:'陳弘意', place:'南神', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
-  {day:3, time:'13:30–15:30', content:'室內演講', owner:'成大', place:'會議廳',
-   tzong:'', act:'黃俊凱：指揮隊輔導引學員集合', bio:'隊輔組：導引學員集合', eq:''},
-  {day:3, time:'15:30–16:30', content:'踏溯台南', owner:'成大', place:'台南',
+  {day:3, time:'13:30–14:30', content:'場次 6｜蔡家淳\n找回自己的聲音：鄭兒玉與台灣母語運動', owner:'成大', place:'會議廳',
+   tzong:'', act:'', bio:'', eq:''},
+  {day:3, time:'14:40–15:40', content:'場次 7｜陳逸凡\n報力抵抗：台灣第一份報紙的死與生', owner:'成大', place:'會議廳',
+   tzong:'', act:'', bio:'', eq:''},
+
+  {day:3, time:'15:40–16:30', content:'踏溯台南', owner:'成大', place:'台南',
    tzong:'', act:'', bio:'隊輔組：帶領學員繼續踏查活動', eq:''},
   {day:3, time:'16:30–18:00', content:'交通時間', owner:'', place:'',
    tzong:'', act:'黃俊凱：帶領學員上車，確認人數', bio:'', eq:'呂岱晏：聯絡遊覽車'},
@@ -1088,8 +1094,8 @@ const flowData = [
 ];
 
 const dayLabels = {1:'第一天｜7 月 13 日（一）', 2:'第二天｜7 月 14 日（二）', 3:'第三天｜7 月 15 日（三）', 4:'第四天｜7 月 16 日（四）'};
-let flowFilter = '全部';
-const flowFilterList = ['全部','第一天','第二天','第三天','第四天'];
+let flowFilter = '第一天';
+const flowFilterList = ['第一天','第二天','第三天','第四天'];
 
 const personTags = {'黃俊凱':'act','陳弘意':'bio','呂岱晏':'eq','凃宥聰':'rec','蔡孟庭':'pr','賴以展':'lead','YOYO':'rec'};
 
