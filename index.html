@@ -173,6 +173,7 @@
       <div class="nav-group">
         <div class="nav-label">📋 資料</div>
         <button class="nav-item" onclick="switchTab('rooms')">房間分配表</button>
+        <button class="nav-item" onclick="switchTab('meals')">用餐統計</button>
         <button class="nav-item" onclick="switchTab('manual')">隊輔手冊</button>
       </div>
     </nav>
@@ -471,18 +472,19 @@
       <h2 class="manual-title">房間分配表</h2>
 
       <div class="stat-section" style="margin-bottom:16px;">
-        <div class="manual-heading" style="margin-bottom:12px;">🎤 講師房間（共 8 間）</div>
+        <div class="manual-heading" style="margin-bottom:12px;">🎤 講師房間（共 9 間）</div>
         <table>
           <thead><tr><th>房間</th><th>姓名</th><th>房型</th><th>入住日</th><th>退房日</th></tr></thead>
           <tbody>
             <tr><td>甲</td><td>陳宗巖</td><td>單人房</td><td>7/13</td><td>7/16</td></tr>
             <tr><td>乙</td><td>楊尚儒</td><td>單人房</td><td>7/13</td><td>7/16</td></tr>
-            <tr><td>丙</td><td>沈有忠</td><td>單人房</td><td>7/15</td><td>7/16</td></tr>
+            <tr><td>丙</td><td>沈有忠</td><td>四人房</td><td>7/15</td><td>7/16</td></tr>
             <tr><td>丁</td><td>盧國毅</td><td>單人房</td><td>7/15</td><td>7/16</td></tr>
             <tr><td>戊</td><td>洪啓堯</td><td>單人房</td><td>7/14</td><td>7/16</td></tr>
-            <tr><td>己</td><td>張宇慧</td><td>單人房</td><td>未定</td><td>未定</td></tr>
+            <tr><td>己</td><td>張宇慧</td><td>單人房</td><td>7/13</td><td>7/14</td></tr>
             <tr><td>庚</td><td>林婉萍</td><td>單人房</td><td>7/13</td><td>7/16</td></tr>
             <tr><td>辛</td><td>王啟仲</td><td>四人房</td><td>未定</td><td>未定</td></tr>
+            <tr><td>壬</td><td>陳宜中</td><td>單人房</td><td>7/13</td><td>7/16</td></tr>
           </tbody>
         </table>
       </div>
@@ -566,6 +568,44 @@
           <tbody id="flow-tbody"></tbody>
         </table>
       </div>
+    </div>
+  </div>
+  <div class="page" id="page-meals">
+    <div class="manual-wrap" style="max-width:900px">
+      <h2 class="manual-title">用餐統計</h2>
+
+      <div class="manual-section info" style="margin-bottom:16px;">
+        <div class="manual-heading">👥 基本固定人員｜102 人</div>
+        <ul class="manual-list">
+          <li>學員 81 人</li>
+          <li>隊輔 9 人（施妤諼、吳恩萱、周品瑜、陳筱琴、錢威銘、李采容、倪瑞澤、董彥甫、王苡媗）</li>
+          <li>工作人員 6 人（賴以展、凃宥聰、呂岱晏、蔡孟庭、黃俊凱、陳弘意）</li>
+          <li>攝影組 2 人（卷毛、小柯）</li>
+          <li>陳宗巖 1 人</li>
+          <li>陳宜中 1 人（全程）</li>
+          <li>楊尚儒 1 人（全程）</li>
+          <li>林婉萍 1 人（全程）</li>
+        </ul>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>日期</th><th>餐次</th><th>人數</th><th>額外人員</th></tr>
+        </thead>
+        <tbody>
+          <tr class="day-header"><td colspan="4">第一天｜7 月 13 日（一）</td></tr>
+          <tr><td>7/13</td><td>午餐</td><td><strong>102 人</strong></td><td>—</td></tr>
+          <tr><td>7/13</td><td>晚餐</td><td><strong>105 人</strong></td><td>佘健源、張宇慧、王啟仲</td></tr>
+          <tr class="day-header"><td colspan="4">第二天｜7 月 14 日（二）</td></tr>
+          <tr><td>7/14</td><td>午餐</td><td><strong>104 人</strong></td><td>張宇慧、黎寶文</td></tr>
+          <tr><td>7/14</td><td>晚餐</td><td><strong>105 人</strong></td><td>張宇慧、洪啓堯、王啟仲</td></tr>
+          <tr class="day-header"><td colspan="4">第三天｜7 月 15 日（三）</td></tr>
+          <tr><td>7/15</td><td>午餐</td><td><strong>103 人</strong></td><td>洪啓堯</td></tr>
+          <tr><td>7/15</td><td>晚餐</td><td><strong>105 人</strong></td><td>洪啓堯、沈有忠、盧國毅</td></tr>
+          <tr class="day-header"><td colspan="4">第四天｜7 月 16 日（四）</td></tr>
+          <tr><td>7/16</td><td>午餐</td><td><strong>106 人</strong></td><td>洪啓堯、沈有忠、盧國毅、吳志中</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </main>
