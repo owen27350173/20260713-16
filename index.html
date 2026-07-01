@@ -623,6 +623,7 @@
       </table>
     </div>
   </div>
+</div>
 </main>
 <script>
 function toggleSidebar(){
@@ -676,7 +677,6 @@ function renderStaff(){
       return`<tr><td><strong>${s.name}</strong></td><td><span class="badge" style="background:${g.bg};color:${g.text}">${s.group}</span></td><td>${s.room}</td><td>${taskCell}</td></tr>`;
     } else if(!firstQueue){
       firstQueue=true;
-      const taskCell=`<ul class="tasks-list">${queueTasks.map(t=>`<li>${t}</li>`).join("")}</ul>`;
       return`<tr><td><strong>${s.name}</strong></td><td><span class="badge" style="background:${g.bg};color:${g.text}">${s.group}</span></td><td>${s.room}</td><td rowspan="${queueCount}">${taskCell}</td></tr>`;
     } else {
       return`<tr><td><strong>${s.name}</strong></td><td><span class="badge" style="background:${g.bg};color:${g.text}">${s.group}</span></td><td>${s.room}</td></tr>`;
@@ -684,7 +684,8 @@ function renderStaff(){
   }).join("");
 }
 function initStaffFilters(){document.getElementById("staff-filters").innerHTML=staffGroupNames.map(g=>`<button class="btn${g===staffFilter?" active":""}" onclick="setStaffFilter('${g}')">${g}</button>`).join("");}
-function setStaffFilter(g){staffFilter=g;
+function setStaffFilter(g){staffFilter=g;initStaffFilters();renderStaff();}
+
 /* ── 活動細流 ── */
 const flowData = [
   {day:1, time:'09:30–10:00', content:'活動報到', owner:'黃俊凱', place:'左營彩虹市集前',
@@ -851,11 +852,8 @@ function setFlowFilter(f) {
     const dayMap = {'第一天':1,'第二天':2,'第三天':3,'第四天':4};
     flowFilter = f;
     const dayNum = dayMap[f];
-    const filtered = flowData.filter(r => r.day === dayNum);
     document.getElementById('flow-count').textContent = '顯示 ' + filtered.length + ' 個時段';
-    let html = `<tr><td colspan="8" class="flow-day">${dayLabels[dayNum]}</td></tr>`;
     filtered.forEach(r => {
-      const cls = r.isBreak ? ' class="flow-break"' : r.isNote ? ' class="flow-note"' : '';
       html += `<tr${cls}>
         <td style="white-space:nowrap;font-weight:500;color:var(--text-secondary)">${r.time}</td>
         <td style="white-space:pre-line;font-weight:${r.isBreak?'400':'500'}">${r.content}</td>
@@ -907,7 +905,6 @@ function searchRoom(query) {
     '705':'陳宜中','606':'陸委會','607':'陸委會','617':'洪浦釗'
   };
 
-  let html = '';
 
   if(lecRoomMap[q]) {
     html += `<div style="margin-bottom:6px;"><span style="font-weight:600;color:#1E3A5F;">📌 講師房：</span> ${lecRoomMap[q]}</div>`;
@@ -924,7 +921,7 @@ function searchRoom(query) {
   }
   result.innerHTML = html;
 }
-initStaffFilters();renderStaff();}
+initStaffFilters();renderStaff();
 
 /* ── 統計 ── */
 const cityStats=[
@@ -1069,7 +1066,6 @@ const groupColors=["","g1","g2","g3","g4","g5","g6","g7","g8","g9"];
 let memberFilter="全部";
 const memberFilterList=["全部","第1組","第2組","第3組","第4組","第5組","第6組","第7組","第8組","第9組","男","女"];
 function renderMembers(){
-  let filtered=[...memberData];
   if(memberFilter==="男"||memberFilter==="女"){filtered=memberData.filter(m=>m.gender===memberFilter);}
   else if(memberFilter!=="全部"){const g=parseInt(memberFilter.replace("第","").replace("組",""));filtered=memberData.filter(m=>m.group===g);}
   filtered.sort((a,b)=>a.group-b.group);
@@ -1082,260 +1078,33 @@ function initMemberFilters(){document.getElementById("member-filters").innerHTML
 function setMemberFilter(g){memberFilter=g;initMemberFilters();renderMembers();}
 
 
-/* ── 活動細流 ── */
-const flowData = [
-  {day:1, time:'09:30–10:00', content:'活動報到', owner:'黃俊凱', place:'左營彩虹市集前',
-   tzong:'', act:'1. 負責指揮分工現場工人\n2. 導引學員至分隊集合區',
-   bio:'陳弘意、蔡孟庭：導引已報到的學員至分隊集合區\n隊輔組：在集合區舉牌等待，引導每位學員加進指定小隊 LINE 群組，團隊建立',
-   eq:'呂岱晏：1. 協助布置報到區（指示牌、隊伍牌、椅子、遮陽／雨備）\n2. 確認報到動線、核對報到名單\n3. 聯絡遊覽車，確保所有學員已上車'},
-  {day:1, time:'10:00–11:30', content:'交通時間', owner:'黃俊凱', place:'', tzong:'', act:'', bio:'', eq:''},
-  {day:1, time:'11:30–12:00', content:'緩衝時間', owner:'黃俊凱', place:'',
-   tzong:'', act:'1. 負責指揮分工現場工人\n2. 導引學員放行李',
-   bio:'陳弘意：餐廳確認桌次\n隊輔組：認識環境',
-   eq:'呂岱晏：場地建設，確保音響、投影、燈光、電力正常\n凃宥聰：接待'},
-  {day:1, time:'12:00–13:30', content:'午餐', owner:'陳弘意', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況，分配座位', eq:''},
-  {day:1, time:'13:30–14:00', content:'破冰', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'黃俊凱：主導破冰遊戲流程',
-   bio:'陳弘意：若需物資協助發放，突發事件通報\n隊輔組：每位隊輔負責帶領自己小隊，引導學員互動',
-   eq:'呂岱晏：準備音響設備／播放背景音樂'},
-  {day:1, time:'14:00–14:20', content:'開幕式', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'黃俊凱：主持開幕流程',
-   bio:'隊輔組：引導小隊依序就坐，協助維持現場秩序',
-   eq:'呂岱晏：協助講者處理演講使用檔案'},
-  {day:1, time:'14:20–14:30', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
-  {day:1, time:'14:30–16:00', content:'場次 1｜楊尚儒\n民主制度與自由價值的基礎概念', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'黃俊凱：引導入座、維持秩序，控時（提醒剩餘時間、準備 Q&A）',
-   bio:'隊輔組：鼓勵小隊員提問',
-   eq:'呂岱晏：負責投影、麥克風、簡報筆、燈光等場控'},
-  {day:1, time:'16:00–16:15', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
-  {day:1, time:'16:15–17:45', content:'場次 2｜佘健源\n社會韌性與危機應變', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'同上', bio:'同上', eq:'同上'},
-  {day:1, time:'17:45–18:00', content:'任務說明', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'黃俊凱：介紹活動的成果發表方式', bio:'', eq:''},
-  {day:1, time:'18:00–19:30', content:'晚餐', owner:'陳弘意', place:'餐廳',
-   tzong:'', act:'', bio:'陳弘意：確認用餐狀況\n隊輔組：協助房卡發放', eq:''},
-  {day:1, time:'19:30–22:00', content:'小組時間', owner:'隊輔組', place:'早餐區',
-   tzong:'', act:'黃俊凱：各隊輔帶領小隊進行小組討論', bio:'隊輔組：帶領小隊進行小組討論', eq:''},
-  // Day 2
-  {day:1, time:'', content:'📌 備注', owner:'', place:'', tzong:'', act:'', bio:'', eq:'蔡孟庭請在該演講場次結束後，盡快（理想上是結束後一小時內）挑幾張與該場講者以及現場活動照片約５－１０張，傳給講師。並於活動中隨時記錄上社群。', isNote:true},
-  {day:2, time:'08:40 / 08:50', content:'工人集合 / 學員集合', owner:'黃俊凱', place:'會議廳',
-   tzong:'各組人員是否就定位', act:'1. 引導學員，確保準時進入下一時段\n2. 若有學員出現狀況，立即通報並處理',
-   bio:'陳弘意：確認用餐狀況', eq:'凃宥聰：接待'},
-  {day:2, time:'09:00–10:30', content:'場次 3｜黎寶文\n從認知戰辨識中國：青年世代的理解與應對', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'黃俊凱：引導入座、維持秩序，控時',
-   bio:'隊輔組：鼓勵小隊員提問', eq:'呂岱晏：負責投影、麥克風、簡報筆、燈光等場控'},
-  {day:2, time:'10:30–10:45', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
-  {day:2, time:'10:45–11:45', content:'場次 4｜史佩靈\nMy Journey to AIT', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'同上', bio:'同上', eq:'凃宥聰：接待'},
-  {day:2, time:'11:45–13:30', content:'午餐', owner:'', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
-  {day:2, time:'13:30–14:00', content:'課前暖身', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'黃俊凱：主導暖身遊戲流程',
-   bio:'陳弘意：若需物資協助發放\n隊輔組：每位隊輔負責帶領自己小隊，引導學員互動',
-   eq:'呂岱晏：準備音響設備\n凃宥聰：接待'},
-  {day:2, time:'14:00–14:30', content:'場次 5｜林婉萍\n性別與民主', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
-  {day:2, time:'14:30–15:00', content:'場次 5｜王啟仲\n講題：青年文化與民主', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
-  {day:2, time:'15:00–15:30', content:'場次 5｜張宇慧\n講題：教育與民主', owner:'黃俊凱', place:'會議廳', tzong:'', act:'同上', bio:'同上', eq:'同上'},
-  {day:2, time:'15:30–15:45', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
-  {day:2, time:'15:45–17:00', content:'林婉萍 & 王啟仲 & 張宇慧 綜合座談', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'黃俊凱：主持座談，控制時間與節奏', bio:'', eq:''},
-  {day:2, time:'17:00–18:30', content:'晚餐', owner:'', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
-  {day:2, time:'18:30–22:00', content:'小組時間', owner:'隊輔組', place:'',
-   tzong:'', act:'黃俊凱：各隊輔帶領小隊進行小組討論', bio:'隊輔組：帶領小隊進行小組討論', eq:''},
-  // Day 3
-  {day:3, time:'08:30', content:'集合完畢上車', owner:'黃俊凱', place:'',
-   tzong:'', act:'黃俊凱：指揮隊輔導引學員集合',
-   bio:'陳弘意：確認用餐狀況\n隊輔組：導引學員集合', eq:'呂岱晏：聯絡遊覽車'},
-  {day:3, time:'08:30–10:00', content:'交通時間', owner:'', place:'', tzong:'', act:'', bio:'', eq:''},
-  {day:3, time:'10:00–12:00', content:'踏溯台南', owner:'成大', place:'台南',
-   tzong:'', act:'', bio:'隊輔組：帶領學員進行戶外踏查活動，維持隊伍秩序', eq:''},
-  {day:3, time:'12:00–13:30', content:'午餐', owner:'陳弘意', place:'南神', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
-  {day:3, time:'13:30–14:30', content:'場次 6｜蔡家淳\n找回自己的聲音：鄭兒玉與台灣母語運動', owner:'成大', place:'會議廳',
-   tzong:'', act:'', bio:'', eq:''},
-  {day:3, time:'14:40–15:40', content:'場次 7｜陳逸凡\n報力抵抗：台灣第一份報紙的死與生', owner:'成大', place:'會議廳',
-   tzong:'', act:'', bio:'', eq:''},
 
-  {day:3, time:'15:40–16:30', content:'踏溯台南', owner:'成大', place:'台南',
-   tzong:'', act:'', bio:'隊輔組：帶領學員繼續踏查活動', eq:''},
-  {day:3, time:'16:30–18:00', content:'交通時間', owner:'', place:'',
-   tzong:'', act:'黃俊凱：帶領學員上車，確認人數', bio:'', eq:'呂岱晏：聯絡遊覽車'},
-  {day:3, time:'18:00–20:00', content:'晚餐', owner:'陳弘意', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
-  {day:3, time:'20:00–22:00', content:'小組時間', owner:'隊輔組', place:'',
-   tzong:'', act:'黃俊凱：各隊輔帶領小隊進行小組討論', bio:'隊輔組：帶領小隊進行小組討論', eq:''},
-  // Day 4
-  {day:3, time:'', content:'📌 備注', owner:'', place:'', tzong:'', act:'', bio:'天熱容易中暑，隊輔務必照顧小隊員的身體狀況。如果有必要請回報。', eq:'', isNote:true},
-  {day:4, time:'08:40 / 08:50', content:'工人集合 / 學員集合', owner:'黃俊凱', place:'會議廳',
-   tzong:'各組人員是否就定位', act:'1. 引導學員，確保準時進入下一時段\n2. 若有學員出現狀況，立即通報並處理',
-   bio:'陳弘意：確認用餐狀況', eq:'凃宥聰：接待'},
-  {day:4, time:'09:00–09:30', content:'場次 6｜吳志中\n台灣外交與全球民主的機會與挑戰', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'黃俊凱：引導入座、維持秩序，控時',
-   bio:'隊輔組：鼓勵小隊員提問', eq:'呂岱晏：負責投影、麥克風、簡報筆、燈光等場控'},
-  {day:4, time:'09:30–10:00', content:'場次 6｜沈有忠\n當前兩岸關係與兩岸政策', owner:'黃俊凱', place:'會議廳', tzong:'同上', act:'同上', bio:'同上', eq:'同上'},
-  {day:4, time:'10:00–10:20', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
-  {day:4, time:'10:20–11:30', content:'吳志中 & 沈有忠 綜合座談\n台灣的民主與未來', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'黃俊凱：主持座談，控制時間與節奏', bio:'', eq:''},
-  {day:4, time:'11:30–13:00', content:'午餐', owner:'', place:'餐廳', tzong:'', act:'', bio:'陳弘意：確認用餐狀況', eq:''},
-  {day:4, time:'13:00–13:30', content:'海報準備', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'黃俊凱：協助各組確認海報內容與站位', bio:'', eq:''},
-  {day:4, time:'13:30–15:30', content:'成果發表', owner:'黃俊凱', place:'會議廳',
-   tzong:'宣布活動開始與時間提醒',
-   act:'黃俊凱：1. 安排發表順序\n2. 發表前協助各組準備內容與站位\n3. 確保提問有序進行',
-   bio:'隊輔組：協助分組點名與時間控管，記錄得獎名單與分數彙整',
-   eq:'呂岱晏：發放並回收評分表或互評貼紙'},
-  {day:4, time:'15:30–15:45', content:'休息', owner:'', place:'', tzong:'', act:'', bio:'', eq:'', isBreak:true},
-  {day:4, time:'15:45–16:15', content:'閉幕式', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'黃俊凱：協助規劃頒獎名單與發表順序，配合主持節奏進行物品遞交與引導',
-   bio:'隊輔組：準備並發放參與證書、回饋表單', eq:''},
-  {day:4, time:'16:15–16:30', content:'滿意度調查', owner:'黃俊凱', place:'會議廳',
-   tzong:'', act:'協助發放問卷並提醒學員填寫',
-   bio:'隊輔組：發放並回收問卷，統計回收數量', eq:''},
-  {day:4, time:'16:30–17:00', content:'帶學生去搭車', owner:'黃俊凱', place:'',
-   tzong:'', act:'帶領學生前往搭車',
-   bio:'隊輔組：引導學員領取個人物品', eq:''},
-];
 
-const dayLabels = {1:'第一天｜7 月 13 日（一）', 2:'第二天｜7 月 14 日（二）', 3:'第三天｜7 月 15 日（三）', 4:'第四天｜7 月 16 日（四）'};
-let flowFilter = '第一天';
-const flowFilterList = ['第一天','第二天','第三天','第四天'];
-
-const personTags = {'黃俊凱':'act','陳弘意':'bio','呂岱晏':'eq','凃宥聰':'rec','蔡孟庭':'pr','賴以展':'lead','YOYO':'rec'};
-
-function tagNames(text) {
-  if(!text) return '';
-  let r = text;
-  Object.entries(personTags).forEach(([n,c]) => { r = r.split(n).join('<span class="ptag ptag-'+c+'">'+n+'</span>'); });
-  r = r.replace(/(C?隊輔組)/g, '<span class="ptag ptag-qi">$1</span>');
-  return r;
-}
 
 function nl(text) {
   if(!text) return '';
   return text.split('\n').map(l=>`<div>${tagNames(l)}</div>`).join('');
 }
 
-function renderFlow() {
-  let filtered = flowFilter === '全部' ? flowData : flowData.filter(r => r.day === flowFilterList.indexOf(flowFilter));
-  document.getElementById('flow-count').textContent = '顯示 ' + filtered.length + ' 個時段';
-  let html = '';
-  let lastDay = 0;
-  filtered.forEach(r => {
-    if(r.day !== lastDay) {
-      html += `<tr><td colspan="8" class="flow-day">${dayLabels[r.day]}</td></tr>`;
-      lastDay = r.day;
-    }
-    const cls = r.isBreak ? ' class="flow-break"' : r.isNote ? ' class="flow-note"' : '';
-    if(r.isNote) {
-      const noteText = [r.tzong, r.act, r.bio, r.eq].filter(Boolean).join(' ');
-      html += `<tr class="flow-note"><td colspan="8" style="font-size:12px;color:#92400E;padding:8px 12px;">${tagNames(noteText)}</td></tr>`;
-    } else {
-      html += `<tr${cls}>
-        <td style="white-space:nowrap;font-weight:500;color:var(--text-secondary)">${r.time}</td>
-        <td style="white-space:pre-line;font-weight:${r.isBreak?'400':'500'}">${r.content}</td>
-        <td>${tagNames(r.owner||'')}</td>
-        <td>${r.place||''}</td>
-        <td>${nl(r.tzong)}</td>
-        <td>${nl(r.act)}</td>
-        <td>${nl(r.bio)}</td>
-        <td>${nl(r.eq)}</td>
-      </tr>`;
-    }
-  });
-  document.getElementById('flow-tbody').innerHTML = html;
-}
 
-function initFlowFilters() {
-  document.getElementById('flow-filters').innerHTML = flowFilterList.map(f =>
-    `<button class="btn${f===flowFilter?' active':''}" onclick="setFlowFilter('${f}')">${f}</button>`
-  ).join('');
-}
-
-function setFlowFilter(f) {
-  if(f !== '全部') {
-    const dayMap = {'第一天':1,'第二天':2,'第三天':3,'第四天':4};
-    flowFilter = f;
-    const dayNum = dayMap[f];
-    const filtered = flowData.filter(r => r.day === dayNum);
-    document.getElementById('flow-count').textContent = '顯示 ' + filtered.length + ' 個時段';
-    let html = `<tr><td colspan="8" class="flow-day">${dayLabels[dayNum]}</td></tr>`;
-    filtered.forEach(r => {
-      const cls = r.isBreak ? ' class="flow-break"' : r.isNote ? ' class="flow-note"' : '';
-      html += `<tr${cls}>
-        <td style="white-space:nowrap;font-weight:500;color:var(--text-secondary)">${r.time}</td>
-        <td style="white-space:pre-line;font-weight:${r.isBreak?'400':'500'}">${r.content}</td>
-        <td>${tagNames(r.owner||'')}</td>
-        <td>${r.place||''}</td>
-        <td>${nl(r.tzong)}</td>
-        <td>${nl(r.act)}</td>
-        <td>${nl(r.bio)}</td>
-        <td>${nl(r.eq)}</td>
-      </tr>`;
-    });
-    document.getElementById('flow-tbody').innerHTML = html;
-  } else {
-    flowFilter = '全部';
-    renderFlow();
-  }
-  initFlowFilters();
-}
 
 initFlowFilters();
 renderFlow();
 
 /* ── 房間查詢 ── */
-function searchRoom(query) {
-  const result = document.getElementById('room-search-result');
-  if(!query.trim()) { result.innerHTML = ''; return; }
 
-  const q = query.trim();
-  const found = [];
-
-  // Search lecturers
-  const lecRows = document.querySelectorAll('#page-rooms table tbody tr');
-  // Search members
-  const allMembers = [...memberData];
-  const matchedMembers = allMembers.filter(m => m.room === q);
-
-  // Also search staff rooms from HTML
-  const staffRoomMap = {
-    '708':'賴以展（總協）','712':'凃宥聰（接待組）',
-    '604':'施妤諼、吳恩萱（隊輔組）／蔡孟庭、李采容、王苡媗（公關組／隊輔組）',
-    '608':'周品瑜、陳筱琴（隊輔組）','609':'呂岱晏、黃俊凱（器材組／活動組）',
-    '611':'呂岱晏、黃俊凱（器材組／活動組）',
-    '612':'陳弘意、錢威銘（生輔組／隊輔組）',
-    '613':'倪瑞澤、董彥甫（隊輔組）','517':'卷毛、小柯（攝影組）'
-  };
-  const lecRoomMap = {
-    '701':'陳宗巖','706':'楊尚儒','603':'沈有忠','605':'盧國毅',
-    '616':'洪啓堯、張宇慧','717':'林婉萍','714':'王啟仲',
-    '705':'陳宜中','606':'陸委會','607':'陸委會','617':'洪浦釗'
-  };
-
-  let html = '';
-
-  if(lecRoomMap[q]) {
-    html += `<div style="margin-bottom:6px;"><span style="font-weight:600;color:#1E3A5F;">📌 講師房：</span> ${lecRoomMap[q]}</div>`;
-  }
-  if(staffRoomMap[q]) {
-    html += `<div style="margin-bottom:6px;"><span style="font-weight:600;color:#1E3A5F;">🏷️ 工作人員房：</span> ${staffRoomMap[q]}</div>`;
-  }
-  if(matchedMembers.length > 0) {
-    const names = matchedMembers.map(m => `${m.name}（第${m.group}組，${m.gender}）`).join('、');
-    html += `<div><span style="font-weight:600;color:#1E3A5F;">🏫 學員：</span> ${names}</div>`;
-  }
-  if(!html) {
-    html = `<span style="color:#94A3B8;">查無 ${q} 房的資料</span>`;
-  }
-  result.innerHTML = html;
-}
 initStaffFilters();renderStaff();
 
-initMemberFilters();renderMembers();
+/* ── 統計 ── */
 
-/* ── 房間分配 ── */
-const groupColors2=["","g1","g2","g3","g4","g5","g6","g7","g8","g9"];
-const sortedByRoom=[...memberData].sort((a,b)=>a.room.localeCompare(b.room));
-document.getElementById("room-member-tbody").innerHTML=sortedByRoom.map(m=>
-  `<tr><td>${m.room}</td><td><strong>${m.name}</strong></td><td><span class="badge ${groupColors2[m.group]}">第${m.group}組</span></td><td>${m.gender}</td></tr>`
-).join("");
+
+/* ── 參加人員 ── */
+
+
+
+initFlowFilters();
+renderFlow();
+/* ── 房間查詢 ── */
 </script>
-</div></body>
+</body>
 </html>
