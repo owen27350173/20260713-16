@@ -471,6 +471,18 @@
     <div class="schedule-wrap">
       <h2 class="manual-title">房間分配表</h2>
 
+      <div class="manual-section info" style="margin-bottom:16px;">
+        <div class="manual-heading">🔍 查詢房間</div>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap;">
+          <input id="room-search" type="text" placeholder="輸入房號，例如 316"
+            style="font-size:14px;padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;width:200px;outline:none;"
+            oninput="searchRoom(this.value)">
+          <button onclick="searchRoom('');document.getElementById('room-search').value=''"
+            style="font-size:13px;padding:7px 14px;border-radius:8px;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-family:inherit;">清除</button>
+        </div>
+        <div id="room-search-result" style="margin-top:10px;font-size:13px;color:var(--text-secondary);min-height:20px;"></div>
+      </div>
+
       <div class="stat-section" style="margin-bottom:16px;">
         <div class="manual-heading" style="margin-bottom:12px;">🎤 講師房間（共 9 間）</div>
         <table>
@@ -865,6 +877,53 @@ function setFlowFilter(f) {
 
 initFlowFilters();
 renderFlow();
+
+/* ── 房間查詢 ── */
+function searchRoom(query) {
+  const result = document.getElementById('room-search-result');
+  if(!query.trim()) { result.innerHTML = ''; return; }
+
+  const q = query.trim();
+  const found = [];
+
+  // Search lecturers
+  const lecRows = document.querySelectorAll('#page-rooms table tbody tr');
+  // Search members
+  const allMembers = [...memberData];
+  const matchedMembers = allMembers.filter(m => m.room === q);
+
+  // Also search staff rooms from HTML
+  const staffRoomMap = {
+    '708':'賴以展（總協）','712':'凃宥聰（接待組）',
+    '604':'施妤諼、吳恩萱（隊輔組）／蔡孟庭、李采容、王苡媗（公關組／隊輔組）',
+    '608':'周品瑜、陳筱琴（隊輔組）','609':'呂岱晏、黃俊凱（器材組／活動組）',
+    '611':'呂岱晏、黃俊凱（器材組／活動組）',
+    '612':'陳弘意、錢威銘（生輔組／隊輔組）',
+    '613':'倪瑞澤、董彥甫（隊輔組）','517':'卷毛、小柯（攝影組）'
+  };
+  const lecRoomMap = {
+    '701':'陳宗巖','706':'楊尚儒','603':'沈有忠','605':'盧國毅',
+    '616':'洪啓堯、張宇慧','717':'林婉萍','714':'王啟仲',
+    '705':'陳宜中','606':'陸委會','607':'陸委會','617':'洪浦釗'
+  };
+
+  let html = '';
+
+  if(lecRoomMap[q]) {
+    html += `<div style="margin-bottom:6px;"><span style="font-weight:600;color:#1E3A5F;">📌 講師房：</span> ${lecRoomMap[q]}</div>`;
+  }
+  if(staffRoomMap[q]) {
+    html += `<div style="margin-bottom:6px;"><span style="font-weight:600;color:#1E3A5F;">🏷️ 工作人員房：</span> ${staffRoomMap[q]}</div>`;
+  }
+  if(matchedMembers.length > 0) {
+    const names = matchedMembers.map(m => `${m.name}（第${m.group}組，${m.gender}）`).join('、');
+    html += `<div><span style="font-weight:600;color:#1E3A5F;">🏫 學員：</span> ${names}</div>`;
+  }
+  if(!html) {
+    html = `<span style="color:#94A3B8;">查無 ${q} 房的資料</span>`;
+  }
+  result.innerHTML = html;
+}
 initStaffFilters();renderStaff();}
 
 /* ── 統計 ── */
@@ -1220,6 +1279,53 @@ function setFlowFilter(f) {
 
 initFlowFilters();
 renderFlow();
+
+/* ── 房間查詢 ── */
+function searchRoom(query) {
+  const result = document.getElementById('room-search-result');
+  if(!query.trim()) { result.innerHTML = ''; return; }
+
+  const q = query.trim();
+  const found = [];
+
+  // Search lecturers
+  const lecRows = document.querySelectorAll('#page-rooms table tbody tr');
+  // Search members
+  const allMembers = [...memberData];
+  const matchedMembers = allMembers.filter(m => m.room === q);
+
+  // Also search staff rooms from HTML
+  const staffRoomMap = {
+    '708':'賴以展（總協）','712':'凃宥聰（接待組）',
+    '604':'施妤諼、吳恩萱（隊輔組）／蔡孟庭、李采容、王苡媗（公關組／隊輔組）',
+    '608':'周品瑜、陳筱琴（隊輔組）','609':'呂岱晏、黃俊凱（器材組／活動組）',
+    '611':'呂岱晏、黃俊凱（器材組／活動組）',
+    '612':'陳弘意、錢威銘（生輔組／隊輔組）',
+    '613':'倪瑞澤、董彥甫（隊輔組）','517':'卷毛、小柯（攝影組）'
+  };
+  const lecRoomMap = {
+    '701':'陳宗巖','706':'楊尚儒','603':'沈有忠','605':'盧國毅',
+    '616':'洪啓堯、張宇慧','717':'林婉萍','714':'王啟仲',
+    '705':'陳宜中','606':'陸委會','607':'陸委會','617':'洪浦釗'
+  };
+
+  let html = '';
+
+  if(lecRoomMap[q]) {
+    html += `<div style="margin-bottom:6px;"><span style="font-weight:600;color:#1E3A5F;">📌 講師房：</span> ${lecRoomMap[q]}</div>`;
+  }
+  if(staffRoomMap[q]) {
+    html += `<div style="margin-bottom:6px;"><span style="font-weight:600;color:#1E3A5F;">🏷️ 工作人員房：</span> ${staffRoomMap[q]}</div>`;
+  }
+  if(matchedMembers.length > 0) {
+    const names = matchedMembers.map(m => `${m.name}（第${m.group}組，${m.gender}）`).join('、');
+    html += `<div><span style="font-weight:600;color:#1E3A5F;">🏫 學員：</span> ${names}</div>`;
+  }
+  if(!html) {
+    html = `<span style="color:#94A3B8;">查無 ${q} 房的資料</span>`;
+  }
+  result.innerHTML = html;
+}
 initStaffFilters();renderStaff();
 
 initMemberFilters();renderMembers();
