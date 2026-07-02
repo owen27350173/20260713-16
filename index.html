@@ -677,6 +677,7 @@ function renderStaff(){
       return`<tr><td><strong>${s.name}</strong></td><td><span class="badge" style="background:${g.bg};color:${g.text}">${s.group}</span></td><td>${s.room}</td><td>${taskCell}</td></tr>`;
     } else if(!firstQueue){
       firstQueue=true;
+      const taskCell=`<ul class="tasks-list">${queueTasks.map(t=>`<li>${t}</li>`).join("")}</ul>`;
       return`<tr><td><strong>${s.name}</strong></td><td><span class="badge" style="background:${g.bg};color:${g.text}">${s.group}</span></td><td>${s.room}</td><td rowspan="${queueCount}">${taskCell}</td></tr>`;
     } else {
       return`<tr><td><strong>${s.name}</strong></td><td><span class="badge" style="background:${g.bg};color:${g.text}">${s.group}</span></td><td>${s.room}</td></tr>`;
@@ -852,18 +853,26 @@ function setFlowFilter(f) {
     const dayMap = {'第一天':1,'第二天':2,'第三天':3,'第四天':4};
     flowFilter = f;
     const dayNum = dayMap[f];
+    const filtered = flowData.filter(r => r.day === dayNum);
     document.getElementById('flow-count').textContent = '顯示 ' + filtered.length + ' 個時段';
+    let html = `<tr><td colspan="8" class="flow-day">${dayLabels[dayNum]}</td></tr>`;
     filtered.forEach(r => {
-      html += `<tr${cls}>
-        <td style="white-space:nowrap;font-weight:500;color:var(--text-secondary)">${r.time}</td>
-        <td style="white-space:pre-line;font-weight:${r.isBreak?'400':'500'}">${r.content}</td>
-        <td>${tagNames(r.owner||'')}</td>
-        <td>${r.place||''}</td>
-        <td>${nl(r.tzong)}</td>
-        <td>${nl(r.act)}</td>
-        <td>${nl(r.bio)}</td>
-        <td>${nl(r.eq)}</td>
-      </tr>`;
+      const cls = r.isBreak ? ' class="flow-break"' : r.isNote ? ' class="flow-note"' : '';
+      if(r.isNote) {
+        const noteText = [r.tzong, r.act, r.bio, r.eq].filter(Boolean).join(' ');
+        html += `<tr class="flow-note"><td colspan="8" style="font-size:12px;color:#92400E;padding:8px 12px;">${tagNames(noteText)}</td></tr>`;
+      } else {
+        html += `<tr${cls}>
+          <td style="white-space:nowrap;font-weight:500;color:var(--text-secondary)">${r.time}</td>
+          <td style="white-space:pre-line;font-weight:${r.isBreak?'400':'500'}">${r.content}</td>
+          <td>${tagNames(r.owner||'')}</td>
+          <td>${r.place||''}</td>
+          <td>${nl(r.tzong)}</td>
+          <td>${nl(r.act)}</td>
+          <td>${nl(r.bio)}</td>
+          <td>${nl(r.eq)}</td>
+        </tr>`;
+      }
     });
     document.getElementById('flow-tbody').innerHTML = html;
   } else {
@@ -880,24 +889,19 @@ renderFlow();
 function searchRoom(query) {
   const result = document.getElementById('room-search-result');
   if(!query.trim()) { result.innerHTML = ''; return; }
-
   const q = query.trim();
-  const found = [];
 
-  // Search lecturers
-  const lecRows = document.querySelectorAll('#page-rooms table tbody tr');
-  // Search members
-  const allMembers = [...memberData];
-  const matchedMembers = allMembers.filter(m => m.room === q);
-
-  // Also search staff rooms from HTML
   const staffRoomMap = {
-    '708':'賴以展（總協）','712':'凃宥聰（接待組）',
-    '604':'施妤諼、吳恩萱（隊輔組）／蔡孟庭、李采容、王苡媗（公關組／隊輔組）',
-    '608':'周品瑜、陳筱琴（隊輔組）','609':'呂岱晏、黃俊凱（器材組／活動組）',
+    '708':'賴以展（總協）',
+    '712':'凃宥聰（接待組）',
+    '614':'施妤諼、吳恩萱（隊輔組）',
+    '604':'蔡孟庭、李采容、王苡媗（公關組／隊輔組）',
+    '608':'周品瑜、陳筱琴（隊輔組）',
     '611':'呂岱晏、黃俊凱（器材組／活動組）',
     '612':'陳弘意、錢威銘（生輔組／隊輔組）',
-    '613':'倪瑞澤、董彥甫（隊輔組）','517':'卷毛、小柯（攝影組）'
+    '613':'倪瑞澤、董彥甫（隊輔組）',
+    '517':'卷毛、小柯（攝影組）',
+    '609':'林郁芯、朱雨嫻（學員）'
   };
   const lecRoomMap = {
     '701':'陳宗巖','706':'楊尚儒','603':'沈有忠','605':'盧國毅',
@@ -905,20 +909,16 @@ function searchRoom(query) {
     '705':'陳宜中','606':'陸委會','607':'陸委會','617':'洪浦釗'
   };
 
+  const matchedMembers = memberData.filter(m => m.room === q);
+  let html = '';
 
-  if(lecRoomMap[q]) {
-    html += `<div style="margin-bottom:6px;"><span style="font-weight:600;color:#1E3A5F;">📌 講師房：</span> ${lecRoomMap[q]}</div>`;
-  }
-  if(staffRoomMap[q]) {
-    html += `<div style="margin-bottom:6px;"><span style="font-weight:600;color:#1E3A5F;">🏷️ 工作人員房：</span> ${staffRoomMap[q]}</div>`;
-  }
+  if(lecRoomMap[q]) html += `<div style="margin-bottom:6px;"><span style="font-weight:600;color:#1E3A5F;">📌 講師：</span> ${lecRoomMap[q]}</div>`;
+  if(staffRoomMap[q]) html += `<div style="margin-bottom:6px;"><span style="font-weight:600;color:#1E3A5F;">🏷️ 工作人員：</span> ${staffRoomMap[q]}</div>`;
   if(matchedMembers.length > 0) {
-    const names = matchedMembers.map(m => `${m.name}（第${m.group}組，${m.gender}）`).join('、');
+    const names = matchedMembers.map(m => `${m.name}（第${m.group}組）`).join('、');
     html += `<div><span style="font-weight:600;color:#1E3A5F;">🏫 學員：</span> ${names}</div>`;
   }
-  if(!html) {
-    html = `<span style="color:#94A3B8;">查無 ${q} 房的資料</span>`;
-  }
+  if(!html) html = `<span style="color:#94A3B8;">查無 ${q} 房的資料</span>`;
   result.innerHTML = html;
 }
 initStaffFilters();renderStaff();
