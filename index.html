@@ -1081,6 +1081,7 @@ const groupColors=["","g1","g2","g3","g4","g5","g6","g7","g8","g9"];
 let memberFilter="全部";
 const memberFilterList=["全部","第1組","第2組","第3組","第4組","第5組","第6組","第7組","第8組","第9組","男","女"];
 function renderMembers(){
+  let filtered = memberData;
   if(memberFilter==="男"||memberFilter==="女"){filtered=memberData.filter(m=>m.gender===memberFilter);}
   else if(memberFilter!=="全部"){const g=parseInt(memberFilter.replace("第","").replace("組",""));filtered=memberData.filter(m=>m.group===g);}
   filtered.sort((a,b)=>a.group-b.group);
@@ -1110,6 +1111,7 @@ renderFlow();
 
 initStaffFilters();renderStaff();
 renderRoomMembers();
+initMemberFilters();renderMembers();
 
 /* ── 統計 ── */
 
