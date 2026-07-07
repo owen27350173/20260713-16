@@ -44,7 +44,7 @@
   .nav-item.active { background: #1E293B; color: #fff; border-left-color: #60A5FA; font-weight: 600; }
 
   /* ── Main content ── */
-  main { margin-left: var(--sidebar-w); padding: 1.75rem 1.5rem 3rem; width: calc(100% - var(--sidebar-w)); min-height: 100vh; }
+  main { margin-left: 220px; padding: 1.75rem 1.5rem 3rem; width: calc(100% - 220px); min-height: 100vh; }
   .page { display: none; }
   .page.active { display: block; }
 
@@ -136,16 +136,7 @@
   .flow-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:var(--radius); }
 
   /* ── Mobile ── */
-  @media(max-width:900px) { .stats-wrap { grid-template-columns: 1fr; } }
-  @media(max-width:768px){
-    .sidebar { transform: translateX(-100%); }
-    .sidebar.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.3); }
-    .mobile-header { display: flex; }
-    main { margin-left: 0; padding: 4.5rem 0.75rem 3rem; width: 100%; }
-    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    thead th { font-size: 11px; padding: 9px 10px; }
-    tbody td { font-size: 12px; padding: 8px 10px; }
-    .tasks-list li { font-size: 12px; }
+  @media(max-width:900px){\n    .stats-wrap { grid-template-columns: 1fr; }\n    .sidebar { transform: translateX(-100%); }\n    .sidebar.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.3); }\n    .mobile-header { display: flex; }\n    main { margin-left: 0; padding: 4.5rem 0.75rem 3rem; width: 100%; }\n    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }\n    thead th { font-size: 11px; padding: 9px 10px; }\n    tbody td { font-size: 12px; padding: 8px 10px; }\n    .tasks-list li { font-size: 12px; }\n  }
   }
 </style>
 </head>
@@ -182,7 +173,7 @@
     <button class="menu-btn" onclick="toggleSidebar()">☰</button>
     <div class="mobile-title">2026全球民主價值青年對話營</div>
   </div>
-<main>
+  <main>
   <div class="page active" id="page-itinerary">
     <div class="schedule-wrap">
       <h2 class="manual-title">行程總表</h2>
@@ -620,8 +611,8 @@
       </div>
     </div>
   </div>
-</div>
-</main>
+  </main>
+
 <script>
 function toggleSidebar(){
   document.getElementById('sidebar').classList.toggle('open');
