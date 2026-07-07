@@ -805,7 +805,7 @@ function tagNames(text) {
 }
 
 function renderFlow() {
-  let filtered = flowFilter === '全部' ? flowData : flowData.filter(r => r.day === flowFilterList.indexOf(flowFilter));
+  let filtered = flowFilter === '全部' ? flowData : flowData.filter(r => r.day === flowFilterList.indexOf(flowFilter) + 1);
   document.getElementById('flow-count').textContent = '顯示 ' + filtered.length + ' 個時段';
   let html = '';
   let lastDay = 0;
