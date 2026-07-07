@@ -18,7 +18,7 @@
     --text: #0F172A;
     --text-secondary: #475569;
     --text-muted: #94A3B8;
-    --sidebar-w: 220px;
+    --sidebar-w: 200px;
     --radius: 10px;
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
     --shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -44,7 +44,7 @@
   .nav-item.active { background: #1E293B; color: #fff; border-left-color: #60A5FA; font-weight: 600; }
 
   /* ── Main content ── */
-  main { margin-left: 220px; padding: 1.75rem 1.5rem 3rem; width: calc(100% - 220px); min-height: 100vh; }
+  .main-content { margin-left: 200px; padding: 1.75rem 1.5rem 3rem; width: calc(100% - 200px); min-height: 100vh; }
   .page { display: none; }
   .page.active { display: block; }
 
@@ -136,7 +136,7 @@
   .flow-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:var(--radius); }
 
   /* ── Mobile ── */
-  @media(max-width:900px){\n    .stats-wrap { grid-template-columns: 1fr; }\n    .sidebar { transform: translateX(-100%); }\n    .sidebar.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.3); }\n    .mobile-header { display: flex; }\n    main { margin-left: 0; padding: 4.5rem 0.75rem 3rem; width: 100%; }\n    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }\n    thead th { font-size: 11px; padding: 9px 10px; }\n    tbody td { font-size: 12px; padding: 8px 10px; }\n    .tasks-list li { font-size: 12px; }\n  }
+  @media(max-width:900px){\n    .stats-wrap { grid-template-columns: 1fr; }\n    .sidebar { transform: translateX(-100%); }\n    .sidebar.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.3); }\n    .mobile-header { display: flex; }\n    .main-content { margin-left: 0 !important; padding: 4.5rem 0.75rem 3rem; width: 100% !important; }\n    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }\n    thead th { font-size: 11px; padding: 9px 10px; }\n    tbody td { font-size: 12px; padding: 8px 10px; }\n    .tasks-list li { font-size: 12px; }\n  }
   }
 </style>
 </head>
@@ -173,7 +173,7 @@
     <button class="menu-btn" onclick="toggleSidebar()">☰</button>
     <div class="mobile-title">2026全球民主價值青年對話營</div>
   </div>
-  <main>
+  <div class="main-content">
   <div class="page active" id="page-itinerary">
     <div class="schedule-wrap">
       <h2 class="manual-title">行程總表</h2>
@@ -611,7 +611,7 @@
       </div>
     </div>
   </div>
-  </main>
+  </div>
 
 <script>
 function toggleSidebar(){
