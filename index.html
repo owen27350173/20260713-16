@@ -136,7 +136,16 @@
   .flow-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:var(--radius); }
 
   /* ── Mobile ── */
-  @media(max-width:900px){\n    .stats-wrap { grid-template-columns: 1fr; }\n    .sidebar { transform: translateX(-100%); }\n    .sidebar.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.3); }\n    .mobile-header { display: flex; }\n    .main-content { margin-left: 0 !important; padding: 4.5rem 0.75rem 3rem; width: 100% !important; }\n    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }\n    thead th { font-size: 11px; padding: 9px 10px; }\n    tbody td { font-size: 12px; padding: 8px 10px; }\n    .tasks-list li { font-size: 12px; }\n  }
+  @media(max-width:900px){
+    .stats-wrap { grid-template-columns: 1fr; }
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); box-shadow: 4px 0 20px rgba(0,0,0,0.3); }
+    .mobile-header { display: flex !important; }
+    .main-content { margin-left: 0 !important; padding: 4.5rem 0.75rem 3rem; }
+    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    thead th { font-size: 11px; padding: 9px 10px; }
+    tbody td { font-size: 12px; padding: 8px 10px; }
+    .tasks-list li { font-size: 12px; }
   }
 </style>
 </head>
